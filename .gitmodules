@@ -1,0 +1,4 @@
+[submodule "config"]
+	path = config
+	url = https://github.com/polingo-kumoh/config.git
+	branch = main
