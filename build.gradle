@@ -38,3 +38,11 @@ bootJar {
 	archiveFileName = 'polingo-applicaion.jar'
 }
 
+tasks.register('copyProperty', Copy) {
+	from file('./config')
+	into file('./src/main/resources')
+}
+
+processResources {
+	dependsOn copyProperty
+}
