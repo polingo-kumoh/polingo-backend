@@ -15,8 +15,8 @@ import java.util.List;
 @Entity
 public class User extends BaseEntity {
     private String nickname;
-    private String profileImage;
-    //기본 언어 설정
+    //TODO [HJ] 이메일 필드 필요한지에 대해 추후 논의
+    private String email;
 
     @Enumerated(EnumType.STRING)
     private Language language;
