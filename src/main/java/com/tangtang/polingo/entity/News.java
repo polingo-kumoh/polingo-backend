@@ -2,7 +2,11 @@ package com.tangtang.polingo.entity;
 
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.global.entity.BaseEntity;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;

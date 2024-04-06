@@ -1,5 +1,7 @@
 package com.tangtang.polingo.user.client;
 
+import com.tangtang.polingo.user.dto.KakaoRequest;
+import com.tangtang.polingo.user.dto.KakaoResponse;
 import com.tangtang.polingo.user.property.KakaoProperties;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class KakaoClient {
     private final KakaoProperties kakaoProperties;
+    private final KakaoAuthClient kakaoAuthClient;
 
     public ResponseEntity<Void> redirectToKakaoAuth() {
         String redirectUrl = createRedirectUrl();
@@ -22,6 +25,11 @@ public class KakaoClient {
         headers.setLocation(URI.create(redirectUrl));
 
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
+    }
+
+    public KakaoResponse handleCallback(KakaoRequest req) {
+        String accessToken = kakaoAuthClient.requestKakaoAccessToken(req);
+        return kakaoAuthClient.requestKakaoUserInfo(accessToken);
     }
 
     private String createRedirectUrl() {
