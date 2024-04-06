@@ -13,6 +13,7 @@ public class GoogleProperties {
     private String clientId;
     private String grantType;
     private String redirectUri;
+    private String clientSecret;
     private String tokenUri;
     private String userInfoUri;
     private String scope;

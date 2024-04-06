@@ -1,5 +1,8 @@
 package com.tangtang.polingo.global.constant;
 
+import lombok.Getter;
+
+@Getter
 public enum LoginType {
     KAKAO("kakao"),
     GOOGLE("google");
@@ -10,10 +13,6 @@ public enum LoginType {
         this.provider = provider;
     }
 
-    public String getProvider() {
-        return provider;
-    }
-
     public static LoginType fromProvider(String provider) {
         for (LoginType type : values()) {
             if (type.getProvider().equalsIgnoreCase(provider)) {
@@ -22,4 +21,5 @@ public enum LoginType {
         }
         throw new IllegalArgumentException("Unknown provider: " + provider);
     }
+
 }

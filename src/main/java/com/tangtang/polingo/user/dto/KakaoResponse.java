@@ -1,12 +1,10 @@
 package com.tangtang.polingo.user.dto;
 
-import lombok.Getter;
-import lombok.extern.slf4j.Slf4j;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Getter;
 
 @Getter
-@Slf4j
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class KakaoResponse {
     @JsonProperty("kakao_account")

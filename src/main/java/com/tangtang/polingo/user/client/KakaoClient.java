@@ -1,6 +1,5 @@
 package com.tangtang.polingo.user.client;
 
-import com.tangtang.polingo.user.dto.KakaoRequest;
 import com.tangtang.polingo.user.dto.KakaoResponse;
 import com.tangtang.polingo.user.property.KakaoProperties;
 import java.net.URI;
@@ -27,9 +26,9 @@ public class KakaoClient {
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 
-    public KakaoResponse handleCallback(KakaoRequest req) {
-        String accessToken = kakaoAuthClient.requestKakaoAccessToken(req);
-        return kakaoAuthClient.requestKakaoUserInfo(accessToken);
+    public KakaoResponse handleCallback(String code) {
+        String accessToken = kakaoAuthClient.requestKakaoAccessToken(code);
+        return kakaoAuthClient.requestUserInfo(accessToken);
     }
 
     private String createRedirectUrl() {
@@ -37,6 +36,8 @@ public class KakaoClient {
                 .queryParam("client_id", kakaoProperties.getClientId())
                 .queryParam("redirect_uri", kakaoProperties.getRedirectUri())
                 .queryParam("response_type", "code")
-                .build().encode(StandardCharsets.UTF_8).toUriString();
+                .build()
+                .encode(StandardCharsets.UTF_8)
+                .toUriString();
     }
 }

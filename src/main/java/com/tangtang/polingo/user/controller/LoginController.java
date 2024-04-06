@@ -4,9 +4,8 @@ package com.tangtang.polingo.user.controller;
 import com.tangtang.polingo.global.constant.LoginType;
 import com.tangtang.polingo.user.client.GoogleClient;
 import com.tangtang.polingo.user.client.KakaoClient;
-import com.tangtang.polingo.user.dto.KakaoRequest;
+import com.tangtang.polingo.user.dto.GoogleResponse;
 import com.tangtang.polingo.user.dto.KakaoResponse;
-import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,10 +30,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/login")
 public class LoginController {
-    @Value("${frontend-url}")
-    private String frontendUrl;
     private final KakaoClient kakaoClient;
     private final GoogleClient googleClient;
+    @Value("${frontend-url}")
+    private String frontendUrl;
 
     @Operation(summary = "카카오 로그인 API", description = "카카오 로그인 API입니다. 스웨거나 포스트맨으로는 동작하지 않고 브라우저창을 통해 직접 주소에 접근하셔야 됩니다. ")
     @ApiResponses(value = {
@@ -51,14 +50,22 @@ public class LoginController {
         };
     }
 
-    @Hidden
-    @GetMapping("/kakao/callback")
-    public void callBackKakaoLogin(@RequestParam("code") String authorizationCode, HttpServletResponse response)
+    @GetMapping("/{provider}/callback")
+    public void callback(@PathVariable String provider, @RequestParam("code") String code, HttpServletResponse response)
             throws IOException {
-        KakaoRequest params = new KakaoRequest(authorizationCode);
-        KakaoResponse kakaoResponse = kakaoClient.handleCallback(params);
+        LoginType loginType = LoginType.fromProvider(provider);
 
-        log.info("카카오 로그인 성공 = {}", kakaoResponse.getName());
+        switch (loginType) {
+            case KAKAO:
+                KakaoResponse kakaoResponse = kakaoClient.handleCallback(code);
+                log.info("카카오 로그인 성공 = {}", kakaoResponse.getName());
+                break;
+
+            case GOOGLE:
+                GoogleResponse googleResponse = googleClient.handleCallback(code);
+                log.info("구글 로그인 성공 = {}", googleResponse.getName());
+                break;
+        }
 
         String redirectUrl = frontendUrl;
         response.sendRedirect(redirectUrl);
