@@ -1,6 +1,8 @@
 package com.tangtang.polingo.user.controller;
 
 
+import com.tangtang.polingo.global.constant.LoginType;
+import com.tangtang.polingo.user.client.GoogleClient;
 import com.tangtang.polingo.user.client.KakaoClient;
 import com.tangtang.polingo.user.dto.KakaoRequest;
 import com.tangtang.polingo.user.dto.KakaoResponse;
@@ -18,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,18 +31,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/login")
 public class LoginController {
-    private final KakaoClient kakaoClient;
     @Value("${frontend-url}")
     private String frontendUrl;
+    private final KakaoClient kakaoClient;
+    private final GoogleClient googleClient;
 
     @Operation(summary = "카카오 로그인 API", description = "카카오 로그인 API입니다. 스웨거나 포스트맨으로는 동작하지 않고 브라우저창을 통해 직접 주소에 접근하셔야 됩니다. ")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "로그인 성공!, localhost:3000?token=?을 통해서 토큰을 전달합니다.", content = @Content(schema = @Schema(hidden = true))),
             @ApiResponse(responseCode = "500", description = " 다뤄지지 않은 Server 오류, 백엔드 담당자에게 문의!", content = @Content(schema = @Schema(hidden = true)))
     })
-    @GetMapping("/kakao")
-    public ResponseEntity<Void> redirectToKakaoLogin() {
-        return kakaoClient.redirectToKakaoAuth();
+    @GetMapping("/{provider}")
+    public ResponseEntity<Void> redirectToAuthorizationURI(@PathVariable String provider) {
+        LoginType loginType = LoginType.fromProvider(provider);
+
+        return switch (loginType) {
+            case KAKAO -> kakaoClient.redirectToKakaoAuth();
+            case GOOGLE -> googleClient.redirectToGoogleAuth();
+        };
     }
 
     @Hidden
