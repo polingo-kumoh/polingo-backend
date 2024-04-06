@@ -1,8 +1,10 @@
-package com.tangtang.polingo.user.client;
+package com.tangtang.polingo.user.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.tangtang.polingo.user.dto.KakaoResponse;
+import com.tangtang.polingo.user.dto.UserInfo;
 import com.tangtang.polingo.user.property.KakaoProperties;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -17,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 @Component
 @RequiredArgsConstructor
 public class KakaoAuthClient {
-
     private final KakaoProperties kakaoProperties;
     private final RestTemplate restTemplate;
 
@@ -33,11 +34,10 @@ public class KakaoAuthClient {
         HttpEntity<?> httpEntity = new HttpEntity<>(body, httpHeaders);
 
         JsonNode response = restTemplate.postForObject(kakaoProperties.getTokenUri(), httpEntity, JsonNode.class);
-
         return response != null ? response.path("access_token").asText() : null;
     }
 
-    public KakaoResponse requestUserInfo(String accessToken) {
+    public UserInfo requestUserInfo(String accessToken) {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         httpHeaders.set("Authorization", "Bearer " + accessToken);
@@ -47,6 +47,8 @@ public class KakaoAuthClient {
 
         HttpEntity<?> httpEntity = new HttpEntity<>(body, httpHeaders);
 
-        return restTemplate.postForObject(kakaoProperties.getUserInfoUri(), httpEntity, KakaoResponse.class);
+        KakaoResponse response = restTemplate.postForObject(kakaoProperties.getUserInfoUri(), httpEntity,
+                KakaoResponse.class);
+        return Objects.requireNonNull(response).toUserInfo();
     }
 }

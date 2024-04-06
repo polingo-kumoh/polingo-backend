@@ -1,6 +1,7 @@
-package com.tangtang.polingo.user.client;
+package com.tangtang.polingo.user.service;
 
-import com.tangtang.polingo.user.dto.GoogleResponse;
+import com.tangtang.polingo.global.constant.LoginType;
+import com.tangtang.polingo.user.dto.UserInfo;
 import com.tangtang.polingo.user.property.GoogleProperties;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
@@ -13,11 +14,12 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 @Component
 @RequiredArgsConstructor
-public class GoogleClient {
+public class GoogleOAuth2Service implements OAuth2Service {
     private final GoogleProperties googleProperties;
     private final GoogleAuthClient googleAuthClient;
 
-    public ResponseEntity<Void> redirectToGoogleAuth() {
+    @Override
+    public ResponseEntity<Void> redirectAuthorizeURI() {
         String redirectUrl = createRedirectUrl();
 
         HttpHeaders headers = new HttpHeaders();
@@ -26,9 +28,15 @@ public class GoogleClient {
         return new ResponseEntity<>(headers, HttpStatus.FOUND);
     }
 
-    public GoogleResponse handleCallback(String code) {
+    @Override
+    public UserInfo handleCallback(String code) {
         String accessToken = googleAuthClient.requestKakaoAccessToken(code);
         return googleAuthClient.requestUserInfo(accessToken);
+    }
+
+    @Override
+    public LoginType getLoginType() {
+        return LoginType.GOOGLE;
     }
 
     private String createRedirectUrl() {

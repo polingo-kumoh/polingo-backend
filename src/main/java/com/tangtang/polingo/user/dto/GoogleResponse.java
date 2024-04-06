@@ -1,13 +1,12 @@
 package com.tangtang.polingo.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.Getter;
+public record GoogleResponse(String id, String name, String email) {
 
-@Getter
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class GoogleResponse {
-    private String id;
-    private String email;
-    private String name;
+    public UserInfo toUserInfo() {
+        return UserInfo.builder()
+                .id(this.id)
+                .name(this.name)
+                .email(this.email)
+                .build();
+    }
 }
-

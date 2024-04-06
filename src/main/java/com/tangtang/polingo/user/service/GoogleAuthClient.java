@@ -1,9 +1,11 @@
-package com.tangtang.polingo.user.client;
+package com.tangtang.polingo.user.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.tangtang.polingo.user.dto.GoogleResponse;
+import com.tangtang.polingo.user.dto.UserInfo;
 import com.tangtang.polingo.user.property.GoogleProperties;
 import java.net.URI;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -41,7 +43,7 @@ public class GoogleAuthClient {
         return response != null ? response.path("access_token").asText() : null;
     }
 
-    public GoogleResponse requestUserInfo(String accessToken) {
+    public UserInfo requestUserInfo(String accessToken) {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
 
@@ -51,6 +53,8 @@ public class GoogleAuthClient {
                 .build()
                 .toUri();
 
-        return restTemplate.exchange(uri, HttpMethod.GET, httpEntity, GoogleResponse.class).getBody();
+        GoogleResponse response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, GoogleResponse.class)
+                .getBody();
+        return Objects.requireNonNull(response).toUserInfo();
     }
 }

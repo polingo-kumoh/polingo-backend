@@ -21,5 +21,4 @@ public enum LoginType {
         }
         throw new IllegalArgumentException("Unknown provider: " + provider);
     }
-
 }
