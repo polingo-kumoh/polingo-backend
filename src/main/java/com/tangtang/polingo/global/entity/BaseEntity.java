@@ -1,4 +1,4 @@
-package com.tangtang.polingo.domain;
+package com.tangtang.polingo.global.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;

@@ -1,5 +1,7 @@
-package com.tangtang.polingo.domain;
+package com.tangtang.polingo.entity;
 
+import com.tangtang.polingo.global.entity.BaseEntity;
+import com.tangtang.polingo.user.entity.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;

@@ -1,4 +1,4 @@
-package com.tangtang.polingo.domain;
+package com.tangtang.polingo.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
