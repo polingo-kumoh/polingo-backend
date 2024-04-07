@@ -1,4 +1,4 @@
-package com.tangtang.polingo.global.config;
+package com.tangtang.polingo.security.config;
 
 import com.tangtang.polingo.security.filter.JwtAuthenticationFilter;
 import lombok.RequiredArgsConstructor;

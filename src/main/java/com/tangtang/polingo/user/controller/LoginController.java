@@ -1,10 +1,6 @@
 package com.tangtang.polingo.user.controller;
 
-import com.tangtang.polingo.global.constant.LoginType;
-import com.tangtang.polingo.oauth2.dto.UserInfo;
-import com.tangtang.polingo.oauth2.service.OAuth2Service;
-import com.tangtang.polingo.oauth2.service.OAuth2Services;
-import com.tangtang.polingo.user.service.UserService;
+import com.tangtang.polingo.user.service.LoginService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -22,31 +18,21 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/login")
 @RequiredArgsConstructor
 public class LoginController {
-    private final UserService userService;
-    private final OAuth2Services oAuth2Services;
     @Value("${frontend-url}")
     private String frontendUrl;
+    private final LoginService loginService;
 
     @GetMapping("/{provider}")
     public ResponseEntity<Void> redirect(@PathVariable String provider) {
-        LoginType loginType = LoginType.fromProvider(provider);
-        OAuth2Service authService = oAuth2Services.getAuthService(loginType);
-
-        return authService.redirectAuthorizeURI();
+        return loginService.redirectLogin(provider);
     }
 
     @GetMapping("/{provider}/callback")
     public void callback(@PathVariable String provider, @RequestParam("code") String code, HttpServletResponse response)
             throws IOException {
-        LoginType loginType = LoginType.fromProvider(provider);
-        OAuth2Service authService = oAuth2Services.getAuthService(loginType);
+        String token = loginService.loginAfterCallback(provider, code);
 
-        String accessToken = authService.requestAccessToken(code);
-        UserInfo userInfo = authService.requestUserInfo(accessToken);
-        log.info("[{}] {} 로그인 성공", provider, userInfo.getName());
-
-        String token = userService.login(loginType, userInfo);
-
+        log.info("[{}] 로그인 성공, Token: {}", provider, token);
         response.sendRedirect(frontendUrl + "?token=" + token);
     }
 }
