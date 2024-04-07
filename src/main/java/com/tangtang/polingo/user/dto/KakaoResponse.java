@@ -12,7 +12,6 @@ public record KakaoResponse(String id, String name) {
         return UserInfo.builder()
                 .id(this.id)
                 .name(this.name)
-                .email(null)
                 .build();
     }
 }

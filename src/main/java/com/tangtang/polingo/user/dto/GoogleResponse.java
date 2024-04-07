@@ -6,7 +6,6 @@ public record GoogleResponse(String id, String name, String email) {
         return UserInfo.builder()
                 .id(this.id)
                 .name(this.name)
-                .email(this.email)
                 .build();
     }
 }

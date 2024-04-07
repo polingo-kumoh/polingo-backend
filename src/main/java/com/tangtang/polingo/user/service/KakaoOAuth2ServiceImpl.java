@@ -2,17 +2,17 @@ package com.tangtang.polingo.user.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.tangtang.polingo.global.constant.LoginType;
-import com.tangtang.polingo.user.dto.GoogleResponse;
+import com.tangtang.polingo.user.dto.KakaoResponse;
 import com.tangtang.polingo.user.dto.UserInfo;
-import com.tangtang.polingo.user.property.GoogleProperties;
+import com.tangtang.polingo.user.property.KakaoProperties;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +25,19 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class GoogleOAuth2Service implements OAuth2Service {
-    private final GoogleProperties googleProperties;
+public class KakaoOAuth2ServiceImpl implements OAuth2Service {
+    private final KakaoProperties kakaoProperties;
     private final RestTemplate restTemplate;
 
     @Override
     public ResponseEntity<Void> redirectAuthorizeURI() {
-        String redirectUrl = createRedirectUrl();
+        String redirectUrl = UriComponentsBuilder.fromUriString(kakaoProperties.getAuthorizationUri())
+                .queryParam("client_id", kakaoProperties.getClientId())
+                .queryParam("redirect_uri", kakaoProperties.getRedirectUri())
+                .queryParam("response_type", "code")
+                .build()
+                .encode(StandardCharsets.UTF_8)
+                .toUriString();
 
         HttpHeaders headers = new HttpHeaders();
         headers.setLocation(URI.create(redirectUrl));
@@ -46,15 +52,12 @@ public class GoogleOAuth2Service implements OAuth2Service {
 
         MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
         body.add("code", code);
-        body.add("client_id", googleProperties.getClientId());
-        body.add("client_secret", googleProperties.getClientSecret());
-        body.add("redirect_uri", googleProperties.getRedirectUri());
-        body.add("grant_type", googleProperties.getGrantType());
+        body.add("grant_type", kakaoProperties.getGrantType());
+        body.add("client_id", kakaoProperties.getClientId());
 
         HttpEntity<?> httpEntity = new HttpEntity<>(body, httpHeaders);
 
-        JsonNode response = restTemplate.postForObject(googleProperties.getTokenUri(), httpEntity, JsonNode.class);
-
+        JsonNode response = restTemplate.postForObject(kakaoProperties.getTokenUri(), httpEntity, JsonNode.class);
         return response != null ? response.path("access_token").asText() : null;
     }
 
@@ -63,30 +66,19 @@ public class GoogleOAuth2Service implements OAuth2Service {
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(accessToken);
 
-        HttpEntity<?> httpEntity = new HttpEntity<>(headers);
+        MultiValueMap<String, List<String>> body = new LinkedMultiValueMap<>();
+        body.add("property_keys", kakaoProperties.getPropertyKeys());
 
-        URI uri = UriComponentsBuilder.fromUriString(googleProperties.getUserInfoUri())
-                .build()
-                .toUri();
+        HttpEntity<?> httpEntity = new HttpEntity<>(body, headers);
 
-        GoogleResponse response = restTemplate.exchange(uri, HttpMethod.GET, httpEntity, GoogleResponse.class)
-                .getBody();
+        KakaoResponse response = restTemplate.postForObject(kakaoProperties.getUserInfoUri(), httpEntity,
+                KakaoResponse.class);
+
         return Objects.requireNonNull(response).toUserInfo();
     }
 
     @Override
     public LoginType getLoginType() {
-        return LoginType.GOOGLE;
-    }
-
-    private String createRedirectUrl() {
-        return UriComponentsBuilder.fromUriString(googleProperties.getAuthorizationUri())
-                .queryParam("client_id", googleProperties.getClientId())
-                .queryParam("redirect_uri", googleProperties.getRedirectUri())
-                .queryParam("response_type", googleProperties.getResponseType())
-                .queryParam("scope", googleProperties.getScope())
-                .encode(StandardCharsets.UTF_8)
-                .build()
-                .toUriString();
+        return LoginType.KAKAO;
     }
 }
