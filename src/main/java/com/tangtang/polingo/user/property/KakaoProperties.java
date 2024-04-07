@@ -11,11 +11,12 @@ import org.springframework.stereotype.Component;
 @Setter
 @ConfigurationProperties(prefix = "spring.security.oauth2.kakao")
 public class KakaoProperties {
+    List<String> propertyKeys;
     private String redirectUri;
     private String tokenUri;
     private String userInfoUri;
     private String clientId;
     private String authorizationUri;
     private String grantType;
-    List<String> propertyKeys;
+    private String responseType;
 }

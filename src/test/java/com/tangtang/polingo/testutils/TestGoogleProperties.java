@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix = "spring.security.oauth2.google")
 @Getter
 @Setter
-public class TestGoogleProperties{
+public class TestGoogleProperties {
 
     public static final String GOOGLE_AUTH_CODE = "google_auth_code";
 

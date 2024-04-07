@@ -1,9 +1,16 @@
 package com.tangtang.polingo.integration;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.tangtang.polingo.testutils.MockServerSetUpUtils;
 import com.tangtang.polingo.testutils.TestGoogleProperties;
 import com.tangtang.polingo.testutils.TestKakaoProperties;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,15 +23,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -49,7 +47,7 @@ public class UserOAuth2IntegrationTest {
 
     @Test
     @DisplayName("사용자가 구글 로그인을 시도하면 구글 정보동의화면으로 리다이렉션 한다.")
-    public void testWhenGoogleLoginStartsThenRedirectToGoogleAgreementPage() throws Exception{
+    public void testWhenGoogleLoginStartsThenRedirectToGoogleAgreementPage() throws Exception {
         //given
 
         //when
@@ -75,7 +73,7 @@ public class UserOAuth2IntegrationTest {
 
     @Test
     @DisplayName("사용자는 구글에 정보동의를 완료하면 JWT 토큰을 발급받을 수 있다. 이 때, 사용자 정보가 없다면 DB에 저장된다.")
-    public void testWhenGoogleAuthThenReturnJWTAndSave() throws Exception{
+    public void testWhenGoogleAuthThenReturnJWTAndSave() throws Exception {
         //given
         mockServerSetUpUtils.setUpGoogleOAuth2MockServer();
         //when
@@ -91,13 +89,12 @@ public class UserOAuth2IntegrationTest {
         assertThat(validResult).isTrue();
         // TODO :DB에 저장되어 있는지 확인하는 검증 로직 추가 필요
 
-
         mockServerSetUpUtils.close();
     }
 
     @Test
     @DisplayName("사용자가 카카오 로그인을 시도하면 카카오 정보동의화면으로 리다이렉션 한다.")
-    public void testWhenKakaoLoginStartsThenRedirectToKakaoAgreementPage() throws Exception{
+    public void testWhenKakaoLoginStartsThenRedirectToKakaoAgreementPage() throws Exception {
         //given
 
         //when
@@ -121,7 +118,7 @@ public class UserOAuth2IntegrationTest {
 
     @Test
     @DisplayName("사용자는 카카오 정보동의를 완료하면 JWT 토큰을 발급받을 수 있다. 이 때, 사용자 정보가 없다면 DB에 저장된다.")
-    public void testWhenKakaoLoginThenReturnJWTAndSave() throws Exception{
+    public void testWhenKakaoLoginThenReturnJWTAndSave() throws Exception {
         //given
         mockServerSetUpUtils.setUpKakaoOAuth2MockServer();
         //when
@@ -137,15 +134,9 @@ public class UserOAuth2IntegrationTest {
         assertThat(validResult).isTrue();
         // TODO :DB에 저장되어 있는지 확인하는 검증 로직 추가 필요
 
-
         mockServerSetUpUtils.close();
 
     }
-
-
-
-
-
 
 
     private boolean validSocialLoginResult(String redirectedUrl) {
@@ -153,9 +144,7 @@ public class UserOAuth2IntegrationTest {
 
         Pattern compiledPattern = Pattern.compile(pattern);
 
-
         Matcher matcher = compiledPattern.matcher(redirectedUrl);
-
 
         boolean matches = matcher.matches();
         return matches;
@@ -163,16 +152,16 @@ public class UserOAuth2IntegrationTest {
 
 
     @TestConfiguration
-    public static class TestConfig{
+    public static class TestConfig {
 
         @Bean
-        public TestGoogleProperties testGoogleProperties(){
+        public TestGoogleProperties testGoogleProperties() {
             return new TestGoogleProperties();
         }
 
 
         @Bean
-        public TestKakaoProperties testKakaoProperties(){
+        public TestKakaoProperties testKakaoProperties() {
             return new TestKakaoProperties();
         }
 
@@ -181,7 +170,7 @@ public class UserOAuth2IntegrationTest {
                 TestGoogleProperties testGoogleProperties,
                 TestKakaoProperties testKakaoProperties
 
-        ){
+        ) {
             return new MockServerSetUpUtils(testGoogleProperties, testKakaoProperties);
         }
 

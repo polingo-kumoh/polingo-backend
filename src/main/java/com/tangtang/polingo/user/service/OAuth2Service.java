@@ -7,7 +7,9 @@ import org.springframework.http.ResponseEntity;
 public interface OAuth2Service {
     ResponseEntity<Void> redirectAuthorizeURI();
 
-    UserInfo handleCallback(String code);
+    String requestAccessToken(String code);
+
+    UserInfo requestUserInfo(String accessToken);
 
     LoginType getLoginType();
 }
