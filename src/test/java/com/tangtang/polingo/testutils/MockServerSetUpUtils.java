@@ -8,11 +8,11 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 
 import java.net.URLEncoder;
+import org.springframework.stereotype.Component;
 
 import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.*;
 import static org.mockserver.model.HttpResponse.*;
-
 
 public class MockServerSetUpUtils {
     private ClientAndServer mockServer;

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.tangtang.polingo.user.dto.KakaoResponse;
 import com.tangtang.polingo.user.dto.UserInfo;
 import com.tangtang.polingo.user.property.KakaoProperties;
+import java.util.List;
 import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,17 +39,17 @@ public class KakaoAuthClient {
     }
 
     public UserInfo requestUserInfo(String accessToken) {
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        httpHeaders.set("Authorization", "Bearer " + accessToken);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setBearerAuth(accessToken);
 
-        MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
-        body.add("property_keys", "[\"kakao_account.profile\"]");
+        MultiValueMap<String, List<String>> body = new LinkedMultiValueMap<>();
+        body.add("property_keys", kakaoProperties.getPropertyKeys());
 
-        HttpEntity<?> httpEntity = new HttpEntity<>(body, httpHeaders);
+        HttpEntity<?> httpEntity = new HttpEntity<>(body, headers);
 
         KakaoResponse response = restTemplate.postForObject(kakaoProperties.getUserInfoUri(), httpEntity,
                 KakaoResponse.class);
+
         return Objects.requireNonNull(response).toUserInfo();
     }
 }

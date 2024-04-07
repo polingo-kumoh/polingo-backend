@@ -31,8 +31,6 @@ import static org.assertj.core.api.Assertions.*;
 @Import(UserOAuth2IntegrationTest.TestConfig.class)
 @AutoConfigureMockMvc
 public class UserOAuth2IntegrationTest {
-
-
     @Autowired
     private MockMvc mockMvc;
 

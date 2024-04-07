@@ -1,5 +1,6 @@
 package com.tangtang.polingo.user.property;
 
+import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -16,4 +17,5 @@ public class KakaoProperties {
     private String clientId;
     private String authorizationUri;
     private String grantType;
+    List<String> propertyKeys;
 }
