@@ -1,0 +1,59 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:db;MODE=MYSQL
+    username: sa
+    password:
+
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
+  # 시큐리티(OAuth, Kakao) 관련 세팅
+  security:
+    oauth2:
+      kakao:
+        authorizationUri: http://localhost:1090/oauth/authorize
+        clientId: test-client-id
+        redirectUri: http://test-server:8080/api/login/kakao/callback
+        tokenUri: http://localhost:1090/oauth/token
+        userInfoUri: http://localhost:1090/v2/user/me
+        grantType: authorization_code
+
+        authServerHost: http://localhost:1090
+        authorizationEndpoint: /oauth/authorize
+        tokenEndpoint: /oauth/token
+        userInfoEndpoint: /v2/user/me
+
+
+      google:
+        authorizationUri: http://localhost:1080/o/oauth2/auth
+        clientId: test-client-id
+        clientSecret: test-client-secret
+        redirectUri: http://test-server:8080/api/login/google/callback
+        tokenUri: http://localhost:1080/token
+        userInfoUri: http://localhost:1080/oauth2/v2/userinfo
+        grantType: authorization_code
+        scope: http://localhost:1080/auth/userinfo.email http://localhost:1080/auth/userinfo.profile
+        responseType: code
+
+        authorizationEndpoint: /o/oauth2/auth
+        tokenEndpoint: /token
+        userInfoEndpoint: /oauth2/v2/userinfo
+
+
+  jwt:
+    secretKey: 1232124124123123123
+    expirationHours: 0
+    issuer: tester
+
+logging:
+  level:
+    org.hibernate.SQL: debug
+
+frontend-url: http://test-server:3000
