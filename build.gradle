@@ -47,6 +47,7 @@ dependencies {
     // Test 관련 세팅
     testImplementation 'com.h2database:h2:2.2.224'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.mock-server:mockserver-netty:5.15.0'
 
 }
 
