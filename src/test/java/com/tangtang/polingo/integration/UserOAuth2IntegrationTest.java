@@ -42,7 +42,6 @@ public class UserOAuth2IntegrationTest {
     private String frontendUrl;
 
 
-
     @Test
     @DisplayName("사용자는 구글 로그인을 수행해 JWT 토큰을 발급받을 수 있다. 이 때, 사용자 정보가 없다면 DB에 저장된다.")
     public void testWhenGoogleAuthThenReturnJWTToken() throws Exception{
@@ -59,6 +58,8 @@ public class UserOAuth2IntegrationTest {
         boolean validResult = validRedirectUrl(redirectedUrl);
 
         assertThat(validResult).isTrue();
+        // TODO :DB에 저장되어 있는지 확인하는 검증 로직 추가 필요
+
 
 
     }
