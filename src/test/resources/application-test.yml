@@ -18,14 +18,14 @@ spring:
   security:
     oauth2:
       kakao:
-        authorizationUri: http://test-kakao.auth.com/oauth/authorize
+        authorizationUri: http://localhost:1090/oauth/authorize
         clientId: test-client-id
         redirectUri: http://test-server:8080/api/login/kakao/callback
-        tokenUri: http://test-kakao.auth.com/oauth/token
-        userInfoUri: http://test-kakao.auth.com/v2/user/me
+        tokenUri: http://localhost:1090/oauth/token
+        userInfoUri: http://localhost:1090/v2/user/me
         grantType: authorization_code
 
-        authServerHost: http://test-kakao.auth.com
+        authServerHost: http://localhost:1090
         authorizationEndpoint: /oauth/authorize
         tokenEndpoint: /oauth/token
         userInfoEndpoint: /v2/user/me

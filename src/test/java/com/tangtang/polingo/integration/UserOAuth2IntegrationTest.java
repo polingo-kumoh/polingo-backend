@@ -3,6 +3,7 @@ package com.tangtang.polingo.integration;
 
 import com.tangtang.polingo.testutils.MockServerSetUpUtils;
 import com.tangtang.polingo.testutils.TestGoogleProperties;
+import com.tangtang.polingo.testutils.TestKakaoProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,6 +44,9 @@ public class UserOAuth2IntegrationTest {
 
     @Autowired
     private TestGoogleProperties googleProperties;
+
+    @Autowired
+    private TestKakaoProperties kakaoProperties;
 
 
     @Test
@@ -85,7 +88,7 @@ public class UserOAuth2IntegrationTest {
                 .andReturn();
         //then
         String redirectedUrl = mvcResult.getResponse().getRedirectedUrl();
-        boolean validResult = validRedirectUrl(redirectedUrl);
+        boolean validResult = validSocialLoginResult(redirectedUrl);
 
         assertThat(validResult).isTrue();
         // TODO :DB에 저장되어 있는지 확인하는 검증 로직 추가 필요
@@ -94,10 +97,38 @@ public class UserOAuth2IntegrationTest {
         mockServerSetUpUtils.close();
     }
 
+    @Test
+    @DisplayName("사용자가 카카오 로그인을 시도하면 페이스북 정보동의화면으로 리다이렉션 한다.")
+    public void testWhenKakaoLoginStartsThenRedirectToKakaoAgreementPage() throws Exception{
+        //given
+
+        //when
+        MvcResult mvcResult = mockMvc.perform(get("/api/login/kakao"))
+                .andExpect(status().is3xxRedirection())
+                .andDo(print())
+                .andReturn();
+
+        //then
+        String actualRedirectUrl = mvcResult.getResponse().getRedirectedUrl();
+        String expectedRedirectUrl = String.format("%s?client_id=%s&redirect_uri=%s&response_type=%s",
+                kakaoProperties.getAuthorizationUri(),
+                kakaoProperties.getClientId(),
+                kakaoProperties.getRedirectUri(),
+                kakaoProperties.getResponseType()
+        );
+
+        assertThat(actualRedirectUrl).isEqualTo(expectedRedirectUrl);
 
 
 
-    private boolean validRedirectUrl(String redirectedUrl) {
+    }
+
+
+
+
+
+
+    private boolean validSocialLoginResult(String redirectedUrl) {
         String pattern = String.format("^%s\\?token=.+", frontendUrl);
 
         Pattern compiledPattern = Pattern.compile(pattern);
