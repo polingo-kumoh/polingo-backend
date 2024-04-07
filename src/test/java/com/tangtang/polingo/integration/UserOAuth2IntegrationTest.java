@@ -76,8 +76,8 @@ public class UserOAuth2IntegrationTest {
 
 
     @Test
-    @DisplayName("사용자는 구글 로그인을 수행해 JWT 토큰을 발급받을 수 있다. 이 때, 사용자 정보가 없다면 DB에 저장된다.")
-    public void testWhenGoogleAuthThenReturnJWTToken() throws Exception{
+    @DisplayName("사용자는 구글에 정보동의를 완료하면 JWT 토큰을 발급받을 수 있다. 이 때, 사용자 정보가 없다면 DB에 저장된다.")
+    public void testWhenGoogleAuthThenReturnJWTAndSave() throws Exception{
         //given
         mockServerSetUpUtils.setUpGoogleOAuth2MockServer();
         //when
@@ -98,7 +98,7 @@ public class UserOAuth2IntegrationTest {
     }
 
     @Test
-    @DisplayName("사용자가 카카오 로그인을 시도하면 페이스북 정보동의화면으로 리다이렉션 한다.")
+    @DisplayName("사용자가 카카오 로그인을 시도하면 카카오 정보동의화면으로 리다이렉션 한다.")
     public void testWhenKakaoLoginStartsThenRedirectToKakaoAgreementPage() throws Exception{
         //given
 
@@ -119,9 +119,31 @@ public class UserOAuth2IntegrationTest {
 
         assertThat(actualRedirectUrl).isEqualTo(expectedRedirectUrl);
 
+    }
 
+    @Test
+    @DisplayName("사용자는 카카오 정보동의를 완료하면 JWT 토큰을 발급받을 수 있다. 이 때, 사용자 정보가 없다면 DB에 저장된다.")
+    public void testWhenKakaoLoginThenReturnJWTAndSave() throws Exception{
+        //given
+        mockServerSetUpUtils.setUpKakaoOAuth2MockServer();
+        //when
+        MvcResult mvcResult = mockMvc.perform(get("/api/login/kakao/callback")
+                        .param("code", TestKakaoProperties.KAKAO_AUTH_CODE))
+                .andExpect(status().is3xxRedirection())
+                .andDo(print())
+                .andReturn();
+        //then
+        String redirectedUrl = mvcResult.getResponse().getRedirectedUrl();
+        boolean validResult = validSocialLoginResult(redirectedUrl);
+
+        assertThat(validResult).isTrue();
+        // TODO :DB에 저장되어 있는지 확인하는 검증 로직 추가 필요
+
+
+        mockServerSetUpUtils.close();
 
     }
+
 
 
 
@@ -150,9 +172,19 @@ public class UserOAuth2IntegrationTest {
             return new TestGoogleProperties();
         }
 
+
         @Bean
-        public MockServerSetUpUtils mockServerSetUpUtils(TestGoogleProperties testGoogleProperties){
-            return new MockServerSetUpUtils(testGoogleProperties);
+        public TestKakaoProperties testKakaoProperties(){
+            return new TestKakaoProperties();
+        }
+
+        @Bean
+        public MockServerSetUpUtils mockServerSetUpUtils(
+                TestGoogleProperties testGoogleProperties,
+                TestKakaoProperties testKakaoProperties
+
+        ){
+            return new MockServerSetUpUtils(testGoogleProperties, testKakaoProperties);
         }
 
     }
