@@ -25,6 +25,12 @@ spring:
         userInfoUri: http://test-kakao.auth.com/v2/user/me
         grantType: authorization_code
 
+        authServerHost: http://test-kakao.auth.com
+        authorizationEndpoint: /oauth/authorize
+        tokenEndpoint: /oauth/token
+        userInfoEndpoint: /v2/user/me
+
+
       google:
         authorizationUri: http://test-google.auth.com/o/oauth2/auth
         clientId: test-client-id
@@ -35,6 +41,12 @@ spring:
         grantType: authorization_code
         scope: http://test-google.auth.com/auth/userinfo.email http://test-google.auth.com/auth/userinfo.profile
         responseType: code
+
+        authServerHost: http://test-google.auth.com
+        authorizationEndpoint: /o/oauth2/auth
+        tokenEndpoint: /token
+        userInfoEndpoint: /oauth2/v2/userinfo
+
 
   jwt:
     secretKey: 1232124124123123123

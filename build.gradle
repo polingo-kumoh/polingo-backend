@@ -48,6 +48,7 @@ dependencies {
     testImplementation 'com.h2database:h2:2.2.224'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mock-server:mockserver-netty:5.15.0'
+    testCompileOnly 'org.projectlombok:lombok'
 
 }
 
