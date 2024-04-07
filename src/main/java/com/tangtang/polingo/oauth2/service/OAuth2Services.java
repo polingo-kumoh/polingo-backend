@@ -1,4 +1,4 @@
-package com.tangtang.polingo.user.service;
+package com.tangtang.polingo.oauth2.service;
 
 import com.tangtang.polingo.global.constant.LoginType;
 import java.util.List;

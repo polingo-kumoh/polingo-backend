@@ -4,10 +4,9 @@ import com.p6spy.engine.logging.Category;
 import com.p6spy.engine.spy.P6SpyOptions;
 import com.p6spy.engine.spy.appender.MessageFormattingStrategy;
 import jakarta.annotation.PostConstruct;
+import java.util.Locale;
 import org.hibernate.engine.jdbc.internal.FormatStyle;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.Locale;
 
 @Configuration
 public class P6SpySqlFormatter implements MessageFormattingStrategy {
@@ -18,7 +17,8 @@ public class P6SpySqlFormatter implements MessageFormattingStrategy {
     }
 
     @Override
-    public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared, String sql, String url) {
+    public String formatMessage(int connectionId, String now, long elapsed, String category, String prepared,
+                                String sql, String url) {
         sql = formatSql(category, sql);
         return String.format("[%s] | %d ms | %s", category, elapsed, formatSql(category, sql));
     }

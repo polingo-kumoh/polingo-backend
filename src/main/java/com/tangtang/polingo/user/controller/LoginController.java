@@ -1,9 +1,10 @@
 package com.tangtang.polingo.user.controller;
 
 import com.tangtang.polingo.global.constant.LoginType;
-import com.tangtang.polingo.user.dto.UserInfo;
-import com.tangtang.polingo.user.service.OAuth2Service;
-import com.tangtang.polingo.user.service.OAuth2Services;
+import com.tangtang.polingo.oauth2.dto.UserInfo;
+import com.tangtang.polingo.oauth2.service.OAuth2Service;
+import com.tangtang.polingo.oauth2.service.OAuth2Services;
+import com.tangtang.polingo.user.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +22,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/login")
 @RequiredArgsConstructor
 public class LoginController {
+    private final UserService userService;
     private final OAuth2Services oAuth2Services;
     @Value("${frontend-url}")
     private String frontendUrl;
 
     @GetMapping("/{provider}")
     public ResponseEntity<Void> redirect(@PathVariable String provider) {
-        OAuth2Service authService = fetchOAuth2Service(provider);
+        LoginType loginType = LoginType.fromProvider(provider);
+        OAuth2Service authService = oAuth2Services.getAuthService(loginType);
 
         return authService.redirectAuthorizeURI();
     }
@@ -35,17 +38,15 @@ public class LoginController {
     @GetMapping("/{provider}/callback")
     public void callback(@PathVariable String provider, @RequestParam("code") String code, HttpServletResponse response)
             throws IOException {
-        OAuth2Service authService = fetchOAuth2Service(provider);
+        LoginType loginType = LoginType.fromProvider(provider);
+        OAuth2Service authService = oAuth2Services.getAuthService(loginType);
 
         String accessToken = authService.requestAccessToken(code);
         UserInfo userInfo = authService.requestUserInfo(accessToken);
         log.info("[{}] {} 로그인 성공", provider, userInfo.getName());
 
-        response.sendRedirect(frontendUrl);
-    }
+        String token = userService.login(loginType, userInfo);
 
-    private OAuth2Service fetchOAuth2Service(String provider) {
-        LoginType loginType = LoginType.fromProvider(provider);
-        return oAuth2Services.getAuthService(loginType);
+        response.sendRedirect(frontendUrl + "?token=" + token);
     }
 }

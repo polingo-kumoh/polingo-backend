@@ -1,4 +1,4 @@
-package com.tangtang.polingo.config;
+package com.tangtang.polingo.global.config;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Info;

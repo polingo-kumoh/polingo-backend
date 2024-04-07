@@ -1,4 +1,4 @@
-package com.tangtang.polingo.user.dto;
+package com.tangtang.polingo.oauth2.dto;
 
 import lombok.Builder;
 import lombok.Getter;

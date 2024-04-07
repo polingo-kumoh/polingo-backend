@@ -26,7 +26,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
+
     annotationProcessor 'org.projectlombok:lombok'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 
     //Swagger 세팅
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -43,6 +45,11 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     implementation 'io.jsonwebtoken:jjwt:0.9.1'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
+
+    //DatatypeConverter, JWT쓰려면 있어야 됨
+    implementation 'com.sun.xml.bind:jaxb-impl:4.0.2'
+    implementation 'com.sun.xml.bind:jaxb-core:4.0.2'
+    implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
 
     // Test 관련 세팅
     testImplementation 'com.h2database:h2:2.2.224'

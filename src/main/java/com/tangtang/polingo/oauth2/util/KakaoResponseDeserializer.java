@@ -1,10 +1,10 @@
-package com.tangtang.polingo.user.util;
+package com.tangtang.polingo.oauth2.util;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonDeserializer;
 import com.fasterxml.jackson.databind.JsonNode;
-import com.tangtang.polingo.user.dto.KakaoResponse;
+import com.tangtang.polingo.oauth2.dto.KakaoResponse;
 import java.io.IOException;
 
 public class KakaoResponseDeserializer extends JsonDeserializer<KakaoResponse> {

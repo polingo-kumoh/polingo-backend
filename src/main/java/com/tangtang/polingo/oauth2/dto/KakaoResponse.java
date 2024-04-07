@@ -1,7 +1,7 @@
-package com.tangtang.polingo.user.dto;
+package com.tangtang.polingo.oauth2.dto;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.tangtang.polingo.user.util.KakaoResponseDeserializer;
+import com.tangtang.polingo.oauth2.util.KakaoResponseDeserializer;
 import lombok.Builder;
 
 @Builder
