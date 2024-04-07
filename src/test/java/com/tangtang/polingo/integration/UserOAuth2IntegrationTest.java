@@ -16,6 +16,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.net.URLEncoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,6 +42,35 @@ public class UserOAuth2IntegrationTest {
     @Value("${frontend-url}")
     private String frontendUrl;
 
+    @Autowired
+    private TestGoogleProperties googleProperties;
+
+
+    @Test
+    @DisplayName("사용자가 구글 로그인을 시도하면 구글 정보동의화면으로 리다이렉션 한다.")
+    public void testWhenGoogleLoginStartsThenRedirectToGoogleAgreementPage() throws Exception{
+        //given
+
+        //when
+        MvcResult mvcResult = mockMvc.perform(get("/api/login/google"))
+                .andExpect(status().is3xxRedirection())
+                .andDo(print())
+                .andReturn();
+
+        //then
+        String actualRedirectUrl = mvcResult.getResponse().getRedirectedUrl();
+        String expectedRedirectUrl = String.format("%s?client_id=%s&redirect_uri=%s&response_type=%s&scope=%s",
+                googleProperties.getAuthorizationUri(),
+                googleProperties.getClientId(),
+                googleProperties.getRedirectUri(),
+                googleProperties.getResponseType(),
+                googleProperties.getScope().replace(" ", "%20")
+        );
+
+        assertThat(actualRedirectUrl).isEqualTo(expectedRedirectUrl);
+
+    }
+
 
     @Test
     @DisplayName("사용자는 구글 로그인을 수행해 JWT 토큰을 발급받을 수 있다. 이 때, 사용자 정보가 없다면 DB에 저장된다.")
@@ -61,8 +91,11 @@ public class UserOAuth2IntegrationTest {
         // TODO :DB에 저장되어 있는지 확인하는 검증 로직 추가 필요
 
 
-
+        mockServerSetUpUtils.close();
     }
+
+
+
 
     private boolean validRedirectUrl(String redirectedUrl) {
         String pattern = String.format("^%s\\?token=.+", frontendUrl);

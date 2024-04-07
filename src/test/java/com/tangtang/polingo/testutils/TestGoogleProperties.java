@@ -18,6 +18,8 @@ public class TestGoogleProperties{
 
     public static final String GOOGLE_REFRESH_TOKEN = "google_refresh_token";
 
+    private String authorizationUri;
+
     private String authorizationEndpoint;
 
     private String tokenEndpoint;
