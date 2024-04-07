@@ -14,7 +14,9 @@ public class TestGoogleProperties{
 
     public static final String GOOGLE_AUTH_CODE = "google_auth_code";
 
-    private String authServerHost;
+    public static final String GOOGLE_ACCESS_TOKEN = "google_access_token";
+
+    public static final String GOOGLE_REFRESH_TOKEN = "google_refresh_token";
 
     private String authorizationEndpoint;
 
@@ -24,11 +26,14 @@ public class TestGoogleProperties{
 
     private String clientId;
 
+    private String clientSecret;
+
     private String redirectUri;
 
     private String responseType;
 
     private String scope;
 
+    private String grantType;
 
 }

@@ -49,7 +49,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.mock-server:mockserver-netty:5.15.0'
     testCompileOnly 'org.projectlombok:lombok'
-
+    testAnnotationProcessor 'org.projectlombok:lombok'
 }
 
 tasks.named('test') {

@@ -32,17 +32,16 @@ spring:
 
 
       google:
-        authorizationUri: http://test-google.auth.com/o/oauth2/auth
+        authorizationUri: http://localhost:1080/o/oauth2/auth
         clientId: test-client-id
         clientSecret: test-client-secret
         redirectUri: http://test-server:8080/api/login/google/callback
-        tokenUri: http://test-google.auth.com/token
-        userInfoUri: http://test-google.auth.com/oauth2/v2/userinfo
+        tokenUri: http://localhost:1080/token
+        userInfoUri: http://localhost:1080/oauth2/v2/userinfo
         grantType: authorization_code
-        scope: http://test-google.auth.com/auth/userinfo.email http://test-google.auth.com/auth/userinfo.profile
+        scope: http://localhost:1080/auth/userinfo.email http://localhost:1080/auth/userinfo.profile
         responseType: code
 
-        authServerHost: http://test-google.auth.com
         authorizationEndpoint: /o/oauth2/auth
         tokenEndpoint: /token
         userInfoEndpoint: /oauth2/v2/userinfo
