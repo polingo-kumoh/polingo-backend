@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 공통 설정 파일 include
-source ./config.sh
+source /home/ubuntu/polingo/scripts/config.sh
 
 # 로그 디렉토리 생성 (존재하지 않는 경우)
 mkdir -p $LOG_DIR
