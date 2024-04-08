@@ -78,3 +78,7 @@ tasks.register('copyProperty', Copy) {
 processResources {
     dependsOn copyProperty
 }
+
+jar {
+    enabled = false
+}
