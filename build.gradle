@@ -67,7 +67,7 @@ tasks.named('test') {
 }
 
 bootJar {
-    archiveFileName = 'polingo-applicaion.jar'
+    archiveFileName = 'polingo-application.jar'
 }
 
 tasks.register('copyProperty', Copy) {
