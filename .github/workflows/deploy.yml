@@ -26,9 +26,11 @@ jobs:
     environment: production
 
     steps:
-    # (1) 기본 체크아웃
+    # (1) 기본 체크아웃, submodule도 가져옴
     - name: Checkout
       uses: actions/checkout@v3
+      with:
+        submodules: 'true'
 
     # (2) JDK 17 세팅
     - name: Set up JDK 17
