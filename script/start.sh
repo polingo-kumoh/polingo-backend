@@ -6,6 +6,10 @@ source ./config.sh
 # 로그 디렉토리 생성 (존재하지 않는 경우)
 mkdir -p $LOG_DIR
 
+# 로그 파일에 대한 모든 권한 부여 (읽기, 쓰기, 실행)
+touch $LOG_FILE # 로그 파일이 존재하지 않으면 생성
+chmod 777 $LOG_FILE
+
 # 스프링부트 애플리케이션 실행
 nohup java -jar $APP_NAME > $LOG_FILE 2>&1 &
 
