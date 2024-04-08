@@ -10,7 +10,7 @@ mkdir -p $LOG_DIR
 nohup java -jar $APP_NAME > $LOG_FILE 2>&1 &
 
 # 애플리케이션이 시작될 때까지 기다리는 시간(초)
-WAIT_TIME=30
+WAIT_TIME=60
 # 현재 시간 + WAIT_TIME 계산
 END_TIME=$((SECONDS+WAIT_TIME))
 
