@@ -14,7 +14,7 @@ permissions:
 
 hooks:
   BeforeInstall:
-    - location: scripts/beforeInstall.sh.sh
+    - location: scripts/beforeInstall.sh
       timeout: 60
       runas: ubuntu
   AfterInstall:
