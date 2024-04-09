@@ -1,5 +1,6 @@
 package com.tangtang.polingo.user.service;
 
+import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.user.dto.UserResponse;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.user.repository.UserRepository;
@@ -22,9 +23,16 @@ public class UserService {
         return ResponseEntity.ok(userResponse);
     }
 
+
     public void updateNickname(User user, String updateName) {
         validateNickname(updateName);
         user.updateNIckName(updateName);
+        userRepository.save(user);
+    }
+
+    public void updateLanguage(User user, String languageCode) {
+        Language newLanguage = Language.fromCode(languageCode);
+        user.updateLanguage(newLanguage);
         userRepository.save(user);
     }
 

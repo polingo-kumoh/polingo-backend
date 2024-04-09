@@ -1,4 +1,4 @@
-package com.tangtang.polingo.global.constant;
+package com.tangtang.polingo.user.constant;
 
 import lombok.Getter;
 

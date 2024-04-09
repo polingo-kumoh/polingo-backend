@@ -1,6 +1,6 @@
 package com.tangtang.polingo.security.service;
 
-import com.tangtang.polingo.global.exception.JwtAuthenticationException;
+import com.tangtang.polingo.security.exception.JwtAuthenticationException;
 import com.tangtang.polingo.security.wrapper.UserWrapper;
 import com.tangtang.polingo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

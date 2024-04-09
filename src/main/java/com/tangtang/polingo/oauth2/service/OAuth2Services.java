@@ -1,6 +1,6 @@
 package com.tangtang.polingo.oauth2.service;
 
-import com.tangtang.polingo.global.constant.LoginType;
+import com.tangtang.polingo.user.constant.LoginType;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;

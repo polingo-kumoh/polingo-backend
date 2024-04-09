@@ -1,12 +1,12 @@
 package com.tangtang.polingo.user.service;
 
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.global.constant.LoginType;
-import com.tangtang.polingo.global.constant.UserRole;
 import com.tangtang.polingo.oauth2.dto.UserInfo;
 import com.tangtang.polingo.oauth2.service.OAuth2Service;
 import com.tangtang.polingo.oauth2.service.OAuth2Services;
 import com.tangtang.polingo.security.service.JwtService;
+import com.tangtang.polingo.user.constant.LoginType;
+import com.tangtang.polingo.user.constant.UserRole;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

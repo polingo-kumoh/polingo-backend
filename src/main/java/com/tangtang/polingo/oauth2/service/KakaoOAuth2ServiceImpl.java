@@ -1,10 +1,10 @@
 package com.tangtang.polingo.oauth2.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.tangtang.polingo.global.constant.LoginType;
 import com.tangtang.polingo.oauth2.dto.KakaoResponse;
 import com.tangtang.polingo.oauth2.dto.UserInfo;
 import com.tangtang.polingo.oauth2.property.KakaoProperties;
+import com.tangtang.polingo.user.constant.LoginType;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;

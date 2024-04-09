@@ -3,7 +3,7 @@ package com.tangtang.polingo.security.util;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.tangtang.polingo.global.dto.ErrorResponse;
+import com.tangtang.polingo.global.dto.CommonResponse;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import org.springframework.http.HttpStatus;
@@ -15,7 +15,7 @@ public class JwtErrorResponseWriter {
         response.setCharacterEncoding("UTF-8");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 
-        ErrorResponse errorResponse = new ErrorResponse("JWT 에러 발생!!", message);
+        CommonResponse errorResponse = new CommonResponse(HttpStatus.UNAUTHORIZED.value(), message);
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);

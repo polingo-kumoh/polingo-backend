@@ -1,6 +1,6 @@
 package com.tangtang.polingo.security.filter;
 
-import com.tangtang.polingo.global.exception.JwtAuthenticationException;
+import com.tangtang.polingo.security.exception.JwtAuthenticationException;
 import com.tangtang.polingo.security.service.CustomUserDetailsService;
 import com.tangtang.polingo.security.service.JwtService;
 import com.tangtang.polingo.security.util.JwtErrorResponseWriter;

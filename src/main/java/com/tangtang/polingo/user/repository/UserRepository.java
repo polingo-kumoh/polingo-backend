@@ -1,6 +1,6 @@
 package com.tangtang.polingo.user.repository;
 
-import com.tangtang.polingo.global.constant.LoginType;
+import com.tangtang.polingo.user.constant.LoginType;
 import com.tangtang.polingo.user.entity.User;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
