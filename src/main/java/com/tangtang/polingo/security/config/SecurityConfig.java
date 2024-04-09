@@ -28,16 +28,11 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests((Requests) -> {
                     Requests.requestMatchers(
-                            "/api/v1/auth/logout",
-                            "/api/v1/auth/delete",
-                            "/api/v1/history/**",
-                            "/api/v1/tasks/**",
-                            "/api/v1/settings/**",
-                            "/api/v1/member/**"
+                            "/api/user/**"
                     ).authenticated();
-
                     Requests.anyRequest().permitAll();
                 })
+
                 .sessionManagement(sessionManagement ->
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
