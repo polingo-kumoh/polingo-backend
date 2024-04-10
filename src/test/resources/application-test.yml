@@ -49,7 +49,7 @@ spring:
 
   jwt:
     secretKey: 1232124124123123123
-    expirationHours: 0
+    expirationHours: 1
     issuer: tester
 
   cors:
@@ -70,3 +70,9 @@ logging:
     org.hibernate.SQL: debug
 
 frontend-url: http://test-server:3000
+
+server:
+  servlet:
+    encoding:
+      force-response: true
+      charset: UTF-8

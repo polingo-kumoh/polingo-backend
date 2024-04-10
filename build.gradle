@@ -82,3 +82,9 @@ processResources {
 jar {
     enabled = false
 }
+
+
+test {
+    // 테스트 JVM 인코딩 설정
+    systemProperty 'file.encoding', 'UTF-8'
+}
