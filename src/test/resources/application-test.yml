@@ -52,6 +52,19 @@ spring:
     expirationHours: 0
     issuer: tester
 
+  cors:
+    allowed-origins:
+      - "http://localhost:3000"
+    allowed-methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+    allowed-headers:
+      - Authorization
+      - Content-Type
+      - Accept
+
 logging:
   level:
     org.hibernate.SQL: debug

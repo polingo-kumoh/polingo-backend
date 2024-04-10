@@ -18,7 +18,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "users")
 @Builder
 @Getter
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
