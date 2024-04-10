@@ -18,7 +18,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 
@@ -67,10 +66,8 @@ public class MyPageIntegrationTest {
                 .containsExactly(1L, "홍길동", Language.ENGLISH);
     }
 
-
-
     @Test
-    @DisplayName("인증이 완료된 사용자는 자신의 기본 언어를 변경해 DB에 변경된 기본 언어를 반영할 수 있다.")
+    @DisplayName("인증이 완료된 사용자는 자신의 기본 언어를 변경해 DB에 반영할 수 있다.")
     public void testGivenAccessTokenWhenChangeDefaultLanguageThenSuccess() throws Exception{
         //given
         String jwtToken = createToken();
@@ -87,6 +84,27 @@ public class MyPageIntegrationTest {
 
         assertThat(user.getLanguage()).isEqualTo(Language.JAPAN);
     }
+
+    @Test
+    @DisplayName("인증이 완료된 유저는 자신의 닉네임을 변경해 DB에 반영할 수 있다.")
+    public void testGivenAccessTokenWhenChangeNickNameThenSuccess() throws Exception{
+        //given
+        String jwtToken = createToken();
+        //when
+        mockMvc.perform(put("/api/user/nickname")
+                        .header("Authorization", "Bearer " + jwtToken)
+                        .param("name", "변경된닉네임")
+                        .characterEncoding("UTF-8"))
+                .andDo(print())
+                .andExpect(status().isOk());
+        //then
+        User user = getUser();
+
+        assertThat(user.getNickname()).isEqualTo("변경된닉네임");
+
+    }
+
+
 
     private String createToken() {
         User user = getUser();
