@@ -51,10 +51,7 @@ public class MyPageIntegrationTest {
     @DisplayName("인증이 완료된 유저는 자신의 정보를 조회할 수 있다.")
     public void testGivenJwtTokenWhenGetMyInfoThenReturnInfo() throws Exception{
         //given
-        User user = userRepository.findByLoginTypeAndProviderId(LoginType.GOOGLE, "123456789")
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
-
-        String jwtToken = jwtService.createToken(user);
+        String jwtToken = createToken();
 
         //when
         MvcResult mvcResult = mockMvc.perform(get("/api/user")
@@ -71,4 +68,25 @@ public class MyPageIntegrationTest {
     }
 
 
+
+    @Test
+    @DisplayName("인증이 완료된 사용자는 자신의 기본 언어를 변경할 수 있다.")
+    public void testGivenAccessTokenWhenChangeDefaultLanguageThenSuccess() throws Exception{
+        //given
+
+        //when
+
+        //then
+
+    }
+
+    private String createToken() {
+        User user = userRepository.findByLoginTypeAndProviderId(LoginType.GOOGLE, "123456789")
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+
+        return jwtService.createToken(user);
+    }
+
+
 }
+
