@@ -1,7 +1,9 @@
 package com.tangtang.polingo.integration;
 
 
+import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -102,9 +104,19 @@ public class UserOAuth2IntegrationTest {
         User actualUser = userRepository.findByLoginTypeAndProviderId(LoginType.GOOGLE, "1234567890")
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        assertThat(actualUser)
-                .extracting("nickname", "language", "role", "loginType", "providerId")
-                .contains("gildong hong", Language.ENGLISH, UserRole.COMMON, LoginType.GOOGLE, "1234567890");
+
+        assertAll("사용자의 정보가 모두 저장되고, 디폴트 단어장이 각 언어마다 한 개씩 저장되어야 한다.",
+                ()->assertThat(actualUser)
+                        .extracting("nickname", "language", "role", "loginType", "providerId")
+                        .contains("gildong hong", Language.ENGLISH, UserRole.COMMON, LoginType.GOOGLE, "1234567890"),
+                ()->assertThat(actualUser.getWordSets()).extracting("name", "language", "isDefault")
+                        .contains(
+                                tuple("내 영어 단어장", Language.ENGLISH, true),
+                                tuple("내 일본어 단어장", Language.JAPAN, true)
+                        )
+        );
+
+
 
 
         mockServerSetUpUtils.close();
@@ -154,9 +166,17 @@ public class UserOAuth2IntegrationTest {
         User actualUser = userRepository.findByLoginTypeAndProviderId(LoginType.KAKAO, "123456789")
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        assertThat(actualUser)
-                .extracting("nickname", "language", "role", "loginType", "providerId")
-                .contains("홍길동", Language.ENGLISH, UserRole.COMMON, LoginType.KAKAO, "123456789");
+        assertAll("사용자의 정보가 모두 저장되고, 디폴트 단어장이 각 언어마다 한 개씩 저장되어야 한다.",
+                ()->assertThat(actualUser)
+                        .extracting("nickname", "language", "role", "loginType", "providerId")
+                        .contains("홍길동", Language.ENGLISH, UserRole.COMMON, LoginType.KAKAO, "123456789"),
+                ()->assertThat(actualUser.getWordSets()).extracting("name", "language", "isDefault")
+                        .contains(
+                                tuple("내 영어 단어장", Language.ENGLISH, true),
+                                tuple("내 일본어 단어장", Language.JAPAN, true)
+                        ));
+
+
 
 
         mockServerSetUpUtils.close();
