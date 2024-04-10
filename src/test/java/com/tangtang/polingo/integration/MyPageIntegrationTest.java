@@ -70,21 +70,34 @@ public class MyPageIntegrationTest {
 
 
     @Test
-    @DisplayName("인증이 완료된 사용자는 자신의 기본 언어를 변경할 수 있다.")
+    @DisplayName("인증이 완료된 사용자는 자신의 기본 언어를 변경해 DB에 변경된 기본 언어를 반영할 수 있다.")
     public void testGivenAccessTokenWhenChangeDefaultLanguageThenSuccess() throws Exception{
         //given
+        String jwtToken = createToken();
 
         //when
-
+        mockMvc.perform(put("/api/user/language")
+                        .header("Authorization", "Bearer " + jwtToken)
+                        .param("languageCode", "jp")
+                        .characterEncoding("UTF-8"))
+                .andDo(print())
+                .andExpect(status().isOk());
         //then
+        User user = getUser();
 
+        assertThat(user.getLanguage()).isEqualTo(Language.JAPAN);
     }
 
     private String createToken() {
-        User user = userRepository.findByLoginTypeAndProviderId(LoginType.GOOGLE, "123456789")
-                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+        User user = getUser();
 
         return jwtService.createToken(user);
+    }
+
+    private User getUser() {
+        User user = userRepository.findByLoginTypeAndProviderId(LoginType.GOOGLE, "123456789")
+                .orElseThrow(() -> new IllegalArgumentException("해당 유저가 존재하지 않습니다."));
+        return user;
     }
 
 
