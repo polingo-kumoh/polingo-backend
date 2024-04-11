@@ -44,9 +44,42 @@ public class TranslateController {
     }
 
 
-    // 이미지 파일인지 확인하는 메서드
+    @PostMapping("/voice")
+    @Operation(summary = "음성 번역 API", description = "음성을 번역합니다.")
+    public TranslateResponse translateVoice(
+            @RequestParam Language sourceLanguage,
+            @RequestParam("file") MultipartFile voice
+    ) {
+        if (!isVoiceFile(voice)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "음성 파일만 업로드 가능합니다.");
+        }
+
+        return TranslateResponse.builder().originalText("Hello").translatedText("안녕하세요.").build();
+    }
+
+
+
+
+    /**
+     * @author minseok kim
+     * @description 이미지 파일인지 확인하는 메서드
+     * @param file 파일
+     * @return 이미지 파일 여부
+    */
     private boolean isImageFile(MultipartFile file) {
         String contentType = file.getContentType();
         return contentType != null && contentType.startsWith("image/");
     }
+
+    /**
+     * @author minseok kim
+     * @description 음성 파일인지 확인하는 메서드
+     * @param file 파일
+     * @return 음성 파일 여부
+     */
+    private boolean isVoiceFile(MultipartFile file) {
+        String contentType = file.getContentType();
+        return contentType != null && contentType.startsWith("audio/");
+    }
+
 }
