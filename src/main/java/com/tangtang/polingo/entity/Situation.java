@@ -8,8 +8,8 @@ import java.util.List;
 
 @Entity
 public class Situation extends BaseEntity {
-    private String category; // 상황을 나타내는 카테고리 (예: "식당", "공항")
+    private String category; // 상위 카테고리 (예: "식당", "공항")
 
     @OneToMany(mappedBy = "situation")
-    private List<SituationSentence> sentences = new ArrayList<>();
+    private List<DetailedSituation> detailedSituations = new ArrayList<>();
 }

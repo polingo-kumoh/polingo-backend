@@ -11,6 +11,6 @@ public class SituationSentence extends BaseEntity {
     private String translation; // 예문의 번역
 
     @ManyToOne
-    @JoinColumn(name = "situation_id")
-    private Situation situation; // 이 예문이 속한 상황(카테고리)
+    @JoinColumn(name = "detailed_situation_id")
+    private DetailedSituation detailedSituation; // 이 예문이 속한 세부 상황
 }
