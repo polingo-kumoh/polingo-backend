@@ -49,11 +49,30 @@ spring:
 
   jwt:
     secretKey: 1232124124123123123
-    expirationHours: 0
+    expirationHours: 1
     issuer: tester
+
+  cors:
+    allowed-origins:
+      - "http://localhost:3000"
+    allowed-methods:
+      - GET
+      - POST
+      - PUT
+      - DELETE
+    allowed-headers:
+      - Authorization
+      - Content-Type
+      - Accept
 
 logging:
   level:
     org.hibernate.SQL: debug
 
 frontend-url: http://test-server:3000
+
+server:
+  servlet:
+    encoding:
+      force-response: true
+      charset: UTF-8
