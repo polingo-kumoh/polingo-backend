@@ -38,7 +38,7 @@ public class User extends BaseEntity {
     //OAuth2제공자로부터 넘어오는 ID값
     private String providerId;
 
-    @OneToMany(mappedBy = "users", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WordSet> wordSets = new ArrayList<>();
 
     public void updateNIckName(String name) {
