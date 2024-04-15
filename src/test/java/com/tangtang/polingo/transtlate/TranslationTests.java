@@ -14,7 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest
 @ContextConfiguration(classes = TranslatorConfig.class)
-public class TranslatorTests {
+public class TranslationTests {
     @Autowired
     private TranslatorConfig translatorConfig;
     private Translator translator;
