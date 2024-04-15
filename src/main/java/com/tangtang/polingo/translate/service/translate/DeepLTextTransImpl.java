@@ -1,4 +1,4 @@
-package com.tangtang.polingo.translate.service;
+package com.tangtang.polingo.translate.service.translate;
 
 import com.deepl.api.DeepLException;
 import com.deepl.api.TextResult;
@@ -9,15 +9,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class DeepLTranslationImpl implements Translation {
-    private static final String TARGET = Language.KOREA.getCode();
+public class DeepLTextTransImpl implements TextTranslator {
+    private static final String TARGET = Language.KOREAN.getTextCode();
     private final Translator translator;
 
     @Override
-    public String translate(String text, String type) {
+    public String translate(String text, Language type) {
         TextResult result;
         try {
-            result = translator.translateText(text, type, TARGET);
+            result = translator.translateText(text, type.getTextCode(), TARGET);
         } catch (DeepLException | InterruptedException e) {
             throw new RuntimeException(e);
         }

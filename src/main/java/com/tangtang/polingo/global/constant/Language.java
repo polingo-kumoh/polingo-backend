@@ -6,13 +6,16 @@ import lombok.RequiredArgsConstructor;
 @Getter
 @RequiredArgsConstructor
 public enum Language {
-    ENGLISH("en"), JAPAN("ja"), KOREA("ko");
+    ENGLISH("en", "en-US"),
+    JAPANESE("ja", "ja-JP"),
+    KOREAN("ko", "ko-KR");
 
-    private final String code;
+    private final String textCode;
+    private final String sttCode;
 
     public static Language fromCode(String code) {
-        for (Language language : Language.values()) {
-            if (language.getCode().equalsIgnoreCase(code)) {
+        for (Language language : values()) {
+            if (language.getTextCode().equalsIgnoreCase(code)) {
                 return language;
             }
         }

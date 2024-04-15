@@ -2,6 +2,7 @@ package com.tangtang.polingo.translate.controller;
 
 
 import com.tangtang.polingo.global.constant.Language;
+import com.tangtang.polingo.translate.dto.AudioTranslateRequest;
 import com.tangtang.polingo.translate.dto.PlainTextTranslateRequest;
 import com.tangtang.polingo.translate.dto.TranslateResponse;
 import com.tangtang.polingo.translate.service.TranslateService;
@@ -34,6 +35,13 @@ public class TranslateController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping("/voice")
+    @Operation(summary = "음성 번역 API", description = "음성을 번역합니다.")
+    public ResponseEntity<TranslateResponse> translateVoice(@RequestBody AudioTranslateRequest request) {
+        TranslateResponse result = translateService.translateAudio(request);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("/image")
     @Operation(summary = "이미지 번역 API", description = "이미지를 번역합니다.")
     public TranslateResponse translateImage(
@@ -42,20 +50,6 @@ public class TranslateController {
     ) {
         if (!isImageFile(image)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미지 파일만 업로드 가능합니다.");
-        }
-
-        return TranslateResponse.builder().originalText("Hello").translatedText("안녕하세요.").build();
-    }
-
-
-    @PostMapping("/voice")
-    @Operation(summary = "음성 번역 API", description = "음성을 번역합니다.")
-    public TranslateResponse translateVoice(
-            @RequestParam Language type,
-            @RequestParam("file") MultipartFile voice
-    ) {
-        if (!isVoiceFile(voice)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "음성 파일만 업로드 가능합니다.");
         }
 
         return TranslateResponse.builder().originalText("Hello").translatedText("안녕하세요.").build();
@@ -83,5 +77,4 @@ public class TranslateController {
         String contentType = file.getContentType();
         return contentType != null && contentType.startsWith("audio/");
     }
-
 }

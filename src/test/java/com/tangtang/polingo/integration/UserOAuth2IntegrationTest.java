@@ -110,7 +110,7 @@ public class UserOAuth2IntegrationTest {
                 () -> assertThat(actualUser.getWordSets()).extracting("name", "language", "isDefault")
                         .contains(
                                 tuple("내 영어 단어장", Language.ENGLISH, true),
-                                tuple("내 일본어 단어장", Language.JAPAN, true)
+                                tuple("내 일본어 단어장", Language.JAPANESE, true)
                         )
         );
 
@@ -168,7 +168,7 @@ public class UserOAuth2IntegrationTest {
                 () -> assertThat(actualUser.getWordSets()).extracting("name", "language", "isDefault")
                         .contains(
                                 tuple("내 영어 단어장", Language.ENGLISH, true),
-                                tuple("내 일본어 단어장", Language.JAPAN, true)
+                                tuple("내 일본어 단어장", Language.JAPANESE, true)
                         ));
 
         mockServerSetUpUtils.close();
