@@ -1,7 +1,6 @@
 package com.tangtang.polingo.translate.service;
 
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.translate.dto.AudioTranslateRequest;
 import com.tangtang.polingo.translate.dto.PlainTextTranslateRequest;
 import com.tangtang.polingo.translate.dto.TranslateResponse;
 import com.tangtang.polingo.translate.service.stt.SpeachToText;
@@ -28,11 +27,8 @@ public class TranslateService {
                 .build();
     }
 
-    public TranslateResponse translateAudio(AudioTranslateRequest request) {
-        MultipartFile file = request.voice();
-        Language language = request.sourceType();
-
-        String originalText = speachToText.convert(file, language);
+    public TranslateResponse translateAudio(MultipartFile voice, Language language) {
+        String originalText = speachToText.convert(voice, language);
         String translatedText = textTranslator.translate(originalText, language);
 
         return TranslateResponse.builder()

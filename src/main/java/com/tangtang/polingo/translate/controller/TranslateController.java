@@ -2,7 +2,6 @@ package com.tangtang.polingo.translate.controller;
 
 
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.translate.dto.AudioTranslateRequest;
 import com.tangtang.polingo.translate.dto.PlainTextTranslateRequest;
 import com.tangtang.polingo.translate.dto.TranslateResponse;
 import com.tangtang.polingo.translate.service.TranslateService;
@@ -11,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,10 +35,11 @@ public class TranslateController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/voice")
+    @PostMapping(value = "/voice", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "음성 번역 API", description = "음성을 번역합니다.")
-    public ResponseEntity<TranslateResponse> translateVoice(@RequestBody AudioTranslateRequest request) {
-        TranslateResponse result = translateService.translateAudio(request);
+    public ResponseEntity<TranslateResponse> translateVoice(@RequestParam("voice") MultipartFile voice,
+                                                                        @RequestParam("language") Language language) {
+        TranslateResponse result = translateService.translateAudio(voice, language);
         return ResponseEntity.ok(result);
     }
 
