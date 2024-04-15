@@ -1,11 +1,16 @@
 package com.tangtang.polingo.integration;
 
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.security.service.JwtService;
 import com.tangtang.polingo.user.constant.LoginType;
-import com.tangtang.polingo.user.constant.UserRole;
 import com.tangtang.polingo.user.dto.UserResponse;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.user.repository.UserRepository;
@@ -19,12 +24,6 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import static org.assertj.core.api.Assertions.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc
 @Transactional
@@ -48,7 +47,7 @@ public class MyPageIntegrationTest {
 
     @Test
     @DisplayName("인증이 완료된 유저는 자신의 정보를 조회할 수 있다.")
-    public void testGivenJwtTokenWhenGetMyInfoThenReturnInfo() throws Exception{
+    public void testGivenJwtTokenWhenGetMyInfoThenReturnInfo() throws Exception {
         //given
         String jwtToken = createToken();
 
@@ -68,7 +67,7 @@ public class MyPageIntegrationTest {
 
     @Test
     @DisplayName("인증이 완료된 사용자는 자신의 기본 언어를 변경해 DB에 반영할 수 있다.")
-    public void testGivenAccessTokenWhenChangeDefaultLanguageThenSuccess() throws Exception{
+    public void testGivenAccessTokenWhenChangeDefaultLanguageThenSuccess() throws Exception {
         //given
         String jwtToken = createToken();
 
@@ -87,7 +86,7 @@ public class MyPageIntegrationTest {
 
     @Test
     @DisplayName("인증이 완료된 유저는 자신의 닉네임을 변경해 DB에 반영할 수 있다.")
-    public void testGivenAccessTokenWhenChangeNickNameThenSuccess() throws Exception{
+    public void testGivenAccessTokenWhenChangeNickNameThenSuccess() throws Exception {
         //given
         String jwtToken = createToken();
         //when
@@ -103,7 +102,6 @@ public class MyPageIntegrationTest {
         assertThat(user.getNickname()).isEqualTo("변경된닉네임");
 
     }
-
 
 
     private String createToken() {

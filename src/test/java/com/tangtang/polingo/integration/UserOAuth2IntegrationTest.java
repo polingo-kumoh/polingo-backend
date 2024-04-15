@@ -1,8 +1,8 @@
 package com.tangtang.polingo.integration;
 
 
-import static org.assertj.core.api.Assertions.*;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.tuple;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -12,13 +12,12 @@ import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.testutils.MockServerSetUpUtils;
 import com.tangtang.polingo.testutils.TestGoogleProperties;
 import com.tangtang.polingo.testutils.TestKakaoProperties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.tangtang.polingo.user.constant.LoginType;
 import com.tangtang.polingo.user.constant.UserRole;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.user.repository.UserRepository;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,20 +103,16 @@ public class UserOAuth2IntegrationTest {
         User actualUser = userRepository.findByLoginTypeAndProviderId(LoginType.GOOGLE, "1234567890")
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-
         assertAll("사용자의 정보가 모두 저장되고, 디폴트 단어장이 각 언어마다 한 개씩 저장되어야 한다.",
-                ()->assertThat(actualUser)
+                () -> assertThat(actualUser)
                         .extracting("nickname", "language", "role", "loginType", "providerId")
                         .contains("gildong hong", Language.ENGLISH, UserRole.COMMON, LoginType.GOOGLE, "1234567890"),
-                ()->assertThat(actualUser.getWordSets()).extracting("name", "language", "isDefault")
+                () -> assertThat(actualUser.getWordSets()).extracting("name", "language", "isDefault")
                         .contains(
                                 tuple("내 영어 단어장", Language.ENGLISH, true),
                                 tuple("내 일본어 단어장", Language.JAPAN, true)
                         )
         );
-
-
-
 
         mockServerSetUpUtils.close();
     }
@@ -167,17 +162,14 @@ public class UserOAuth2IntegrationTest {
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         assertAll("사용자의 정보가 모두 저장되고, 디폴트 단어장이 각 언어마다 한 개씩 저장되어야 한다.",
-                ()->assertThat(actualUser)
+                () -> assertThat(actualUser)
                         .extracting("nickname", "language", "role", "loginType", "providerId")
                         .contains("홍길동", Language.ENGLISH, UserRole.COMMON, LoginType.KAKAO, "123456789"),
-                ()->assertThat(actualUser.getWordSets()).extracting("name", "language", "isDefault")
+                () -> assertThat(actualUser.getWordSets()).extracting("name", "language", "isDefault")
                         .contains(
                                 tuple("내 영어 단어장", Language.ENGLISH, true),
                                 tuple("내 일본어 단어장", Language.JAPAN, true)
                         ));
-
-
-
 
         mockServerSetUpUtils.close();
 
