@@ -26,7 +26,6 @@ public class TranslateController {
     @Operation(summary = "텍스트 번역 API", description = "텍스트를 번역합니다.")
     public TranslateResponse translateText(@RequestBody PlainTextTranslateRequest request) {
         return translateService.translatePlainText(request);
-
     }
 
     @PostMapping("/image")

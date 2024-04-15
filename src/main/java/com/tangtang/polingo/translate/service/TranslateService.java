@@ -20,7 +20,7 @@ public class TranslateService {
     public TranslateResponse translatePlainText(PlainTextTranslateRequest request){
         TextResult result;
         try {
-            result = translator.translateText(request.text(), request.sourceType(), TARGET);
+            result = translator.translateText(request.text(), request.getSource(), TARGET);
         } catch (DeepLException | InterruptedException e) {
             throw new RuntimeException(e);
         }
