@@ -22,22 +22,17 @@ import org.springframework.web.server.ResponseStatusException;
 public class TranslateController {
     private final TranslateService translateService;
 
-    @PostMapping("/text")
+    @PostMapping("/plain")
     @Operation(summary = "텍스트 번역 API", description = "텍스트를 번역합니다.")
-    public TranslateResponse translateText(
-            @RequestParam Language sourceLanguage,
-            @RequestBody PlainTextTranslateRequest text
-    ) {
-        String result = translateService.translatePlainText(text.text());
-        log.info("result = {}", result);
+    public TranslateResponse translateText(@RequestBody PlainTextTranslateRequest request) {
+        return translateService.translatePlainText(request);
 
-        return TranslateResponse.builder().originalText("Hello").translatedText("안녕하세요.").build();
     }
 
     @PostMapping("/image")
     @Operation(summary = "이미지 번역 API", description = "이미지를 번역합니다.")
     public TranslateResponse translateImage(
-            @RequestParam Language sourceLanguage,
+            @RequestParam Language type,
             @RequestParam("file") MultipartFile image
     ) {
         if (!isImageFile(image)) {
@@ -51,7 +46,7 @@ public class TranslateController {
     @PostMapping("/voice")
     @Operation(summary = "음성 번역 API", description = "음성을 번역합니다.")
     public TranslateResponse translateVoice(
-            @RequestParam Language sourceLanguage,
+            @RequestParam Language type,
             @RequestParam("file") MultipartFile voice
     ) {
         if (!isVoiceFile(voice)) {
@@ -62,24 +57,22 @@ public class TranslateController {
     }
 
 
-
-
     /**
-     * @author minseok kim
-     * @description 이미지 파일인지 확인하는 메서드
      * @param file 파일
      * @return 이미지 파일 여부
-    */
+     * @author minseok kim
+     * @description 이미지 파일인지 확인하는 메서드
+     */
     private boolean isImageFile(MultipartFile file) {
         String contentType = file.getContentType();
         return contentType != null && contentType.startsWith("image/");
     }
 
     /**
-     * @author minseok kim
-     * @description 음성 파일인지 확인하는 메서드
      * @param file 파일
      * @return 음성 파일 여부
+     * @author minseok kim
+     * @description 음성 파일인지 확인하는 메서드
      */
     private boolean isVoiceFile(MultipartFile file) {
         String contentType = file.getContentType();
