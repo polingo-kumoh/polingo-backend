@@ -11,5 +11,4 @@ public class PolingoApplication {
     public static void main(String[] args) {
         SpringApplication.run(PolingoApplication.class, args);
     }
-
 }

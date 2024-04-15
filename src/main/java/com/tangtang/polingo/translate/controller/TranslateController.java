@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,6 +35,14 @@ public class TranslateController {
         return ResponseEntity.ok(result);
     }
 
+    @PostMapping(value = "/voice", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Operation(summary = "음성 번역 API", description = "음성을 번역합니다.")
+    public ResponseEntity<TranslateResponse> translateVoice(@RequestParam("voice") MultipartFile voice,
+                                                                        @RequestParam("language") Language language) {
+        TranslateResponse result = translateService.translateAudio(voice, language);
+        return ResponseEntity.ok(result);
+    }
+
     @PostMapping("/image")
     @Operation(summary = "이미지 번역 API", description = "이미지를 번역합니다.")
     public TranslateResponse translateImage(
@@ -42,20 +51,6 @@ public class TranslateController {
     ) {
         if (!isImageFile(image)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "이미지 파일만 업로드 가능합니다.");
-        }
-
-        return TranslateResponse.builder().originalText("Hello").translatedText("안녕하세요.").build();
-    }
-
-
-    @PostMapping("/voice")
-    @Operation(summary = "음성 번역 API", description = "음성을 번역합니다.")
-    public TranslateResponse translateVoice(
-            @RequestParam Language type,
-            @RequestParam("file") MultipartFile voice
-    ) {
-        if (!isVoiceFile(voice)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "음성 파일만 업로드 가능합니다.");
         }
 
         return TranslateResponse.builder().originalText("Hello").translatedText("안녕하세요.").build();
@@ -83,5 +78,4 @@ public class TranslateController {
         String contentType = file.getContentType();
         return contentType != null && contentType.startsWith("audio/");
     }
-
 }

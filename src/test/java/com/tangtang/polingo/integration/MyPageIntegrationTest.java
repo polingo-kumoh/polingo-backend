@@ -81,7 +81,7 @@ public class MyPageIntegrationTest {
         //then
         User user = getUser();
 
-        assertThat(user.getLanguage()).isEqualTo(Language.JAPAN);
+        assertThat(user.getLanguage()).isEqualTo(Language.JAPANESE.name());
     }
 
     @Test

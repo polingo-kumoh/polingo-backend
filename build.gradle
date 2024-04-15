@@ -63,6 +63,8 @@ dependencies {
 
     //deepL 라이브러리
     implementation "com.deepl.api:deepl-java:1.5.0"
+
+    implementation 'com.google.cloud:google-cloud-speech:4.36.0'
 }
 
 tasks.named('test') {
