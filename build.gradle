@@ -60,6 +60,9 @@ dependencies {
 
     //p6spy 세팅
     implementation 'com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0'
+
+    //deepL 라이브러리
+    implementation "com.deepl.api:deepl-java:1.5.0"
 }
 
 tasks.named('test') {
