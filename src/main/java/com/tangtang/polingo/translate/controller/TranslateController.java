@@ -4,6 +4,7 @@ package com.tangtang.polingo.translate.controller;
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.translate.dto.PlainTextTranslateRequest;
 import com.tangtang.polingo.translate.dto.TranslateResponse;
+import com.tangtang.polingo.translate.service.TranslateService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +20,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequestMapping("/api/translate")
 @RequiredArgsConstructor
 public class TranslateController {
-
+    private final TranslateService translateService;
 
     @PostMapping("/text")
     @Operation(summary = "텍스트 번역 API", description = "텍스트를 번역합니다.")
@@ -27,6 +28,9 @@ public class TranslateController {
             @RequestParam Language sourceLanguage,
             @RequestBody PlainTextTranslateRequest text
     ) {
+        String result = translateService.translatePlainText(text.text());
+        log.info("result = {}", result);
+
         return TranslateResponse.builder().originalText("Hello").translatedText("안녕하세요.").build();
     }
 
