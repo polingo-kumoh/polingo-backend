@@ -1,8 +1,10 @@
 package com.tangtang.polingo.transtlate;
 
 
+import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
+
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.translate.config.TranslatorConfig;
+import com.tangtang.polingo.translate.config.ExternalAPIConfig;
 import com.tangtang.polingo.translate.service.stt.GoogleSTTImpl;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -16,7 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
 @SpringBootTest
-@ContextConfiguration(classes = {TranslatorConfig.class, GoogleSTTImpl.class})
+@ContextConfiguration(classes = {ExternalAPIConfig.class, GoogleSTTImpl.class})
 public class GoogleSTTImplTest {
     @Autowired
     private GoogleSTTImpl googleSTT;
@@ -34,5 +36,6 @@ public class GoogleSTTImplTest {
 
         // 결과 검증
         log.info("결과 = {}", result);
+        assertNotNull(result, "stt 결과는 null이 아니어야 합니다.");
     }
 }

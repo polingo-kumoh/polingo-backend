@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.deepl.api.Translator;
-import com.tangtang.polingo.translate.config.TranslatorConfig;
+import com.tangtang.polingo.translate.config.ExternalAPIConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,21 +13,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest
-@ContextConfiguration(classes = TranslatorConfig.class)
+@ContextConfiguration(classes = ExternalAPIConfig.class)
 public class TextTranslatorTests {
     @Autowired
-    private TranslatorConfig translatorConfig;
+    private ExternalAPIConfig externalAPIConfig;
     private Translator translator;
 
     @BeforeEach
     public void setUp() {
-        translator = translatorConfig.translator();
+        translator = externalAPIConfig.translator();
     }
 
     @Test
     @DisplayName("빈 정상 주입 확인")
     public void testTranslatorNotNull() {
-        assertNotNull(translatorConfig.translator(), "Translator 객체가 초기화되어야 합니다.");
+        assertNotNull(externalAPIConfig.translator(), "Translator 객체가 초기화되어야 합니다.");
     }
 
     @Test
