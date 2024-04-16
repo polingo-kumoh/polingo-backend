@@ -38,15 +38,15 @@ public class TranslateController {
     @PostMapping(value = "/voice", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "음성 번역 API", description = "음성을 번역합니다.")
     public ResponseEntity<TranslateResponse> translateVoice(@RequestParam("voice") MultipartFile voice,
-                                                            @RequestParam("souce-type") Language language) {
+                                                            @RequestParam("source-type") Language language) {
         TranslateResponse result = translateService.translateAudio(voice, language);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping(value = "/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @Operation(summary = "이미지 번역 API", description = "이미지를 번역합니다.")
-    public ResponseEntity<TranslateResponse> translateImage(@RequestParam("voice") MultipartFile image,
-                                                            @RequestParam("souce-type") Language language) {
+    public ResponseEntity<TranslateResponse> translateImage(@RequestParam("image") MultipartFile image,
+                                                            @RequestParam("source-type") Language language) {
         TranslateResponse result = translateService.translateImage(image, language);
         return ResponseEntity.ok(result);
     }
