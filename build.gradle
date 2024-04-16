@@ -64,7 +64,11 @@ dependencies {
     //deepL 라이브러리
     implementation "com.deepl.api:deepl-java:1.5.0"
 
+    // google speech 라이브러리
     implementation 'com.google.cloud:google-cloud-speech:4.36.0'
+
+    //Json 파싱 관련
+    implementation group: 'org.json', name: 'json', version: '20240303'
 }
 
 tasks.named('test') {

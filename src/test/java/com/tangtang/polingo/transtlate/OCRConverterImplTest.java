@@ -2,9 +2,7 @@ package com.tangtang.polingo.transtlate;
 
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 
-import com.tangtang.polingo.translate.config.ExternalAPIConfig;
 import com.tangtang.polingo.translate.service.ocr.OCRConverterImpl;
-import com.tangtang.polingo.translate.service.stt.GoogleSTTImpl;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import lombok.extern.slf4j.Slf4j;
