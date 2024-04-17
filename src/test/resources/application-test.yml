@@ -46,7 +46,10 @@ spring:
         tokenEndpoint: /token
         userInfoEndpoint: /oauth2/v2/userinfo
 
-
+  cloud:
+    gcp:
+      credentials:
+        location: abc.json
   jwt:
     secretKey: 1232124124123123123
     expirationHours: 1
@@ -76,3 +79,6 @@ server:
     encoding:
       force-response: true
       charset: UTF-8
+translator:
+  deepL-key: 123214
+  ocr-uri: http://localhost:8080/ocr
