@@ -81,4 +81,4 @@ server:
       charset: UTF-8
 translator:
   deepL-key: 123214
-  ocr-uri: http://localhost:8080/ocr
+  ocr-uri: http://localhost:1090/api/ocr/v1/to-text
