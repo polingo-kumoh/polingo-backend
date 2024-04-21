@@ -16,11 +16,11 @@ public class NewsSentence {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String originText;
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String translatedText;
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String grammars;
 
     @ManyToOne(fetch = FetchType.LAZY)

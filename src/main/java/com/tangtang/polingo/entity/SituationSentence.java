@@ -1,6 +1,7 @@
 package com.tangtang.polingo.entity;
 
 import com.tangtang.polingo.global.entity.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
@@ -8,10 +9,10 @@ import jakarta.persistence.ManyToOne;
 
 @Entity
 public class SituationSentence extends BaseEntity {
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String sentence; // 예문 내용
 
-    @Lob
+    @Column(columnDefinition = "TEXT")
     private String translation; // 예문의 번역
 
     @ManyToOne

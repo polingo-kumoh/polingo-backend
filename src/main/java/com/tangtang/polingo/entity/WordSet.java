@@ -23,7 +23,7 @@ public class WordSet extends BaseEntity {
     private boolean isDefault;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "users_id")
     private User user;
 
     @OneToMany(mappedBy = "wordSet", cascade = CascadeType.ALL, orphanRemoval = true)
