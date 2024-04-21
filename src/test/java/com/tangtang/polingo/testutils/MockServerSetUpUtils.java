@@ -5,9 +5,11 @@ import static org.mockserver.integration.ClientAndServer.startClientAndServer;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
 
+import java.io.IOException;
 import java.net.URLEncoder;
 import org.mockserver.integration.ClientAndServer;
 import org.mockserver.model.MediaType;
+import org.springframework.web.multipart.MultipartFile;
 
 public class MockServerSetUpUtils {
     private final TestGoogleProperties googleProperties;
@@ -123,6 +125,17 @@ public class MockServerSetUpUtils {
                         "    }\n" +
                         "}")
         );
+    }
+
+    public void setUpOCRMockServer(MultipartFile multipartFile) throws IOException {
+        mockServer = startClientAndServer(1090);
+
+        mockServer.when(request()
+                .withMethod("POST")
+                        .withPath("/api/ocr/v1/to-text")
+        ).respond(response()
+                .withStatusCode(200)
+                .withBody("{ \"data\": \"Hello, world!\" }"));
     }
 
 
