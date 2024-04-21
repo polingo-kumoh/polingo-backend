@@ -11,9 +11,9 @@ import org.springframework.stereotype.Component;
 public class OpenEntityManagerConfig {
     @Bean
     public FilterRegistrationBean<OpenEntityManagerInViewFilter> openEntityManagerInViewFilter() {
-        FilterRegistrationBean<OpenEntityManagerInViewFilter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
-        filterFilterRegistrationBean.setFilter(new OpenEntityManagerInViewFilter());
-        filterFilterRegistrationBean.setOrder(Integer.MIN_VALUE);
-        return filterFilterRegistrationBean;
+        FilterRegistrationBean<OpenEntityManagerInViewFilter> filterRegistrationFilter = new FilterRegistrationBean<>();
+        filterRegistrationFilter.setFilter(new OpenEntityManagerInViewFilter());
+        filterRegistrationFilter.setOrder(Integer.MIN_VALUE);
+        return filterRegistrationFilter;
     }
 }
