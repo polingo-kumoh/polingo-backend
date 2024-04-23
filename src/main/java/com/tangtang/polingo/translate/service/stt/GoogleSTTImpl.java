@@ -7,7 +7,10 @@ import com.google.cloud.speech.v1.SpeechClient;
 import com.google.cloud.speech.v1.SpeechRecognitionResult;
 import com.google.protobuf.ByteString;
 import com.tangtang.polingo.global.constant.Language;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -20,13 +23,19 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class GoogleSTTImpl implements SpeachToText {
     private final SpeechClient speechClient;
+    private final FileConverter fileConverter;
 
     @Override
     public String convert(MultipartFile file, Language language) {
         ByteString audioBytes;
         try {
-            audioBytes = ByteString.copyFrom(file.getBytes());
-        } catch (IOException e) {
+            File tempFile = fileConverter.convertMultipartFileToFile(file);
+            String convertedFilePath = tempFile.getAbsolutePath().replace(".3gp", ".mp3");
+            log.info("[{}] ,[{}]", tempFile.getAbsolutePath(), convertedFilePath);
+            new AudioConverter().convert3gpToMp3(tempFile.getAbsolutePath(), convertedFilePath);
+
+            audioBytes = ByteString.copyFrom(Files.readAllBytes(Paths.get(convertedFilePath)));
+        } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
 

@@ -73,6 +73,13 @@ public class NewsService {
         return newsRepository.findScrapedNewsByUserAndLanguage(user, language, pageable);
     }
 
+    public void unscrapNews(User user, Long newsId) {
+        NewsScrap newsScrap = newsScrapRepository.findByUserAndNewsId(user, newsId)
+                .orElseThrow(() -> new IllegalArgumentException("스크랩되지 않은 뉴스입니다."));
+
+        newsScrapRepository.delete(newsScrap);
+    }
+
     private boolean isNewsAlreadyScrappedByUser(News news, User user) {
         return news.getNewsScraps().stream()
                 .anyMatch(newsScrap -> newsScrap.getUser().equals(user));

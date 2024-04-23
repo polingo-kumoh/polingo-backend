@@ -17,6 +17,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -54,7 +55,7 @@ public class NewsController {
 
     @PostMapping("/scrap/{newsId}")
     @Operation(summary = "뉴스 스크랩 API", description = "뉴스 ID로 스크랩을 합니다.")
-    public ResponseEntity<CommonResponse> getNews(@CurrentUser User user, @PathVariable Long newsId) {
+    public ResponseEntity<CommonResponse> scrapNews(@CurrentUser User user, @PathVariable Long newsId) {
         newsService.scrapNews(user, newsId);
         return ResponseEntity.ok(new CommonResponse(HttpStatus.OK.value(), "뉴스를 스크랩하였습니다."));
     }
@@ -69,5 +70,12 @@ public class NewsController {
         Pageable pageable = PageRequest.of(page, size);
         Page<NewsSummaryResponse> newsPage = newsService.getScrapedNews(user, languageCode, pageable);
         return ResponseEntity.ok(newsPage);
+    }
+
+    @DeleteMapping("/scrap/{newsId}")
+    @Operation(summary = "뉴스 스크랩 취소 API", description = "뉴스 ID로 스크랩 취소를 합니다.")
+    public ResponseEntity<CommonResponse> deleteScrap(@CurrentUser User user, @PathVariable Long newsId) {
+        newsService.unscrapNews(user, newsId);
+        return ResponseEntity.ok(new CommonResponse(HttpStatus.OK.value(), "뉴스 스크랩을 취소하였습니다."));
     }
 }
