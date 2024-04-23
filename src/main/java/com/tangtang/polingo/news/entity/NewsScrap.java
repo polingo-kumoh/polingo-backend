@@ -1,4 +1,4 @@
-package com.tangtang.polingo.entity;
+package com.tangtang.polingo.news.entity;
 
 import com.tangtang.polingo.global.entity.BaseEntity;
 import com.tangtang.polingo.user.entity.User;
@@ -6,8 +6,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Getter
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class NewsScrap extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "users_id")
