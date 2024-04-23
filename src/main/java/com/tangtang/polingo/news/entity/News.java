@@ -2,6 +2,7 @@ package com.tangtang.polingo.news.entity;
 
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.global.entity.BaseEntity;
+import com.tangtang.polingo.user.entity.User;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

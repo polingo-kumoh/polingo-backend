@@ -1,6 +1,11 @@
 package com.tangtang.polingo.news.controller;
 
 
+import com.tangtang.polingo.global.constant.Language;
+import com.tangtang.polingo.global.dto.CommonResponse;
+import com.tangtang.polingo.security.annotation.CurrentUser;
+import com.tangtang.polingo.user.entity.User;
+import org.springframework.data.domain.Page;
 import com.tangtang.polingo.news.dto.NewsDetailResponse;
 import com.tangtang.polingo.news.dto.NewsSummaryResponse;
 import com.tangtang.polingo.news.service.NewsService;
@@ -8,12 +13,14 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,5 +50,24 @@ public class NewsController {
     public ResponseEntity<NewsDetailResponse> getNews(@PathVariable Long newsId) {
         NewsDetailResponse newsDetail = newsService.getNewsDetail(newsId);
         return ResponseEntity.ok(newsDetail);
+    }
+
+    @PostMapping("/scrap/{newsId}")
+    @Operation(summary = "뉴스 스크랩 API", description = "뉴스 ID로 스크랩을 합니다.")
+    public ResponseEntity<CommonResponse> getNews(@CurrentUser User user, @PathVariable Long newsId) {
+        newsService.scrapNews(user, newsId);
+        return ResponseEntity.ok(new CommonResponse(HttpStatus.OK.value(), "뉴스를 스크랩하였습니다."));
+    }
+
+    @GetMapping("/scrap")
+    @Operation(summary = "스크랩한 뉴스 목록 조회 API", description = "스크랩한 뉴스를 조회합니다. 언어로 필터링 가능합니다.")
+    public ResponseEntity<Page<NewsSummaryResponse>> getScrapedNewses(
+            @CurrentUser User user,
+            @RequestParam(required = false) String languageCode,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<NewsSummaryResponse> newsPage = newsService.getScrapedNews(user, languageCode, pageable);
+        return ResponseEntity.ok(newsPage);
     }
 }

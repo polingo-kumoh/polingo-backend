@@ -1,6 +1,10 @@
 package com.tangtang.polingo.news.service;
 
 import com.tangtang.polingo.global.constant.Language;
+import com.tangtang.polingo.news.entity.News;
+import com.tangtang.polingo.news.entity.NewsScrap;
+import com.tangtang.polingo.news.repository.NewsScrapRepository;
+import com.tangtang.polingo.user.entity.User;
 import org.springframework.data.domain.Page;
 import com.tangtang.polingo.news.dto.NewsDetailResponse;
 import com.tangtang.polingo.news.dto.NewsSummaryResponse;
@@ -19,6 +23,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class NewsService {
     private final NewsRepository newsRepository;
+    private final NewsScrapRepository newsScrapRepository;
     public Page<NewsSummaryResponse> getNewsSummaries(String languageCode, Pageable pageable) {
         Language language = Language.fromCode(languageCode);
         return newsRepository.findNewsSummariesByLanguage(language, pageable);
@@ -45,5 +50,31 @@ public class NewsService {
                         .translatedText(sentence.getTranslatedText())
                         .build())
                 .collect(Collectors.toList());
+    }
+
+    public void scrapNews(User user, Long newsId) {
+        News news = newsRepository.findById(newsId).orElse(null);
+        assert news != null;
+
+        if (isNewsAlreadyScrappedByUser(news, user)) {
+            throw new IllegalStateException("사용자가 이미 해당 뉴스를 스크랩했습니다.");
+        }
+
+        NewsScrap newsScrap = NewsScrap.builder()
+                .news(news)
+                .user(user)
+                .build();
+
+        newsScrapRepository.save(newsScrap);
+    }
+
+    public Page<NewsSummaryResponse> getScrapedNews(User user, String languageCode, Pageable pageable) {
+        Language language = Language.fromCode(languageCode);
+        return newsRepository.findScrapedNewsByUserAndLanguage(user, language, pageable);
+    }
+
+    private boolean isNewsAlreadyScrappedByUser(News news, User user) {
+        return news.getNewsScraps().stream()
+                .anyMatch(newsScrap -> newsScrap.getUser().equals(user));
     }
 }
