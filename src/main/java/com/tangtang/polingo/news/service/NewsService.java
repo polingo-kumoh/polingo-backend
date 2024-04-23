@@ -1,21 +1,21 @@
 package com.tangtang.polingo.news.service;
 
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.news.entity.News;
-import com.tangtang.polingo.news.entity.NewsScrap;
-import com.tangtang.polingo.news.repository.NewsScrapRepository;
-import com.tangtang.polingo.user.entity.User;
-import org.springframework.data.domain.Page;
 import com.tangtang.polingo.news.dto.NewsDetailResponse;
 import com.tangtang.polingo.news.dto.NewsSummaryResponse;
 import com.tangtang.polingo.news.dto.SentenceDetail;
+import com.tangtang.polingo.news.entity.News;
+import com.tangtang.polingo.news.entity.NewsScrap;
 import com.tangtang.polingo.news.entity.NewsSentence;
 import com.tangtang.polingo.news.repository.NewsRepository;
-import org.springframework.data.domain.Pageable;
+import com.tangtang.polingo.news.repository.NewsScrapRepository;
+import com.tangtang.polingo.user.entity.User;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 public class NewsService {
     private final NewsRepository newsRepository;
     private final NewsScrapRepository newsScrapRepository;
+
     public Page<NewsSummaryResponse> getNewsSummaries(String languageCode, Pageable pageable) {
         Language language = Language.fromCode(languageCode);
         return newsRepository.findNewsSummariesByLanguage(language, pageable);

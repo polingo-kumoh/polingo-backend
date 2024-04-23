@@ -1,32 +1,30 @@
 package com.tangtang.polingo.news.controller;
 
 
-import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.global.dto.CommonResponse;
-import com.tangtang.polingo.security.annotation.CurrentUser;
-import com.tangtang.polingo.user.entity.User;
-import org.springframework.data.domain.Page;
 import com.tangtang.polingo.news.dto.NewsDetailResponse;
 import com.tangtang.polingo.news.dto.NewsSummaryResponse;
 import com.tangtang.polingo.news.service.NewsService;
+import com.tangtang.polingo.security.annotation.CurrentUser;
+import com.tangtang.polingo.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@Tag(name = "뉴스 관련 API", description = "사용자와 뉴스의 상호작용에 대해서 다룹니다.")
+@Tag(name = "뉴스 관련 API", description = "사용자와 뉴스의 상호작용에 대해서 다룹니다. languageCode는 [en/ja]  둘줄 하나로 선택하시면 됩니다.")
 @Slf4j
 @RestController
 @RequestMapping("/api/news")

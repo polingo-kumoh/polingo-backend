@@ -132,7 +132,7 @@ public class MockServerSetUpUtils {
 
         mockServer.when(request()
                 .withMethod("POST")
-                        .withPath("/api/ocr/v1/to-text")
+                .withPath("/api/ocr/v1/to-text")
         ).respond(response()
                 .withStatusCode(200)
                 .withBody("{ \"data\": \"Hello, world!\" }"));
