@@ -3,6 +3,7 @@ package com.tangtang.polingo.user.entity;
 import com.tangtang.polingo.entity.WordSet;
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.global.entity.BaseEntity;
+import com.tangtang.polingo.news.entity.NewsScrap;
 import com.tangtang.polingo.user.constant.LoginType;
 import com.tangtang.polingo.user.constant.UserRole;
 import jakarta.persistence.CascadeType;
@@ -42,6 +43,9 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<WordSet> wordSets = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<NewsScrap> newsScraps = new ArrayList<>();
+
     public void updateNIckName(String name) {
         this.nickname = name;
     }
@@ -49,5 +53,4 @@ public class User extends BaseEntity {
     public void updateLanguage(Language language) {
         this.language = language;
     }
-
 }
