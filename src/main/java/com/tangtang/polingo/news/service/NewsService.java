@@ -10,6 +10,7 @@ import com.tangtang.polingo.news.entity.NewsSentence;
 import com.tangtang.polingo.news.repository.NewsRepository;
 import com.tangtang.polingo.news.repository.NewsScrapRepository;
 import com.tangtang.polingo.user.entity.User;
+import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -25,32 +26,32 @@ public class NewsService {
     private final NewsRepository newsRepository;
     private final NewsScrapRepository newsScrapRepository;
 
-    public Page<NewsSummaryResponse> getNewsSummaries(String languageCode, Pageable pageable) {
+    public Page<NewsSummaryResponse> getNewsSummaries(String languageCode, Pageable pageable, User user) {
         Language language = Language.fromCode(languageCode);
-        return newsRepository.findNewsSummariesByLanguage(language, pageable);
+        return newsRepository.findNewsSummariesByLanguage(user, language, pageable);
     }
 
-    public NewsDetailResponse getNewsDetail(Long newsId) {
-        return newsRepository.findById(newsId)
-                .map(news -> NewsDetailResponse.builder()
-                        .id(news.getId())
-                        .imageUrl(news.getImageUrl())
-                        .title(news.getTitle())
-                        .link(news.getNewsUrl())
-                        .sentences(createSentenceDetails(news.getNewsSentences()))
-                        .build())
-                .orElse(null);
-    }
+    public NewsDetailResponse getNewsDetail(Long newsId, User user) {
+        News news = newsRepository.findNewsByIdWithSentences(newsId)
+                .orElseThrow(() -> new EntityNotFoundException("News not found with ID: " + newsId));
 
-    private List<SentenceDetail> createSentenceDetails(List<NewsSentence> newsSentences) {
-        return newsSentences.stream()
-                .map(sentence -> SentenceDetail.builder()
-                        .sentenceId(sentence.getId())
-                        .originalText(sentence.getOriginText())
-                        .grammar(sentence.getGrammars())
-                        .translatedText(sentence.getTranslatedText())
+        boolean isScraped = newsScrapRepository.existsByUserAndNews(user, news);
+        List<SentenceDetail> sentences = news.getNewsSentences().stream()
+                .map(ns -> SentenceDetail.builder()
+                        .sentenceId(ns.getId())
+                        .originalText(ns.getOriginText())
+                        .translatedText(ns.getTranslatedText())
                         .build())
                 .collect(Collectors.toList());
+
+        return NewsDetailResponse.builder()
+                .id(news.getId())
+                .imageUrl(news.getImageUrl())
+                .title(news.getTitle())
+                .link(news.getNewsUrl())
+                .isScraped(isScraped)
+                .sentences(sentences)
+                .build();
     }
 
     public void scrapNews(User user, Long newsId) {

@@ -37,17 +37,19 @@ public class NewsController {
     public ResponseEntity<Page<NewsSummaryResponse>> getNewses(
             @RequestParam(required = false) String languageCode,
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
+            @RequestParam(defaultValue = "10") int size,
+            @CurrentUser User user
+    ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<NewsSummaryResponse> newsPage = newsService.getNewsSummaries(languageCode, pageable);
+        Page<NewsSummaryResponse> newsPage = newsService.getNewsSummaries(languageCode, pageable, user);
         return ResponseEntity.ok(newsPage);
     }
 
 
     @GetMapping("/{newsId}")
     @Operation(summary = "뉴스 단건 조회 API", description = "뉴스 ID로 뉴스의 상세 정보와 관련 문장들을 조회합니다.")
-    public ResponseEntity<NewsDetailResponse> getNews(@PathVariable Long newsId) {
-        NewsDetailResponse newsDetail = newsService.getNewsDetail(newsId);
+    public ResponseEntity<NewsDetailResponse> getNews(@PathVariable Long newsId, @CurrentUser User user) {
+        NewsDetailResponse newsDetail = newsService.getNewsDetail(newsId, user);
         return ResponseEntity.ok(newsDetail);
     }
 
