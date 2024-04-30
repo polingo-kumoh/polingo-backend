@@ -1,11 +1,58 @@
 package com.tangtang.polingo.wordset.controller;
 
+import com.tangtang.polingo.global.dto.CommonResponse;
+import com.tangtang.polingo.security.annotation.CurrentUser;
+import com.tangtang.polingo.user.entity.User;
+import com.tangtang.polingo.wordset.dto.WordSetCreateRequest;
+import com.tangtang.polingo.wordset.dto.WordSetSummaryResponse;
+import com.tangtang.polingo.wordset.entity.WordSet;
+import com.tangtang.polingo.wordset.service.WordSetService;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "단어장 API", description = "단어 조회를 통해 얻은 데이터를 단어장에 저장하고 관리할 수 있습니다.")
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/wordset")
 public class WordSetController {
+    private final WordSetService wordSetService;
+
+    @PostMapping("/create")
+    public CommonResponse createWordSet(@RequestBody WordSetCreateRequest wordSetCreateRequest, @CurrentUser User user) {
+        wordSetService.createWordSet(user, wordSetCreateRequest);
+        return new CommonResponse(HttpStatus.OK.value(), "단어장을 생성했습니다.");
+    }
+
+    // 단어장 이름 변경
+    @PutMapping("/{wordSetId}/update")
+    public CommonResponse updateWordSetName(@PathVariable Long wordSetId, @RequestParam String newName, @CurrentUser User user) {
+        wordSetService.updateWordSetName(wordSetId, newName);
+        return new CommonResponse(HttpStatus.OK.value(), "단어장의 이름을 변경하였습니다.");
+    }
+
+    // 단어장 목록 조회
+    @GetMapping("/list")
+    public ResponseEntity<List<WordSetSummaryResponse>> getAllWordSetsByUserId(@CurrentUser User user) {
+        List<WordSetSummaryResponse> wordSets = wordSetService.getAllWordSetSummariesByUser(user);
+        return ResponseEntity.ok(wordSets);
+    }
+
+    // 단어장 삭제
+    @DeleteMapping("/delete/{wordSetId}")
+    public CommonResponse deleteWordSet(@CurrentUser User user, @PathVariable Long wordSetId) {
+        wordSetService.deleteWordSet(wordSetId);
+        return new CommonResponse(HttpStatus.OK.value(), "단어장을 삭제하였습니다.");
+    }
 }

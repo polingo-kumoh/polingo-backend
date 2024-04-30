@@ -38,4 +38,8 @@ public class WordSet extends BaseEntity {
 
     @OneToMany(mappedBy = "wordSet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Quiz> quizzes = new ArrayList<>();
+
+    public void updateName(String name){
+        this.name = name;
+    }
 }
