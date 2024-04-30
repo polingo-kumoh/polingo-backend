@@ -39,11 +39,11 @@ public class WordSet extends BaseEntity {
     @OneToMany(mappedBy = "wordSet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Quiz> quizzes = new ArrayList<>();
 
-    public void updateName(String name){
+    public void updateName(String name) {
         this.name = name;
     }
 
-    public void updateDefault(boolean isDefault){
+    public void updateDefault(boolean isDefault) {
         this.isDefault = isDefault;
     }
 

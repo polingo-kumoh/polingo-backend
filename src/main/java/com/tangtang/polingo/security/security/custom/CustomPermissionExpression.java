@@ -20,7 +20,8 @@ public class CustomPermissionExpression implements PermissionEvaluator {
     }
 
     @Override
-    public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType, Object permission) {
+    public boolean hasPermission(Authentication authentication, Serializable targetId, String targetType,
+                                 Object permission) {
         if (authentication == null || targetType == null || permission == null) {
             return false;
         }
