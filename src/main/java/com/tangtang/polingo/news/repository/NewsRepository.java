@@ -17,7 +17,8 @@ public interface NewsRepository extends JpaRepository<News, Long> {
     @Query("SELECT new com.tangtang.polingo.news.dto.NewsSummaryResponse(" +
             "n.id, n.imageUrl, n.title, n.publishDate, " +
             "(SELECT COUNT(ns) > 0 FROM NewsScrap ns WHERE ns.news = n AND ns.user = :user), " +
-            "(SELECT ns.originText FROM NewsSentence ns WHERE ns.news = n AND ns.id = (SELECT MIN(ns2.id) FROM NewsSentence ns2 WHERE ns2.news = n))" +
+            "(SELECT ns.originText FROM NewsSentence ns WHERE ns.news = n AND ns.id = (SELECT MIN(ns2.id) FROM NewsSentence ns2 WHERE ns2.news = n))"
+            +
             ") " +
             "FROM News n " +
             "WHERE (:language IS NULL OR n.language = :language) " +
@@ -27,13 +28,13 @@ public interface NewsRepository extends JpaRepository<News, Long> {
                                                           @Param("language") Language language, Pageable pageable);
 
 
-
     @Query("SELECT n FROM News n LEFT JOIN FETCH n.newsSentences WHERE n.id = :newsId")
     Optional<News> findNewsByIdWithSentences(@Param("newsId") Long newsId);
 
     @Query("SELECT new com.tangtang.polingo.news.dto.NewsSummaryResponse(" +
             "n.id, n.imageUrl, n.title, n.publishDate, " +
-            "(SELECT ns.originText FROM NewsSentence ns WHERE ns.news = n AND ns.id = (SELECT MIN(ns2.id) FROM NewsSentence ns2 WHERE ns2.news = n))) " +
+            "(SELECT ns.originText FROM NewsSentence ns WHERE ns.news = n AND ns.id = (SELECT MIN(ns2.id) FROM NewsSentence ns2 WHERE ns2.news = n))) "
+            +
             "FROM News n " +
             "JOIN n.newsScraps ns " +
             "WHERE ns.user = :user AND (:language IS NULL OR n.language = :language) " +

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 public class wordService {
     private final WordSearcher wordSearcher;
 
-    public WordMeaningResponse findWordMeaning( String code, String word) {
+    public WordMeaningResponse findWordMeaning(String code, String word) {
         Language language = Language.fromCode(code);
         Optional<String> descriptionOpt = wordSearcher.search(language, word);
         String description = descriptionOpt.orElse("단어가 사전에 존재하지 않습니다!");

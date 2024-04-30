@@ -8,5 +8,6 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface NewsScrapRepository extends CrudRepository<NewsScrap, Long> {
     Optional<NewsScrap> findByUserAndNewsId(User user, Long newsId);
+
     boolean existsByUserAndNews(User user, News news);
 }

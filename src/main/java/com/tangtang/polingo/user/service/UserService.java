@@ -1,9 +1,14 @@
 package com.tangtang.polingo.user.service;
 
 import com.tangtang.polingo.global.constant.Language;
+import com.tangtang.polingo.oauth2.dto.UserInfo;
+import com.tangtang.polingo.user.constant.LoginType;
+import com.tangtang.polingo.user.constant.UserRole;
 import com.tangtang.polingo.user.dto.UserResponse;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.user.repository.UserRepository;
+import com.tangtang.polingo.wordset.entity.WordSet;
+import com.tangtang.polingo.wordset.repository.WordSetRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +20,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class UserService {
+    private final WordSetRepository wordSetRepository;
     private final UserRepository userRepository;
 
     @PersistenceContext
@@ -47,6 +53,34 @@ public class UserService {
         Language newLanguage = Language.fromCode(languageCode);
         user.updateLanguage(newLanguage);
         userRepository.save(user);
+    }
+
+    public User createUser(LoginType loginType, UserInfo userInfo) {
+        User newUser = User.builder()
+                .nickname(userInfo.getName())
+                .language(Language.ENGLISH)
+                .role(UserRole.COMMON)
+                .loginType(loginType)
+                .providerId(userInfo.getId())
+                .build();
+        newUser = userRepository.save(newUser);
+        createDefaultWordSets(newUser);
+        return newUser;
+    }
+
+    private void createDefaultWordSets(User user) {
+        createDefaultWordSet(user, "영어 기본 단어장", Language.ENGLISH);
+        createDefaultWordSet(user, "일본어 기본 단어장", Language.JAPANESE);
+    }
+
+    private void createDefaultWordSet(User user, String name, Language language) {
+        WordSet wordSet = WordSet.builder()
+                .name(name)
+                .language(language)
+                .isDefault(true)
+                .user(user)
+                .build();
+        wordSetRepository.save(wordSet);
     }
 
     private void validateNickname(String nickname) {

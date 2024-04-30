@@ -1,7 +1,6 @@
 package com.tangtang.polingo.news.dto;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -18,11 +17,6 @@ public class NewsSummaryResponse {
     private boolean isScraped;
     private String firstSentence;
 
-    @JsonGetter("is_scraped")
-    public boolean isScraped() {
-        return isScraped;
-    }
-
     public NewsSummaryResponse(Long id, String imageUrl, String title, LocalDateTime publishDate,
                                String firstSentence) {
         this.id = id;
@@ -31,5 +25,10 @@ public class NewsSummaryResponse {
         this.publishDate = publishDate;
         this.isScraped = true;
         this.firstSentence = firstSentence;
+    }
+
+    @JsonGetter("is_scraped")
+    public boolean isScraped() {
+        return isScraped;
     }
 }

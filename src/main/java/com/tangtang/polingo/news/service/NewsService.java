@@ -6,7 +6,6 @@ import com.tangtang.polingo.news.dto.NewsSummaryResponse;
 import com.tangtang.polingo.news.dto.SentenceDetail;
 import com.tangtang.polingo.news.entity.News;
 import com.tangtang.polingo.news.entity.NewsScrap;
-import com.tangtang.polingo.news.entity.NewsSentence;
 import com.tangtang.polingo.news.repository.NewsRepository;
 import com.tangtang.polingo.news.repository.NewsScrapRepository;
 import com.tangtang.polingo.user.entity.User;
