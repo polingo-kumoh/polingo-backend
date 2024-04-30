@@ -2,8 +2,8 @@ package com.tangtang.polingo.wordset.service;
 
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.user.entity.User;
-import com.tangtang.polingo.wordset.dto.WordSetCreateRequest;
-import com.tangtang.polingo.wordset.dto.WordSetSummaryResponse;
+import com.tangtang.polingo.wordset.dto.wordset.WordSetCreateRequest;
+import com.tangtang.polingo.wordset.dto.wordset.WordSetSummaryResponse;
 import com.tangtang.polingo.wordset.entity.WordSet;
 import com.tangtang.polingo.wordset.repository.WordSetRepository;
 import java.util.List;

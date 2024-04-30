@@ -1,5 +1,6 @@
 package com.tangtang.polingo.user.entity;
 
+import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.global.entity.BaseEntity;
 import com.tangtang.polingo.news.entity.NewsScrap;
 import com.tangtang.polingo.user.constant.LoginType;

@@ -1,4 +1,4 @@
-package com.tangtang.polingo.wordset.dto;
+package com.tangtang.polingo.wordset.dto.wordset;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import lombok.Builder;
@@ -6,7 +6,7 @@ import lombok.Builder;
 @Builder
 public record WordSetSummaryResponse(long id, String name, boolean isDefault) {
     @JsonGetter("is_default")
-    public boolean isScraped() {
+    public boolean isDefault() {
         return isDefault;
     }
 }
