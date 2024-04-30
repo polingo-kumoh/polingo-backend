@@ -1,6 +1,7 @@
 package com.tangtang.polingo.entity;
 
 import com.tangtang.polingo.global.entity.BaseEntity;
+import com.tangtang.polingo.wordset.entity.WordSet;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;

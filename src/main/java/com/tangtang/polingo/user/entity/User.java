@@ -1,6 +1,6 @@
 package com.tangtang.polingo.user.entity;
 
-import com.tangtang.polingo.entity.WordSet;
+import com.tangtang.polingo.wordset.entity.WordSet;
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.global.entity.BaseEntity;
 import com.tangtang.polingo.news.entity.NewsScrap;

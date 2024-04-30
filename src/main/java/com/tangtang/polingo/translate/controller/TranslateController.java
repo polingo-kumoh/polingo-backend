@@ -50,27 +50,4 @@ public class TranslateController {
         TranslateResponse result = translateService.translateImage(image, language);
         return ResponseEntity.ok(result);
     }
-
-
-    /**
-     * @param file 파일
-     * @return 이미지 파일 여부
-     * @author minseok kim
-     * @description 이미지 파일인지 확인하는 메서드
-     */
-    private boolean isImageFile(MultipartFile file) {
-        String contentType = file.getContentType();
-        return contentType != null && contentType.startsWith("image/");
-    }
-
-    /**
-     * @param file 파일
-     * @return 음성 파일 여부
-     * @author minseok kim
-     * @description 음성 파일인지 확인하는 메서드
-     */
-    private boolean isVoiceFile(MultipartFile file) {
-        String contentType = file.getContentType();
-        return contentType != null && contentType.startsWith("audio/");
-    }
 }

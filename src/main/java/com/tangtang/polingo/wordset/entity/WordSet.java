@@ -1,5 +1,6 @@
-package com.tangtang.polingo.entity;
+package com.tangtang.polingo.wordset.entity;
 
+import com.tangtang.polingo.entity.Quiz;
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.global.entity.BaseEntity;
 import com.tangtang.polingo.user.entity.User;

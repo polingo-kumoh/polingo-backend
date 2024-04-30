@@ -1,4 +1,4 @@
-package com.tangtang.polingo.entity;
+package com.tangtang.polingo.wordset.entity;
 
 
 import com.tangtang.polingo.global.constant.Language;
