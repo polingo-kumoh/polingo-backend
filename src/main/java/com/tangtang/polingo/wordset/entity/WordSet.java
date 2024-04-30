@@ -28,8 +28,5 @@ public class WordSet extends BaseEntity {
     private User user;
 
     @OneToMany(mappedBy = "wordSet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Word> words = new ArrayList<>();
-
-    @OneToMany(mappedBy = "wordSet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Quiz> quizzes = new ArrayList<>();
 }

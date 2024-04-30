@@ -1,4 +1,4 @@
-package com.tangtang.polingo.wordset.service.search;
+package com.tangtang.polingo.word.service.search;
 
 import com.tangtang.polingo.global.constant.Language;
 import java.util.Objects;

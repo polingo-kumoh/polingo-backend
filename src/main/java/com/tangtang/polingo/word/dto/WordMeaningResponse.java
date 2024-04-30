@@ -1,4 +1,4 @@
-package com.tangtang.polingo.wordset.dto;
+package com.tangtang.polingo.word.dto;
 
 import lombok.Builder;
 

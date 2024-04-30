@@ -1,15 +1,15 @@
-package com.tangtang.polingo.wordset.service;
+package com.tangtang.polingo.word.service;
 
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.wordset.dto.WordMeaningResponse;
-import com.tangtang.polingo.wordset.service.search.WordSearcher;
+import com.tangtang.polingo.word.dto.WordMeaningResponse;
+import com.tangtang.polingo.word.service.search.WordSearcher;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class WordSetService {
+public class wordService {
     private final WordSearcher wordSearcher;
 
     public WordMeaningResponse findWordMeaning( String code, String word) {
