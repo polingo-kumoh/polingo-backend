@@ -1,9 +1,7 @@
-package com.tangtang.polingo.security.filter;
+package com.tangtang.polingo.security.jwt;
 
 import com.tangtang.polingo.security.exception.JwtAuthenticationException;
-import com.tangtang.polingo.security.service.CustomUserDetailsService;
-import com.tangtang.polingo.security.service.JwtService;
-import com.tangtang.polingo.security.util.JwtErrorResponseWriter;
+import com.tangtang.polingo.security.security.custom.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -24,7 +22,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @RequiredArgsConstructor
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-    private final JwtService jwtService;
+    private final JwtProvider jwtProvider;
     private final CustomUserDetailsService customUserDetailsService;
 
 
@@ -40,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void authenticateRequest(HttpServletRequest request) {
-        Optional<String> tokenOptional = jwtService.extractTokenFromHeader(request);
+        Optional<String> tokenOptional = jwtProvider.extractTokenFromHeader(request);
 
         tokenOptional.ifPresent(token -> {
             Authentication authentication = authenticateWithToken(token);
@@ -52,7 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private Authentication authenticateWithToken(String token) {
         String userInfo = Optional.ofNullable(token)
                 .filter(subject -> subject.length() >= 10)
-                .map(jwtService::validateTokenAndGetSubject)
+                .map(jwtProvider::validateTokenAndGetSubject)
                 .orElseThrow(() -> new JwtAuthenticationException("페이로드가 올바르지 않습니다"));
 
         UserDetails userDetails = customUserDetailsService.loadUserByUsername(userInfo);

@@ -1,17 +1,17 @@
 package com.tangtang.polingo.wordset.controller;
 
 import com.tangtang.polingo.global.dto.CommonResponse;
-import com.tangtang.polingo.security.annotation.CurrentUser;
+import com.tangtang.polingo.security.security.annotation.CurrentUser;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.wordset.dto.WordSetCreateRequest;
 import com.tangtang.polingo.wordset.dto.WordSetSummaryResponse;
-import com.tangtang.polingo.wordset.entity.WordSet;
 import com.tangtang.polingo.wordset.service.WordSetService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,6 +37,7 @@ public class WordSetController {
 
     // 단어장 이름 변경
     @PutMapping("/{wordSetId}/update")
+    @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'write')")
     public CommonResponse updateWordSetName(@PathVariable Long wordSetId, @RequestParam String newName, @CurrentUser User user) {
         wordSetService.updateWordSetName(wordSetId, newName);
         return new CommonResponse(HttpStatus.OK.value(), "단어장의 이름을 변경하였습니다.");
@@ -51,6 +52,7 @@ public class WordSetController {
 
     // 단어장 삭제
     @DeleteMapping("/delete/{wordSetId}")
+    @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'delete')")
     public CommonResponse deleteWordSet(@CurrentUser User user, @PathVariable Long wordSetId) {
         wordSetService.deleteWordSet(wordSetId);
         return new CommonResponse(HttpStatus.OK.value(), "단어장을 삭제하였습니다.");

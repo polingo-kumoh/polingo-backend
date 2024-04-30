@@ -5,7 +5,7 @@ import com.tangtang.polingo.global.dto.CommonResponse;
 import com.tangtang.polingo.news.dto.NewsDetailResponse;
 import com.tangtang.polingo.news.dto.NewsSummaryResponse;
 import com.tangtang.polingo.news.service.NewsService;
-import com.tangtang.polingo.security.annotation.CurrentUser;
+import com.tangtang.polingo.security.security.annotation.CurrentUser;
 import com.tangtang.polingo.user.entity.User;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

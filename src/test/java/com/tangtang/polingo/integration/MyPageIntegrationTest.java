@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.security.service.JwtService;
+import com.tangtang.polingo.security.jwt.JwtProvider;
 import com.tangtang.polingo.user.constant.LoginType;
 import com.tangtang.polingo.user.dto.UserResponse;
 import com.tangtang.polingo.user.entity.User;
@@ -36,7 +36,7 @@ public class MyPageIntegrationTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private JwtService jwtService;
+    private JwtProvider jwtProvider;
 
     @Autowired
     private UserRepository userRepository;
@@ -107,7 +107,7 @@ public class MyPageIntegrationTest {
     private String createToken() {
         User user = getUser();
 
-        return jwtService.createToken(user);
+        return jwtProvider.createToken(user);
     }
 
     private User getUser() {

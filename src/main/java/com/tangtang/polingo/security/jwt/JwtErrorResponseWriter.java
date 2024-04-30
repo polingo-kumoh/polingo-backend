@@ -1,4 +1,4 @@
-package com.tangtang.polingo.security.util;
+package com.tangtang.polingo.security.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;

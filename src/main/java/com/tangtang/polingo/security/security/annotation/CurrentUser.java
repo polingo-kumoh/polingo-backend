@@ -1,4 +1,4 @@
-package com.tangtang.polingo.security.annotation;
+package com.tangtang.polingo.security.security.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

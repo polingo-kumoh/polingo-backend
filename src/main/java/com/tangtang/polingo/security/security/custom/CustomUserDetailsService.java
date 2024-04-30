@@ -1,7 +1,6 @@
-package com.tangtang.polingo.security.service;
+package com.tangtang.polingo.security.security.custom;
 
 import com.tangtang.polingo.security.exception.JwtAuthenticationException;
-import com.tangtang.polingo.security.wrapper.UserWrapper;
 import com.tangtang.polingo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;

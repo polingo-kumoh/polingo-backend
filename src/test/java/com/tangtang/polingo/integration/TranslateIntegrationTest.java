@@ -12,7 +12,7 @@ import com.deepl.api.Translator;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.cloud.speech.v1.SpeechClient;
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.security.service.JwtService;
+import com.tangtang.polingo.security.jwt.JwtProvider;
 import com.tangtang.polingo.testutils.MockServerSetUpUtils;
 import com.tangtang.polingo.testutils.TestGoogleProperties;
 import com.tangtang.polingo.testutils.TestKakaoProperties;
@@ -61,7 +61,7 @@ public class TranslateIntegrationTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private JwtService jwtService;
+    private JwtProvider jwtProvider;
 
     @Autowired
     private MockServerSetUpUtils mockServerSetUpUtils;
@@ -71,7 +71,7 @@ public class TranslateIntegrationTest {
     @DisplayName("인증된 사용자는 텍스트 원문을 가지고 번역을 수행해 번역본을 제공받을 수 있다.")
     void given_AuthenticatedUserOriginText_when_Translate_then_ReturnOriginTextAndTranslatedText() throws Exception {
         // given
-        String givenToken = jwtService.createToken(testUser);
+        String givenToken = jwtProvider.createToken(testUser);
 
         when(translator.translateText("Hello, world!", "en", "ko"))
                 .thenReturn(new TextResult("안녕, 세계!", "en"));
@@ -100,7 +100,7 @@ public class TranslateIntegrationTest {
     @DisplayName("인증된 사용자는 음성 파일을 가지고 번역을 수행해 번역본을 제공받을 수 있다.")
     void given_AuthenticatedUserOriginVoice_when_Translate_then_ReturnOriginTextAndTranslatedText() throws Exception {
         // given
-        String givenToken = jwtService.createToken(testUser);
+        String givenToken = jwtProvider.createToken(testUser);
 
         MockMultipartFile voiceFile =
                 new MockMultipartFile("voice", "test-audio.mp3", "audio/mpeg", "test audio data".getBytes());
@@ -130,7 +130,7 @@ public class TranslateIntegrationTest {
     @DisplayName("인증된 사용자는 이미지 파일을 가지고 번역을 수행해 번역본을 제공받을 수 있다.")
     void given_AuthenticatedUserOriginImage_when_Translate_then_ReturnOriginTextAndTranslatedText() throws Exception {
         // given
-        String givenToken = jwtService.createToken(testUser);
+        String givenToken = jwtProvider.createToken(testUser);
 
         MockMultipartFile imageFile =
                 new MockMultipartFile("image", "test-image.jpg", "image/jpeg", "test image data".getBytes());

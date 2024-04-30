@@ -3,7 +3,7 @@ package com.tangtang.polingo.user.service;
 import com.tangtang.polingo.oauth2.dto.UserInfo;
 import com.tangtang.polingo.oauth2.service.OAuth2Service;
 import com.tangtang.polingo.oauth2.service.OAuth2Services;
-import com.tangtang.polingo.security.service.JwtService;
+import com.tangtang.polingo.security.jwt.JwtProvider;
 import com.tangtang.polingo.user.constant.LoginType;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.user.repository.UserRepository;
@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class LoginService {
-    private final JwtService jwtService;
+    private final JwtProvider jwtProvider;
     private final OAuth2Services oAuth2Services;
     private final UserService userService;
     private final UserRepository userRepository;
@@ -36,6 +36,6 @@ public class LoginService {
         User user = userRepository.findByLoginTypeAndProviderId(loginType, userInfo.getId())
                 .orElseGet(() -> userService.createUser(loginType, userInfo));
 
-        return jwtService.createToken(user);
+        return jwtProvider.createToken(user);
     }
 }

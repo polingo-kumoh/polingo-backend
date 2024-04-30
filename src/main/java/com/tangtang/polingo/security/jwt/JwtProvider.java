@@ -1,7 +1,6 @@
-package com.tangtang.polingo.security.service;
+package com.tangtang.polingo.security.jwt;
 
 import com.tangtang.polingo.security.exception.JwtAuthenticationException;
-import com.tangtang.polingo.security.property.JwtProperties;
 import com.tangtang.polingo.user.entity.User;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
@@ -24,7 +23,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class JwtService {
+public class JwtProvider {
     private final JwtProperties jwtProperties;
 
     public String createToken(User user) {

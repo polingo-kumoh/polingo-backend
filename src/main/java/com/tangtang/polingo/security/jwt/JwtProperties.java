@@ -1,4 +1,4 @@
-package com.tangtang.polingo.security.property;
+package com.tangtang.polingo.security.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

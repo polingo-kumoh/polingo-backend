@@ -1,4 +1,4 @@
-package com.tangtang.polingo.security.wrapper;
+package com.tangtang.polingo.security.security.custom;
 
 import com.tangtang.polingo.user.entity.User;
 import java.util.Collection;

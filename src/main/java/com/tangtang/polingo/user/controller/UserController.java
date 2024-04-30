@@ -1,7 +1,7 @@
 package com.tangtang.polingo.user.controller;
 
 import com.tangtang.polingo.global.dto.CommonResponse;
-import com.tangtang.polingo.security.annotation.CurrentUser;
+import com.tangtang.polingo.security.security.annotation.CurrentUser;
 import com.tangtang.polingo.user.dto.UserResponse;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.user.service.UserService;
