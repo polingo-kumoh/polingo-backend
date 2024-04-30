@@ -42,4 +42,12 @@ public class WordSet extends BaseEntity {
     public void updateName(String name){
         this.name = name;
     }
+
+    public void updateDefault(boolean isDefault){
+        this.isDefault = isDefault;
+    }
+
+    public boolean getIsDefault() {
+        return isDefault;
+    }
 }

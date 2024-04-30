@@ -57,4 +57,12 @@ public class WordSetController {
         wordSetService.deleteWordSet(wordSetId);
         return new CommonResponse(HttpStatus.OK.value(), "단어장을 삭제하였습니다.");
     }
+
+    @PutMapping("/{wordSetId}/set-default")
+    @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'write')")
+    public CommonResponse setDefaultWordSet(@CurrentUser User user, @PathVariable Long wordSetId) {
+        wordSetService.setDefaultWordSet(user, wordSetId);
+        return new CommonResponse(HttpStatus.OK.value(), "기본 단어장으로 설정되었습니다.");
+    }
+
 }
