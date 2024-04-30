@@ -10,15 +10,18 @@ import com.tangtang.polingo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class LoginService {
     private final JwtProvider jwtProvider;
     private final OAuth2Services oAuth2Services;
     private final UserService userService;
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public ResponseEntity<Void> redirectLogin(String provider) {
         LoginType loginType = LoginType.fromProvider(provider);
         OAuth2Service oauth2Service = oAuth2Services.getAuthService(loginType);

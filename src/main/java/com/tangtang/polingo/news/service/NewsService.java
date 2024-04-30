@@ -17,10 +17,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class NewsService {
     private final NewsRepository newsRepository;
     private final NewsScrapRepository newsScrapRepository;
@@ -53,6 +55,7 @@ public class NewsService {
                 .build();
     }
 
+    @Transactional
     public void scrapNews(User user, Long newsId) {
         News news = newsRepository.findById(newsId).orElse(null);
         assert news != null;
@@ -74,6 +77,7 @@ public class NewsService {
         return newsRepository.findScrapedNewsByUserAndLanguage(user, language, pageable);
     }
 
+    @Transactional
     public void unscrapNews(User user, Long newsId) {
         NewsScrap newsScrap = newsScrapRepository.findByUserAndNewsId(user, newsId)
                 .orElseThrow(() -> new IllegalArgumentException("스크랩되지 않은 뉴스입니다."));

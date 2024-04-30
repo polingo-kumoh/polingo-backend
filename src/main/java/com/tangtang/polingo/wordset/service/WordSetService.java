@@ -10,13 +10,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class WordSetService {
     private final WordSetRepository wordSetRepository;
 
     //단어장 생성
+    @Transactional
     public void createWordSet(User user, WordSetCreateRequest req) {
         WordSet wordSet = WordSet.builder()
                 .name(req.name())
@@ -28,6 +31,7 @@ public class WordSetService {
     }
 
     // 단어장 이름 변경
+    @Transactional
     public void updateWordSetName(Long wordSetId, String newName) {
         WordSet wordSet = wordSetRepository.findById(wordSetId)
                 .orElseThrow(() -> new IllegalArgumentException("단어장을 찾을 수 없습니다."));
@@ -49,6 +53,7 @@ public class WordSetService {
     }
 
     // 단어장 삭제
+    @Transactional
     public void deleteWordSet(Long wordSetId) {
         wordSetRepository.deleteById(wordSetId);
     }

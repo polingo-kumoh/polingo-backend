@@ -15,10 +15,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class UserService {
     private final WordSetRepository wordSetRepository;
     private final UserRepository userRepository;
@@ -42,19 +44,21 @@ public class UserService {
         return ResponseEntity.ok(userResponse);
     }
 
-
+    @Transactional
     public void updateNickname(User user, String updateName) {
         validateNickname(updateName);
         user.updateNIckName(updateName);
         userRepository.save(user);
     }
 
+    @Transactional
     public void updateLanguage(User user, String languageCode) {
         Language newLanguage = Language.fromCode(languageCode);
         user.updateLanguage(newLanguage);
         userRepository.save(user);
     }
 
+    @Transactional
     public User createUser(LoginType loginType, UserInfo userInfo) {
         User newUser = User.builder()
                 .nickname(userInfo.getName())

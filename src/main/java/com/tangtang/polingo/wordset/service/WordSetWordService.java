@@ -12,8 +12,10 @@ import com.tangtang.polingo.wordset.repository.WordSetWordRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class WordSetWordService {
     private final WordRepository wordRepository;
@@ -28,6 +30,7 @@ public class WordSetWordService {
         linkWordToWordSet(wordSet, word);
     }
 
+    @Transactional(readOnly = true)
     public WordSetDetailsResponse getWordSetDetails(Long wordSetId) {
         WordSet wordSet = wordSetRepository.findById(wordSetId)
                 .orElseThrow(() -> new IllegalArgumentException("단어장을 찾을 수 없습니다."));

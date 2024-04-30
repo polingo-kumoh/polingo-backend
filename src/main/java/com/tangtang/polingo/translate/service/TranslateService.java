@@ -8,9 +8,11 @@ import com.tangtang.polingo.translate.service.stt.SpeachToText;
 import com.tangtang.polingo.translate.service.translate.TextTranslator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class TranslateService {
     private final TextTranslator textTranslator;

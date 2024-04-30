@@ -6,8 +6,10 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
+@Transactional
 public class OAuth2Services {
     private final Map<LoginType, OAuth2Service> authServiceMap;
 
