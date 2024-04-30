@@ -2,7 +2,7 @@ package com.tangtang.polingo.word.controller;
 
 
 import com.tangtang.polingo.word.dto.WordMeaningResponse;
-import com.tangtang.polingo.word.service.wordService;
+import com.tangtang.polingo.word.service.WordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/word")
 @RequiredArgsConstructor
 public class WordController {
-    private final wordService wordService;
+    private final WordService wordService;
 
     @GetMapping("/{code}")
     @Operation(summary = "단어 조회 API", description = "단어를 조회합니다.")

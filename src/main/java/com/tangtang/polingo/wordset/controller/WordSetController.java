@@ -5,7 +5,10 @@ import com.tangtang.polingo.security.security.annotation.CurrentUser;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.wordset.dto.WordSetCreateRequest;
 import com.tangtang.polingo.wordset.dto.WordSetSummaryResponse;
+import com.tangtang.polingo.wordset.dto.dto.InsertWordRequest;
+import com.tangtang.polingo.wordset.dto.dto.WordSetDetailsResponse;
 import com.tangtang.polingo.wordset.service.WordSetService;
+import com.tangtang.polingo.wordset.service.WordSetWordService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -28,32 +31,31 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/wordset")
 public class WordSetController {
     private final WordSetService wordSetService;
+    private final WordSetWordService wordSetWordService;
 
-    @PostMapping("/create")
-    public CommonResponse createWordSet(@RequestBody WordSetCreateRequest wordSetCreateRequest, @CurrentUser User user) {
+    @PostMapping
+    public CommonResponse createWordSet(@RequestBody WordSetCreateRequest wordSetCreateRequest,
+                                        @CurrentUser User user) {
         wordSetService.createWordSet(user, wordSetCreateRequest);
         return new CommonResponse(HttpStatus.OK.value(), "단어장을 생성했습니다.");
     }
 
-    // 단어장 이름 변경
-    @PutMapping("/{wordSetId}/update")
+    @PutMapping("/{wordSetId}")
     @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'write')")
-    public CommonResponse updateWordSetName(@PathVariable Long wordSetId, @RequestParam String newName, @CurrentUser User user) {
+    public CommonResponse updateWordSetName(@PathVariable Long wordSetId, @RequestParam String newName) {
         wordSetService.updateWordSetName(wordSetId, newName);
         return new CommonResponse(HttpStatus.OK.value(), "단어장의 이름을 변경하였습니다.");
     }
 
-    // 단어장 목록 조회
-    @GetMapping("/list")
+    @GetMapping
     public ResponseEntity<List<WordSetSummaryResponse>> getAllWordSetsByUserId(@CurrentUser User user) {
         List<WordSetSummaryResponse> wordSets = wordSetService.getAllWordSetSummariesByUser(user);
         return ResponseEntity.ok(wordSets);
     }
 
-    // 단어장 삭제
-    @DeleteMapping("/delete/{wordSetId}")
+    @DeleteMapping("/{wordSetId}")
     @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'delete')")
-    public CommonResponse deleteWordSet(@CurrentUser User user, @PathVariable Long wordSetId) {
+    public CommonResponse deleteWordSet(@PathVariable Long wordSetId) {
         wordSetService.deleteWordSet(wordSetId);
         return new CommonResponse(HttpStatus.OK.value(), "단어장을 삭제하였습니다.");
     }
@@ -65,4 +67,17 @@ public class WordSetController {
         return new CommonResponse(HttpStatus.OK.value(), "기본 단어장으로 설정되었습니다.");
     }
 
+    @PostMapping("/{wordSetId}/insert-word")
+    @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'write')")
+    public CommonResponse insertWordInWordSet(@PathVariable Long wordSetId, @RequestBody InsertWordRequest req) {
+        wordSetWordService.insertWord(wordSetId, req);
+        return new CommonResponse(HttpStatus.OK.value(), "단어를 단어장에 삽입하였습니다.");
+    }
+
+    @GetMapping("/{wordSetId}/details")
+    public ResponseEntity<WordSetDetailsResponse> getWordSetDetails(@PathVariable Long wordSetId) {
+        WordSetDetailsResponse response = wordSetWordService.getWordSetDetails(wordSetId);
+
+        return ResponseEntity.ok(response);
+    }
 }

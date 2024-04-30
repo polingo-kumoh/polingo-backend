@@ -26,7 +26,8 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests((Requests) -> {
                     Requests.requestMatchers(
-                            "/api/user/**"
+                            "/api/user/**",
+                            "api/wordset/**"
                     ).authenticated();
                     Requests.anyRequest().permitAll();
                 })

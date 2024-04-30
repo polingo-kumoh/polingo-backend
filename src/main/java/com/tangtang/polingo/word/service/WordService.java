@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class wordService {
+public class WordService {
     private final WordSearcher wordSearcher;
 
     public WordMeaningResponse findWordMeaning(String code, String word) {

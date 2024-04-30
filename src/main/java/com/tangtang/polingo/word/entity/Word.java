@@ -1,4 +1,4 @@
-package com.tangtang.polingo.wordset.entity;
+package com.tangtang.polingo.word.entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
