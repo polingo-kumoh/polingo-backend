@@ -1,6 +1,8 @@
 package com.tangtang.polingo.wordset.controller;
 
 import com.tangtang.polingo.global.dto.CommonResponse;
+import com.tangtang.polingo.security.security.annotation.CurrentUser;
+import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.wordset.dto.wordsetword.InsertWordRequest;
 import com.tangtang.polingo.wordset.dto.wordsetword.WordSetDetailsResponse;
 import com.tangtang.polingo.wordset.service.WordSetWordService;

@@ -1,5 +1,6 @@
 package com.tangtang.polingo.wordset.service;
 
+import com.tangtang.polingo.quiz.service.UserWordService;
 import com.tangtang.polingo.word.entity.Word;
 import com.tangtang.polingo.word.repository.WordRepository;
 import com.tangtang.polingo.wordset.dto.wordsetword.InsertWordRequest;
@@ -21,13 +22,33 @@ public class WordSetWordService {
     private final WordRepository wordRepository;
     private final WordSetRepository wordSetRepository;
     private final WordSetWordRepository wordSetWordRepository;
+    private final UserWordService userWordService;
 
     public void insertWord(Long wordSetId, InsertWordRequest req) {
         WordSet wordSet = wordSetRepository.findById(wordSetId)
                 .orElseThrow(() -> new IllegalArgumentException("단어장을 찾을 수 없습니다."));
+
         Word word = wordRepository.findByText(req.word())
                 .orElseGet(() -> createAndSaveWord(req.word(), req.description()));
+
+        boolean isExist = wordSetWordRepository.existsByWordSetAndWord(wordSet, word);
+
+        if(isExist){
+            throw new IllegalStateException("단어가 이미 이 단어장에 존재합니다.");
+        }
+
+        userWordService.createUserWord(wordSet.getUser(), word, wordSet.getLanguage());
+
         linkWordToWordSet(wordSet, word);
+    }
+
+    public void deleteWordFromWordSet(Long wordSetId, Long wordId) {
+        WordSetWord wordSetWord = wordSetWordRepository.findByWordSetIdAndWordId(wordSetId, wordId)
+                .orElseThrow(() -> new IllegalArgumentException("해당 단어 연결 정보를 찾을 수 없습니다."));
+
+        userWordService.deleteUserWordOrDecreaseCount(wordSetWord.getWordSet().getUser().getId(), wordId);
+
+        wordSetWordRepository.delete(wordSetWord);
     }
 
     @Transactional(readOnly = true)
@@ -49,12 +70,6 @@ public class WordSetWordService {
                 .name(wordSet.getName())
                 .words(wordDetails)
                 .build();
-    }
-
-    public void deleteWordFromWordSet(Long wordSetId, Long wordId) {
-        WordSetWord wordSetWord = wordSetWordRepository.findByWordSetIdAndWordId(wordSetId, wordId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 단어 연결 정보를 찾을 수 없습니다."));
-        wordSetWordRepository.delete(wordSetWord);
     }
 
     public void moveWordToAnotherWordSet(Long wordSetId, Long wordId, Long targetWordSetId) {
