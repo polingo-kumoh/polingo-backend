@@ -1,14 +1,30 @@
 package com.tangtang.polingo.quiz.entity;
 
-import com.tangtang.polingo.word.entity.Word;
 import java.util.List;
-import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Builder;
+import lombok.Getter;
 
-@Data
-@AllArgsConstructor
+@Getter
+@Builder
 public class Quiz {
-    private Word question;
-    private List<String> options;
-    private String correctAnswer;
+    private int id;
+    private String question;
+    private List<Option> options;
+    private Option correctAnswer;
+
+    public int getCorrectId() {
+        return correctAnswer.getOptionId();
+    }
+
+    @Getter
+    @Builder
+    public static class Option implements Comparable<Option> {
+        private int optionId;
+        private String text;
+
+        @Override
+        public int compareTo(Option o) {
+            return Integer.compare(optionId, o.optionId);
+        }
+    }
 }

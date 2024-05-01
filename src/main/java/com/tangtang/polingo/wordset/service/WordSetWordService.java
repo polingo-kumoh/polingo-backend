@@ -1,6 +1,5 @@
 package com.tangtang.polingo.wordset.service;
 
-import com.tangtang.polingo.quiz.service.UserWordService;
 import com.tangtang.polingo.word.entity.Word;
 import com.tangtang.polingo.word.repository.WordRepository;
 import com.tangtang.polingo.wordset.dto.wordsetword.InsertWordRequest;
@@ -21,7 +20,6 @@ public class WordSetWordService {
     private final WordRepository wordRepository;
     private final WordSetRepository wordSetRepository;
     private final WordSetWordRepository wordSetWordRepository;
-    private final UserWordService userWordService;
 
     public void insertWord(Long wordSetId, InsertWordRequest req) {
         WordSet wordSet = wordSetRepository.findById(wordSetId)
@@ -30,24 +28,16 @@ public class WordSetWordService {
         Word word = wordRepository.findByText(req.word())
                 .orElseGet(() -> createAndSaveWord(req.word(), req.description()));
 
-        boolean isExist = wordSetWordRepository.existsByWordSetAndWord(wordSet, word);
-
-        if (isExist) {
+        if (wordSetWordRepository.existsByWordSetAndWord(wordSet, word)) {
             throw new IllegalStateException("단어가 이미 이 단어장에 존재합니다.");
         }
-
-        userWordService.createUserWord(wordSet.getUser(), word, wordSet.getLanguage());
 
         linkWordToWordSet(wordSet, word);
     }
 
     public void deleteWordsFromWordSet(Long wordSetId, List<Long> wordIds) {
         List<WordSetWord> wordsToDelete = wordSetWordRepository.findByWordSetIdAndWordIds(wordSetId, wordIds);
-        for (WordSetWord wordSetWord : wordsToDelete) {
-            userWordService.deleteUserWordOrDecreaseCount(wordSetWord.getWordSet().getUser().getId(),
-                    wordSetWord.getWord().getId());
-            wordSetWordRepository.delete(wordSetWord);
-        }
+        wordSetWordRepository.deleteAll(wordsToDelete);
     }
 
     public void moveWordsToAnotherWordSet(Long wordSetId, List<Long> wordIds, Long targetWordSetId) {
