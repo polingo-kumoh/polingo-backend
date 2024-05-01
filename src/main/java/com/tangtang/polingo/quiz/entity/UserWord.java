@@ -1,7 +1,6 @@
 package com.tangtang.polingo.quiz.entity;
 
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.global.entity.BaseEntity;
 import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.word.entity.Word;
 import jakarta.persistence.Entity;

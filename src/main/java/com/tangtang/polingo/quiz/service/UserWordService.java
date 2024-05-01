@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserWordService {
     private final UserWordRepository userWordRepository;
+
     public void createUserWord(User user, Word word, Language language) {
         UserWord userWord = userWordRepository.findByUserIdAndWordId(user.getId(), word.getId())
                 .orElseGet(() -> UserWord.builder()

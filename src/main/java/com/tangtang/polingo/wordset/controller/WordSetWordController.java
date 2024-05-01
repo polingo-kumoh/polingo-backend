@@ -1,13 +1,12 @@
 package com.tangtang.polingo.wordset.controller;
 
 import com.tangtang.polingo.global.dto.CommonResponse;
-import com.tangtang.polingo.security.security.annotation.CurrentUser;
-import com.tangtang.polingo.user.entity.User;
 import com.tangtang.polingo.wordset.dto.wordsetword.InsertWordRequest;
 import com.tangtang.polingo.wordset.dto.wordsetword.WordSetDetailsResponse;
 import com.tangtang.polingo.wordset.service.WordSetWordService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,19 +41,21 @@ public class WordSetWordController {
         return ResponseEntity.ok(response);
     }
 
-    @Operation(summary = "단어 삭제 API", description = "지정된 단어장에서 특정 단어를 삭제합니다.")
-    @DeleteMapping("/{wordId}")
+    @Operation(summary = "단어 일괄 삭제 API", description = "지정된 단어장에서 선택된 여러 단어를 삭제합니다.")
+    @DeleteMapping
     @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'write')")
-    public CommonResponse deleteWordFromWordSet(@PathVariable Long wordSetId, @PathVariable Long wordId) {
-        wordSetWordService.deleteWordFromWordSet(wordSetId, wordId);
-        return new CommonResponse(HttpStatus.OK.value(), "단어장에서 해당 단어를 삭제했습니다.");
+    public CommonResponse deleteWordsFromWordSet(@PathVariable Long wordSetId, @RequestBody List<Long> wordIds) {
+        wordSetWordService.deleteWordsFromWordSet(wordSetId, wordIds);
+        return new CommonResponse(HttpStatus.OK.value(), "단어장에서 선택된 단어들을 삭제했습니다.");
     }
 
-    @Operation(summary = "단어 이동 API", description = "하나의 단어장에서 다른 단어장으로 특정 단어를 이동시킵니다. targetWordSetId는 이동시킬 단어장의 id를 의미합니다.")
-    @PostMapping("/{wordId}/move-to/{targetWordSetId}")
+    @Operation(summary = "단어 일괄 이동 API", description = "하나의 단어장에서 다른 단어장으로 선택된 여러 단어를 이동시킵니다.")
+    @PostMapping("/move-to/{targetWordSetId}")
     @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'write') and hasPermission(#targetWordSetId, 'WordSet', 'write')")
-    public CommonResponse moveWordToAnotherWordSet(@PathVariable Long wordSetId, @PathVariable Long wordId, @PathVariable Long targetWordSetId) {
-        wordSetWordService.moveWordToAnotherWordSet(wordSetId, wordId, targetWordSetId);
-        return new CommonResponse(HttpStatus.OK.value(), "단어장의 단어를 이동시켰습니다.");
+    public CommonResponse moveWordsToAnotherWordSet(@PathVariable Long wordSetId, @RequestBody List<Long> wordIds,
+                                                    @PathVariable Long targetWordSetId) {
+        wordSetWordService.moveWordsToAnotherWordSet(wordSetId, wordIds, targetWordSetId);
+        return new CommonResponse(HttpStatus.OK.value(), "단어장의 선택된 단어들을 이동시켰습니다.");
     }
+
 }

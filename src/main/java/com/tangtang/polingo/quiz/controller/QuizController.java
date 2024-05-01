@@ -1,7 +1,6 @@
 package com.tangtang.polingo.quiz.controller;
 
 import com.tangtang.polingo.quiz.dto.QuizResponse;
-import com.tangtang.polingo.quiz.entity.Quiz;
 import com.tangtang.polingo.quiz.service.QuizService;
 import com.tangtang.polingo.security.security.annotation.CurrentUser;
 import com.tangtang.polingo.user.entity.User;

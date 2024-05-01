@@ -53,7 +53,6 @@ public class WordSetController {
         return ResponseEntity.ok(wordSets);
     }
 
-
     @Operation(summary = "단어장 삭제 API", description = "지정된 단어장을 삭제합니다.")
     @DeleteMapping("/{wordSetId}")
     @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'delete')")

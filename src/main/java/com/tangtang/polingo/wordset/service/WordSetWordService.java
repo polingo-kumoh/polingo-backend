@@ -8,7 +8,6 @@ import com.tangtang.polingo.wordset.dto.wordsetword.WordSetDetailsResponse;
 import com.tangtang.polingo.wordset.entity.WordSet;
 import com.tangtang.polingo.wordset.entity.WordSetWord;
 import com.tangtang.polingo.wordset.repository.WordSetRepository;
-
 import com.tangtang.polingo.wordset.repository.WordSetWordRepository;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +32,7 @@ public class WordSetWordService {
 
         boolean isExist = wordSetWordRepository.existsByWordSetAndWord(wordSet, word);
 
-        if(isExist){
+        if (isExist) {
             throw new IllegalStateException("단어가 이미 이 단어장에 존재합니다.");
         }
 
@@ -42,14 +41,26 @@ public class WordSetWordService {
         linkWordToWordSet(wordSet, word);
     }
 
-    public void deleteWordFromWordSet(Long wordSetId, Long wordId) {
-        WordSetWord wordSetWord = wordSetWordRepository.findByWordSetIdAndWordId(wordSetId, wordId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 단어 연결 정보를 찾을 수 없습니다."));
-
-        userWordService.deleteUserWordOrDecreaseCount(wordSetWord.getWordSet().getUser().getId(), wordId);
-
-        wordSetWordRepository.delete(wordSetWord);
+    public void deleteWordsFromWordSet(Long wordSetId, List<Long> wordIds) {
+        List<WordSetWord> wordsToDelete = wordSetWordRepository.findByWordSetIdAndWordIds(wordSetId, wordIds);
+        for (WordSetWord wordSetWord : wordsToDelete) {
+            userWordService.deleteUserWordOrDecreaseCount(wordSetWord.getWordSet().getUser().getId(),
+                    wordSetWord.getWord().getId());
+            wordSetWordRepository.delete(wordSetWord);
+        }
     }
+
+    public void moveWordsToAnotherWordSet(Long wordSetId, List<Long> wordIds, Long targetWordSetId) {
+        List<WordSetWord> wordsToMove = wordSetWordRepository.findByWordSetIdAndWordIds(wordSetId, wordIds);
+        WordSet targetWordSet = wordSetRepository.findById(targetWordSetId)
+                .orElseThrow(() -> new IllegalArgumentException("타겟 단어장을 찾을 수 없습니다."));
+
+        for (WordSetWord wordSetWord : wordsToMove) {
+            wordSetWordRepository.delete(wordSetWord);
+            linkWordToWordSet(targetWordSet, wordSetWord.getWord());
+        }
+    }
+
 
     @Transactional(readOnly = true)
     public WordSetDetailsResponse getWordSetDetails(Long wordSetId) {
@@ -70,18 +81,6 @@ public class WordSetWordService {
                 .name(wordSet.getName())
                 .words(wordDetails)
                 .build();
-    }
-
-    public void moveWordToAnotherWordSet(Long wordSetId, Long wordId, Long targetWordSetId) {
-        WordSetWord wordSetWord = wordSetWordRepository.findByWordSetIdAndWordId(wordSetId, wordId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 단어 연결 정보를 찾을 수 없습니다."));
-
-        WordSet targetWordSet = wordSetRepository.findById(targetWordSetId)
-                .orElseThrow(() -> new IllegalArgumentException("타겟 단어장을 찾을 수 없습니다."));
-
-        wordSetWordRepository.delete(wordSetWord);
-
-        linkWordToWordSet(targetWordSet, wordSetWord.getWord());
     }
 
     private Word createAndSaveWord(String text, String description) {

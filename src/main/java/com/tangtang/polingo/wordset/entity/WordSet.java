@@ -3,11 +3,14 @@ package com.tangtang.polingo.wordset.entity;
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.global.entity.BaseEntity;
 import com.tangtang.polingo.user.entity.User;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import java.util.Set;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,6 +33,10 @@ public class WordSet extends BaseEntity {
     @ManyToOne
     @JoinColumn(name = "users_id")
     private User user;
+
+    @OneToMany(mappedBy = "wordSet", cascade = CascadeType.REMOVE)
+    private Set<WordSetWord> wordSetWords;
+
 
     public void updateName(String name) {
         this.name = name;

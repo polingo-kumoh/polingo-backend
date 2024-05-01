@@ -7,6 +7,7 @@ import com.tangtang.polingo.wordset.dto.wordset.WordSetSummaryResponse;
 import com.tangtang.polingo.wordset.entity.WordSet;
 import com.tangtang.polingo.wordset.repository.WordSetRepository;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,14 +44,20 @@ public class WordSetService {
     // 단어장 목록 조회
     public List<WordSetSummaryResponse> getAllWordSetSummariesByUser(User user) {
         List<WordSet> wordSets = wordSetRepository.findAllByUser(user);
+        Map<Long, Long> wordCounts = wordSetRepository.countWordsInWordSetsByUser(user)
+                .stream()
+                .collect(Collectors.toMap(entry -> (Long) entry[0], entry -> (Long) entry[1]));
+
         return wordSets.stream()
                 .map(wordSet -> WordSetSummaryResponse.builder()
                         .id(wordSet.getId())
                         .name(wordSet.getName())
                         .isDefault(wordSet.getIsDefault())
+                        .count(wordCounts.getOrDefault(wordSet.getId(), 0L)) // 단어 개수 추가
                         .build())
                 .collect(Collectors.toList());
     }
+
 
     // 단어장 삭제
     @Transactional
