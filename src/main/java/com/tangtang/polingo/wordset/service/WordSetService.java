@@ -65,6 +65,7 @@ public class WordSetService {
         wordSetRepository.deleteById(wordSetId);
     }
 
+    @Transactional
     public void setDefaultWordSet(User user, Long wordSetId) {
         WordSet wordSetToSetDefault = wordSetRepository.findById(wordSetId)
                 .orElseThrow(() -> new IllegalArgumentException("WordSet not found or does not belong to the user"));
