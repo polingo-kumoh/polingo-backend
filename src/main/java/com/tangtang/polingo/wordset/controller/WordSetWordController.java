@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "단어장 내부 단어 API", description = "단어 조회를 통해 얻은 데이터를 단어장에 저장하고 관리할 수 있습니다. wordSetId는 단어장의 id, wordId는 단어의 id")
@@ -44,7 +45,7 @@ public class WordSetWordController {
     @Operation(summary = "단어 일괄 삭제 API", description = "지정된 단어장에서 선택된 여러 단어를 삭제합니다.")
     @DeleteMapping
     @PreAuthorize("hasPermission(#wordSetId, 'WordSet', 'write')")
-    public CommonResponse deleteWordsFromWordSet(@PathVariable Long wordSetId, @RequestBody List<Long> wordIds) {
+    public CommonResponse deleteWordsFromWordSet(@PathVariable Long wordSetId, @RequestParam List<Long> wordIds) {
         wordSetWordService.deleteWordsFromWordSet(wordSetId, wordIds);
         return new CommonResponse(HttpStatus.OK.value(), "단어장에서 선택된 단어들을 삭제했습니다.");
     }
@@ -57,5 +58,4 @@ public class WordSetWordController {
         wordSetWordService.moveWordsToAnotherWordSet(wordSetId, wordIds, targetWordSetId);
         return new CommonResponse(HttpStatus.OK.value(), "단어장의 선택된 단어들을 이동시켰습니다.");
     }
-
 }
