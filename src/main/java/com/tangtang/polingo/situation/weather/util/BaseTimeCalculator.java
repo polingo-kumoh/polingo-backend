@@ -17,16 +17,19 @@ public class BaseTimeCalculator {
         int currentHour = currentTime.getHour();
         int currentMinute = currentTime.getMinute();
 
+        String lastBaseTime = BASE_TIMES.get(BASE_TIMES.size() - 1);
+
         for (String baseTime : BASE_TIMES) {
             int baseHour = Integer.parseInt(baseTime.substring(0, 2));
             int baseMinute = Integer.parseInt(baseTime.substring(2, 4));
 
-            if (currentHour < baseHour || (currentHour == baseHour && currentMinute <= baseMinute)) {
-                return baseTime;
+            if (currentHour < baseHour || (currentHour == baseHour && currentMinute < baseMinute)) {
+                return lastBaseTime;
             }
+
+            lastBaseTime = baseTime;
         }
 
-        return BASE_TIMES.get(BASE_TIMES.size() - 1);
+        return lastBaseTime;
     }
 }
-

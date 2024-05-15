@@ -22,15 +22,13 @@ public class WeatherClientTest {
 
     @Autowired
     private WeatherClient weatherClient;
-    @Autowired
-    private WeatherConfig weatherConfig;
 
     @Test
     public void testGetWeather() {
-        log.info("expr = {}", weatherConfig.getKey());
         // When
         String response = weatherClient.getWeather(86, 95);
 
+        log.info("response = {}", response);
         // Then
         assertNotNull(response);
     }
