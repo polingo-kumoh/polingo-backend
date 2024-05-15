@@ -1,4 +1,4 @@
-package com.tangtang.polingo.situation.weather.util;
+package com.tangtang.polingo.situation.util;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

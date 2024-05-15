@@ -1,4 +1,4 @@
-package com.tangtang.polingo.situation.weather.config;
+package com.tangtang.polingo.situation.config;
 
 import lombok.Getter;
 import lombok.Setter;

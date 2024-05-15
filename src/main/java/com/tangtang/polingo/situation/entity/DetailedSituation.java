@@ -10,7 +10,6 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.codec.language.bm.Lang;
 
 @Entity
 public class DetailedSituation extends BaseEntity {

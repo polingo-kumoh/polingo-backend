@@ -1,7 +1,7 @@
-package com.tangtang.polingo.situation.weather.service;
+package com.tangtang.polingo.situation.service.weather;
 
-import com.tangtang.polingo.situation.weather.config.WeatherConfig;
-import com.tangtang.polingo.situation.weather.util.BaseTimeCalculator;
+import com.tangtang.polingo.situation.config.WeatherConfig;
+import com.tangtang.polingo.situation.util.BaseTimeCalculator;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

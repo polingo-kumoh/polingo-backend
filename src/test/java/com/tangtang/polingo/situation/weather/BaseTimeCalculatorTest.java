@@ -2,9 +2,8 @@ package com.tangtang.polingo.situation.weather;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.tangtang.polingo.situation.weather.util.BaseTimeCalculator;
+import com.tangtang.polingo.situation.util.BaseTimeCalculator;
 import java.time.LocalDateTime;
-
 import org.junit.jupiter.api.Test;
 
 public class BaseTimeCalculatorTest {
