@@ -1,4 +1,4 @@
-package com.tangtang.polingo.entity;
+package com.tangtang.polingo.situation.entity;
 
 import com.tangtang.polingo.global.entity.BaseEntity;
 import jakarta.persistence.Column;
