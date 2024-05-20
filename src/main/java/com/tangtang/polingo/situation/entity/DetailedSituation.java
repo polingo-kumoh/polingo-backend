@@ -10,8 +10,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class DetailedSituation extends BaseEntity {
     private String name; // 세부 상황의 이름 (예: "주문", "계산")
 
@@ -24,4 +26,11 @@ public class DetailedSituation extends BaseEntity {
 
     @OneToMany(mappedBy = "detailedSituation")
     private List<SituationSentence> sentences = new ArrayList<>();
+
+    @OneToMany(mappedBy = "detailedSituation")
+    private List<SituationImage> images = new ArrayList<>();
+
+    public boolean matches(String holidayName, Language language) {
+        return this.name.equals(holidayName) && this.language == language;
+    }
 }

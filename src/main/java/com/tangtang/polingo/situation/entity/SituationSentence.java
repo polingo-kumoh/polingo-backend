@@ -5,8 +5,10 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class SituationSentence extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String sentence; // 예문 내용

@@ -8,14 +8,14 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
 
 @Entity
+@Getter
 public class Situation extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Category category;
-
-    @Column(length = 255)
     private String name;
 
     @OneToMany(mappedBy = "situation")
