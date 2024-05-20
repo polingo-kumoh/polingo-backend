@@ -1,5 +1,6 @@
 src/main/resources/application*.yml
 src/main/resources/*.json
+src/main/resources/ehcache.xml
 
 HELP.md
 .gradle

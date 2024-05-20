@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class SituationImage{
+public class SituationImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,4 +21,3 @@ public class SituationImage{
     @JoinColumn(name = "detailed_situation_id", nullable = false)
     private DetailedSituation detailedSituation;
 }
-

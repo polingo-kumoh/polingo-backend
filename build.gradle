@@ -69,6 +69,10 @@ dependencies {
 
     //Json 파싱 관련
     implementation group: 'org.json', name: 'json', version: '20240303'
+
+    //캐시
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'net.sf.ehcache:ehcache:2.10.3'
 }
 
 tasks.named('test') {

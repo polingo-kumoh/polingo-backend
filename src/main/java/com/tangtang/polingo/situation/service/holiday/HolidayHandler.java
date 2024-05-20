@@ -1,14 +1,12 @@
 package com.tangtang.polingo.situation.service.holiday;
 
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.situation.cache.HolidayMap;
-import com.tangtang.polingo.situation.dto.SituationResponse;
+import com.tangtang.polingo.situation.dto.DateResponse;
 import com.tangtang.polingo.situation.entity.Category;
 import com.tangtang.polingo.situation.entity.Situation;
 import com.tangtang.polingo.situation.entity.SituationImage;
 import com.tangtang.polingo.situation.entity.SituationSentence;
 import com.tangtang.polingo.situation.repository.SituationRepository;
-import com.tangtang.polingo.situation.service.SituationHandler;
 import com.tangtang.polingo.situation.vo.Holiday;
 import java.time.LocalDate;
 import java.util.Optional;
@@ -19,17 +17,11 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class HolidayHandler implements SituationHandler {
+public class HolidayHandler {
     private final HolidayMap holidayMap;
     private final SituationRepository situationRepository;
 
-    @Override
-    public boolean supports(Category category) {
-        return Category.DATE.equals(category);
-    }
-
-    @Override
-    public SituationResponse getSituation(Language language, LocalDate date) {
+    public DateResponse getSituation(Language language, LocalDate date) {
         LocalDate today = Optional.ofNullable(date).orElse(LocalDate.now());
         String countryCode = language.getCountryCode();
 
@@ -63,11 +55,11 @@ public class HolidayHandler implements SituationHandler {
         return sentence.getDetailedSituation().getImages().stream()
                 .findFirst()
                 .map(SituationImage::getUrl)
-                .orElseThrow(() -> new IllegalArgumentException("이미지를 찾을 수 없습니다."));
+                .orElse(null);
     }
 
-    private SituationResponse createSituationResponse(SituationSentence sentence) {
+    private DateResponse createSituationResponse(SituationSentence sentence) {
         String imageUrl = findSituationImage(sentence);
-        return new SituationResponse("공휴일", sentence.getSentence(), imageUrl);
+        return new DateResponse(sentence.getSentence(), sentence.getTranslation(), imageUrl);
     }
 }

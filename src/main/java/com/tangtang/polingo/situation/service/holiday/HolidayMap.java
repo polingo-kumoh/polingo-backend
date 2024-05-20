@@ -1,4 +1,4 @@
-package com.tangtang.polingo.situation.cache;
+package com.tangtang.polingo.situation.service.holiday;
 
 import com.tangtang.polingo.situation.vo.Holiday;
 import jakarta.annotation.PostConstruct;
@@ -54,7 +54,8 @@ public class HolidayMap {
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<>() {}
+                new ParameterizedTypeReference<>() {
+                }
         );
         return response.getBody();
     }

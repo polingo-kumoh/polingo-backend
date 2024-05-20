@@ -2,7 +2,7 @@ package com.tangtang.polingo.integration;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-import com.tangtang.polingo.situation.cache.HolidayMap;
+import com.tangtang.polingo.situation.service.holiday.HolidayMap;
 import java.time.LocalDate;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -51,7 +51,8 @@ public class SituationControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.type").value("공휴일"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.sentance").value("今日は元日です！"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.situationImage").value("http://example.com/new_year_jp.jpg"))
+                .andExpect(
+                        MockMvcResultMatchers.jsonPath("$.situationImage").value("http://example.com/new_year_jp.jpg"))
                 .andDo(MockMvcResultHandlers.print());
 
         // KOREAN 테스트

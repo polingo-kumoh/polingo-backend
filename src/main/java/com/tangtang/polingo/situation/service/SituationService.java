@@ -1,10 +1,11 @@
 package com.tangtang.polingo.situation.service;
 
 import com.tangtang.polingo.global.constant.Language;
-import com.tangtang.polingo.situation.dto.SituationResponse;
-import com.tangtang.polingo.situation.entity.Category;
+import com.tangtang.polingo.situation.dto.DateResponse;
+import com.tangtang.polingo.situation.dto.WeatherResponse;
+import com.tangtang.polingo.situation.service.holiday.HolidayHandler;
+import com.tangtang.polingo.situation.service.weather.WeatherHandler;
 import java.time.LocalDate;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,14 +14,14 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class SituationService {
+    private final HolidayHandler holidayHandler;
+    private final WeatherHandler weatherHandler;
 
-    private final List<SituationHandler> handlers;
+    public DateResponse getDateSituation(Language language, LocalDate date) {
+        return holidayHandler.getSituation(language, date);
+    }
 
-    public SituationResponse getSituation(Category category, Language language, LocalDate date) {
-        return handlers.stream()
-                .filter(handler -> handler.supports(category))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("지원하지 않는 카테고리입니다."))
-                .getSituation(language, date);
+    public WeatherResponse getWeatherSituation(Language language, String lon, String lat) {
+        return weatherHandler.getSituation(language, lon, lat);
     }
 }
