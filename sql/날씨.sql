@@ -117,13 +117,13 @@ VALUES ('clear sky', 2);
 
 -- Inserting DetailedSituation for Clouds
 INSERT INTO detailed_situation (name, situation_id)
-VALUES ('few clouds (11-25%)', 2);
+VALUES ('few clouds', 2);
 INSERT INTO detailed_situation (name, situation_id)
-VALUES ('scattered clouds (25-50%)', 2);
+VALUES ('scattered clouds', 2);
 INSERT INTO detailed_situation (name, situation_id)
-VALUES ('broken clouds (51-84%)', 2);
+VALUES ('broken clouds', 2);
 INSERT INTO detailed_situation (name, situation_id)
-VALUES ('overcast clouds (85-100%)', 2);
+VALUES ('overcast clouds', 2);
 
 INSERT INTO situation_sentence (language, sentence, translation, detailed_situation_id)
 VALUES ('ENGLISH', 'Thunderstorm with light rain. Take an umbrella when going out.',

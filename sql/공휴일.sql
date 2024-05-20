@@ -115,7 +115,7 @@ INSERT INTO detailed_situation (name, situation_id) VALUES ('Juneteenth National
 INSERT INTO detailed_situation (name, situation_id) VALUES ('Independence Day', 1);
 INSERT INTO detailed_situation (name, situation_id) VALUES ('Labor Day', 1);
 INSERT INTO detailed_situation (name, situation_id) VALUES ('Columbus Day', 1);
-INSERT INTO detailed_situation (name, situation_id) VALUES ('Indigenous Peoples\' Day', 1);
+INSERT INTO detailed_situation (name, situation_id) VALUES ('Indigenous Peoples' Day', 1);
 INSERT INTO detailed_situation (name, situation_id)
 VALUES ('Veterans Day', 1);
 INSERT INTO detailed_situation (name, situation_id)
