@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 @Getter
 @Component
 @EnableConfigurationProperties
-@ConfigurationProperties(prefix = "open-api")
-public class OpenConfig {
+@ConfigurationProperties(prefix = "openweathermap")
+public class OpenWeatherMapConfig {
+    private String api;
     private String key;
-    private String weatherUri;
 }

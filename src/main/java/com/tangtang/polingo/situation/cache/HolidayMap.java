@@ -1,13 +1,12 @@
 package com.tangtang.polingo.situation.cache;
 
 import com.tangtang.polingo.situation.vo.Holiday;
+import jakarta.annotation.PostConstruct;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.annotation.PostConstruct;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
@@ -22,7 +21,7 @@ import org.springframework.web.client.RestTemplate;
 public class HolidayMap {
 
     private final RestTemplate restTemplate;
-    private final Map<String, Map<LocalDate, List<Holiday>>> holidaysByCountry = new HashMap<>();
+    private final Map<String, Holiday> holidaysByCountryAndDate = new HashMap<>();
 
     @Autowired
     public HolidayMap(RestTemplateBuilder restTemplateBuilder) {
@@ -34,18 +33,18 @@ public class HolidayMap {
         loadHolidaysForCountry("US");
         loadHolidaysForCountry("KR");
         loadHolidaysForCountry("JP");
-        log.info("Holidays = {}", holidaysByCountry);
+        log.info("Holidays = {}", holidaysByCountryAndDate);
     }
 
-    public List<Holiday> getHolidays(String countryCode, LocalDate date) {
-        return holidaysByCountry.getOrDefault(countryCode, Collections.emptyMap())
-                .getOrDefault(date, Collections.emptyList());
+    public Optional<Holiday> getHoliday(String countryCode, LocalDate date) {
+        String key = countryCode + date.toString();
+        return Optional.ofNullable(holidaysByCountryAndDate.get(key));
     }
 
     private void loadHolidaysForCountry(String countryCode) {
         int currentYear = LocalDate.now().getYear();
         List<Holiday> holidays = getPublicHolidays(currentYear, countryCode);
-        holidays.addAll(getPublicHolidays(currentYear , countryCode));
+        holidays.addAll(getPublicHolidays(currentYear + 1, countryCode));
         addHolidays(countryCode, holidays);
     }
 
@@ -61,11 +60,9 @@ public class HolidayMap {
     }
 
     private void addHolidays(String countryCode, List<Holiday> holidays) {
-        Map<LocalDate, List<Holiday>> holidayMap = holidaysByCountry.computeIfAbsent(countryCode, k -> new HashMap<>());
-
         for (Holiday holiday : holidays) {
-            LocalDate date = LocalDate.parse(holiday.getDate());
-            holidayMap.computeIfAbsent(date, k -> new ArrayList<>()).add(holiday);
+            String key = countryCode + holiday.getDate();
+            holidaysByCountryAndDate.put(key, holiday);
         }
     }
 }
