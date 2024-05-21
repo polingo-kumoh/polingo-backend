@@ -1,5 +1,7 @@
-INSERT INTO situation(category, name) VALUES ('DATE', '날짜');
-INSERT INTO situation(category, name) VALUES ('WEATHER', '날씨');
+INSERT INTO situation(category, name)
+VALUES ('DATE', '날짜');
+INSERT INTO situation(category, name)
+VALUES ('WEATHER', '날씨');
 
 
 INSERT INTO detailed_situation (name, situation_id)
@@ -281,7 +283,8 @@ VALUES
 ('ENGLISH', 'Squalls are present. Avoid going out.', '돌풍이 있습니다. 외출을 자제하세요.', 79),
 ('ENGLISH', 'Tornado has occurred. Seek shelter in a safe place.', '토네이도가 발생했습니다. 안전한 장소로 대피하세요.', 80),
 ('ENGLISH', 'Clear sky. Have a pleasant day.', '하늘이 맑습니다. 기분 좋은 하루 되세요.', 81),
-('ENGLISH', 'There are a few clouds in the sky, but it’s mostly clear. It''s a great day for a walk or outdoor activities.', '오늘 하늘에 약간의 구름이 있지만, 대체로 맑은 날씨입니다. 산책이나 야외 활동을 즐기기 좋은 날입니다.', 82),
+('ENGLISH', 'There are a few clouds in the sky,
+        but it’s mostly clear. It''s a great day for a walk or outdoor activities.', '오늘 하늘에 약간의 구름이 있지만, 대체로 맑은 날씨입니다. 산책이나 야외 활동을 즐기기 좋은 날입니다.', 82),
 ('ENGLISH', 'Scattered clouds are in the sky. The sunlight peeking through the clouds makes for pleasant weather.', '오늘 하늘에는 구름이 드문드문 떠 있습니다. 햇빛이 구름 사이로 비춰 기분 좋은 날씨입니다.', 83),
 ('ENGLISH', 'There are many clouds in the sky. It might not be the best day for a picnic or outdoor activities.', '구름이 많이 끼어 있습니다. 피크닉이나 소풍 활동 하기에는 살짝 부적합할 수도 있습니다.', 84),
 ('ENGLISH', 'The sky is overcast and covered with clouds. There might be a chance of rain, so take an umbrella.', '오늘은 하늘이 흐리고 구름으로 덮여 있습니다. 비가 올 가능성이 있으니 우산을 챙기세요.', 85);

@@ -1,0 +1,326 @@
+[
+  {
+    "id": 30,
+    "category": "PLACE",
+    "name": "공항",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716299937/polingo/dg6xyc9ocs8adjwwirtn.webp"
+  },
+  {
+    "id": 31,
+    "category": "PLACE",
+    "name": "호텔",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300351/polingo/phzt97kze63q4i2wrgpu.webp"
+  },
+  {
+    "id": 32,
+    "category": "PLACE",
+    "name": "식당",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300179/polingo/kaofcroud0g9vu2njxua.webp"
+  },
+  {
+    "id": 33,
+    "category": "PLACE",
+    "name": "카페",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300288/polingo/xnjv4h0imbchnuolgssg.webp"
+  },
+  {
+    "id": 34,
+    "category": "PLACE",
+    "name": "마트",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300068/polingo/tobxd8pywf49cb1xehf3.webp"
+  },
+  {
+    "id": 35,
+    "category": "PLACE",
+    "name": "병원",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300101/polingo/hm8nt4uw6v360ev9zh7e.webp"
+  },
+  {
+    "id": 36,
+    "category": "PLACE",
+    "name": "약국",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300200/polingo/glyguxp007vol9dcyqhu.webp"
+  },
+  {
+    "id": 37,
+    "category": "PLACE",
+    "name": "택시",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300302/polingo/a6s8i9ybjbxp62h1k61m.webp"
+  },
+  {
+    "id": 38,
+    "category": "PLACE",
+    "name": "대중교통",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716299997/polingo/bewln5hosi3qwpycuawi.webp"
+  },
+  {
+    "id": 39,
+    "category": "PLACE",
+    "name": "은행",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300216/polingo/wtqnmzbyiaaxmmfvnez2.webp"
+  },
+  {
+    "id": 40,
+    "category": "PLACE",
+    "name": "관광지",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716299957/polingo/bukiqfhzmt5xbdlod5ic.webp"
+  },
+  {
+    "id": 41,
+    "category": "PLACE",
+    "name": "전시회",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300236/polingo/awascfn5mt5bnvvv0fqm.webp"
+  },
+  {
+    "id": 42,
+    "category": "PLACE",
+    "name": "경찰서",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716299886/polingo/gutoulcruyn6jb4qkdv2.webp"
+  },
+  {
+    "id": 43,
+    "category": "PLACE",
+    "name": "주유소",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300252/polingo/pd8bbcnqvyuqdhv8ozcx.webp"
+  },
+  {
+    "id": 44,
+    "category": "PLACE",
+    "name": "렌터카",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300051/polingo/ju8yyckasjbsnancjpym.webp"
+  },
+  {
+    "id": 45,
+    "category": "PLACE",
+    "name": "극장",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716299978/polingo/vmy2kbrudwn4kh1gd9gs.webp"
+  },
+  {
+    "id": 46,
+    "category": "PLACE",
+    "name": "도서관",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300018/polingo/rwbihepkxfybuf5rnmmg.webp"
+  },
+  {
+    "id": 47,
+    "category": "PLACE",
+    "name": "체육관",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300271/polingo/gsr9qsykf5svav1uo5yi.webp"
+  },
+  {
+    "id": 48,
+    "category": "PLACE",
+    "name": "공원",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716299913/polingo/y6hwowcjwx9qoag5lkr2.webp"
+  },
+  {
+    "id": 49,
+    "category": "PLACE",
+    "name": "서점",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300120/polingo/ql0ugjh3nn5noawttg4d.webp"
+  },
+  {
+    "id": 50,
+    "category": "PLACE",
+    "name": "수영장",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300142/polingo/khfocwri2w5i2rabfecc.webp"
+  },
+  {
+    "id": 51,
+    "category": "PLACE",
+    "name": "미용실",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300085/polingo/swrqv9rbzcidw8lf4yah.webp"
+  },
+  {
+    "id": 52,
+    "category": "PLACE",
+    "name": "해변",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300334/polingo/dsmfn2ka2xb6dxdaoffh.webp"
+  },
+  {
+    "id": 53,
+    "category": "PLACE",
+    "name": "등산",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300034/polingo/getushrfxpvb3zngpu3h.webp"
+  },
+  {
+    "id": 54,
+    "category": "PLACE",
+    "name": "시장",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300159/polingo/hxtntofgkpg6t4w2pfwb.webp"
+  },
+  {
+    "id": 55,
+    "category": "PLACE",
+    "name": "경기장",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716299848/polingo/pw6hgqjnsr5iaouvek9l.webp"
+  },
+  {
+    "id": 56,
+    "category": "PLACE",
+    "name": "투어",
+    "icon": "http://res.cloudinary.com/dxtqpipdu/image/upload/v1716300319/polingo/px57rakhnmu1ggkhqasl.webp"
+  },
+  {
+    "id": 57,
+    "category": "TIME",
+    "name": "MORNING",
+    "icon": null
+  },
+  {
+    "id": 58,
+    "category": "TIME",
+    "name": "LUNCH",
+    "icon": null
+  },
+  {
+    "id": 59,
+    "category": "TIME",
+    "name": "DINNER",
+    "icon": null
+  },
+  {
+    "id": 60,
+    "category": "WEATHER",
+    "name": "뇌우",
+    "icon": null
+  },
+  {
+    "id": 61,
+    "category": "WEATHER",
+    "name": "이슬비",
+    "icon": null
+  },
+  {
+    "id": 62,
+    "category": "WEATHER",
+    "name": "비",
+    "icon": null
+  },
+  {
+    "id": 63,
+    "category": "WEATHER",
+    "name": "눈",
+    "icon": null
+  },
+  {
+    "id": 64,
+    "category": "WEATHER",
+    "name": "대기 상태",
+    "icon": null
+  },
+  {
+    "id": 65,
+    "category": "DATE",
+    "name": "1월 기념일",
+    "icon": null
+  },
+  {
+    "id": 66,
+    "category": "DATE",
+    "name": "2월 기념일",
+    "icon": null
+  },
+  {
+    "id": 67,
+    "category": "DATE",
+    "name": "3월 기념일",
+    "icon": null
+  },
+  {
+    "id": 68,
+    "category": "DATE",
+    "name": "4월 기념일",
+    "icon": null
+  },
+  {
+    "id": 69,
+    "category": "DATE",
+    "name": "5월 기념일",
+    "icon": null
+  },
+  {
+    "id": 70,
+    "category": "DATE",
+    "name": "6월 기념일",
+    "icon": null
+  },
+  {
+    "id": 71,
+    "category": "DATE",
+    "name": "7월 기념일",
+    "icon": null
+  },
+  {
+    "id": 72,
+    "category": "DATE",
+    "name": "8월 기념일",
+    "icon": null
+  },
+  {
+    "id": 73,
+    "category": "DATE",
+    "name": "9월 기념일",
+    "icon": null
+  },
+  {
+    "id": 74,
+    "category": "DATE",
+    "name": "10월 기념일",
+    "icon": null
+  },
+  {
+    "id": 75,
+    "category": "DATE",
+    "name": "11월 기념일",
+    "icon": null
+  },
+  {
+    "id": 76,
+    "category": "DATE",
+    "name": "12월 기념일",
+    "icon": null
+  },
+  {
+    "id": 77,
+    "category": "DATE",
+    "name": "MONDAY",
+    "icon": null
+  },
+  {
+    "id": 78,
+    "category": "DATE",
+    "name": "TUESDAY",
+    "icon": null
+  },
+  {
+    "id": 79,
+    "category": "DATE",
+    "name": "WEDNESDAY",
+    "icon": null
+  },
+  {
+    "id": 80,
+    "category": "DATE",
+    "name": "THURSDAY",
+    "icon": null
+  },
+  {
+    "id": 81,
+    "category": "DATE",
+    "name": "FRIDAY",
+    "icon": null
+  },
+  {
+    "id": 82,
+    "category": "DATE",
+    "name": "SATURDAY",
+    "icon": null
+  },
+  {
+    "id": 83,
+    "category": "DATE",
+    "name": "SUNDAY",
+    "icon": null
+  }
+]

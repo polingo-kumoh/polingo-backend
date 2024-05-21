@@ -2,13 +2,10 @@ package com.tangtang.polingo.situation.service.holiday;
 
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.situation.dto.DateResponse;
-import com.tangtang.polingo.situation.entity.Category;
 import com.tangtang.polingo.situation.entity.DetailedSituation;
-import com.tangtang.polingo.situation.entity.Situation;
 import com.tangtang.polingo.situation.entity.SituationImage;
 import com.tangtang.polingo.situation.entity.SituationSentence;
 import com.tangtang.polingo.situation.repository.DetailedSituationRepository;
-import com.tangtang.polingo.situation.repository.SituationRepository;
 import com.tangtang.polingo.situation.vo.Holiday;
 import java.time.LocalDate;
 import java.util.Optional;

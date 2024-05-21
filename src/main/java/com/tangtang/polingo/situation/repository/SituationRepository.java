@@ -9,4 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SituationRepository extends JpaRepository<Situation, Long> {
     Optional<Situation> findByCategory(Category category);
+
+    Optional<Situation> findByName(String today);
 }

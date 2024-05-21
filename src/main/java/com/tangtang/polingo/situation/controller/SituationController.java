@@ -3,6 +3,7 @@ package com.tangtang.polingo.situation.controller;
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.situation.dto.DateResponse;
 import com.tangtang.polingo.situation.dto.WeatherResponse;
+import com.tangtang.polingo.situation.dto.WeekResponse;
 import com.tangtang.polingo.situation.service.SituationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -39,6 +40,14 @@ public class SituationController {
             @RequestParam String lon,
             @RequestParam String lat) {
         WeatherResponse response = situationService.getWeatherSituation(lang, lon, lat);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "요일 상황별 예문 API")
+    @GetMapping("/week")
+    public ResponseEntity<WeekResponse> getWeekSituation(
+            @RequestParam Language lang) {
+        WeekResponse response = situationService.getWeekSituation(lang);
         return ResponseEntity.ok(response);
     }
 }
