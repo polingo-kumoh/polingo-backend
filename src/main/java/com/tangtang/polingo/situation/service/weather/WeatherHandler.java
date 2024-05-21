@@ -3,9 +3,11 @@ package com.tangtang.polingo.situation.service.weather;
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.situation.dto.WeatherResponse;
 import com.tangtang.polingo.situation.entity.Category;
+import com.tangtang.polingo.situation.entity.DetailedSituation;
 import com.tangtang.polingo.situation.entity.Situation;
 import com.tangtang.polingo.situation.entity.SituationImage;
 import com.tangtang.polingo.situation.entity.SituationSentence;
+import com.tangtang.polingo.situation.repository.DetailedSituationRepository;
 import com.tangtang.polingo.situation.repository.SituationRepository;
 import com.tangtang.polingo.situation.vo.Weather;
 import java.util.Optional;
@@ -18,7 +20,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WeatherHandler {
     private final WeatherClient weatherClient;
-    private final SituationRepository situationRepository;
+    private final DetailedSituationRepository detailedSituationRepository;
 
     public WeatherResponse getSituation(Language language, String lon, String lat) {
         Weather weather = weatherClient.getWeatherInfo(lon, lat);
@@ -37,12 +39,10 @@ public class WeatherHandler {
     }
 
     private Optional<SituationSentence> findMatchingSentence(String description, Language language) {
-        Situation situation = situationRepository.findByCategory(Category.WEATHER)
+        DetailedSituation detailedSituation = detailedSituationRepository.findByName(description)
                 .orElseThrow(() -> new IllegalArgumentException("날씨 데이터가 없습니다."));
 
-        return situation.getDetailedSituations().stream()
-                .filter(detailedSituation -> detailedSituation.matches(description))
-                .flatMap(detailedSituation -> detailedSituation.getSentences().stream())
+        return detailedSituation.getSentences().stream()
                 .filter(sentence -> sentence.getLanguage() == language)
                 .findFirst();
     }

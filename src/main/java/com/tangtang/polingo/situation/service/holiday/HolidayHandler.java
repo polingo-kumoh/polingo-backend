@@ -3,9 +3,11 @@ package com.tangtang.polingo.situation.service.holiday;
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.situation.dto.DateResponse;
 import com.tangtang.polingo.situation.entity.Category;
+import com.tangtang.polingo.situation.entity.DetailedSituation;
 import com.tangtang.polingo.situation.entity.Situation;
 import com.tangtang.polingo.situation.entity.SituationImage;
 import com.tangtang.polingo.situation.entity.SituationSentence;
+import com.tangtang.polingo.situation.repository.DetailedSituationRepository;
 import com.tangtang.polingo.situation.repository.SituationRepository;
 import com.tangtang.polingo.situation.vo.Holiday;
 import java.time.LocalDate;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class HolidayHandler {
     private final HolidayMap holidayMap;
-    private final SituationRepository situationRepository;
+    private final DetailedSituationRepository detailedSituationRepository;
 
     public DateResponse getSituation(Language language, LocalDate date) {
         LocalDate today = Optional.ofNullable(date).orElse(LocalDate.now());
@@ -36,13 +38,11 @@ public class HolidayHandler {
     }
 
     private Optional<SituationSentence> findMatchingSentence(Holiday holiday, Language language) {
-        Situation situation = situationRepository.findByCategory(Category.DATE)
+        String holidayName = getHolidayName(holiday);
+        DetailedSituation detailedSituation = detailedSituationRepository.findByName(holidayName)
                 .orElseThrow(() -> new IllegalArgumentException("공휴일 데이터가 없습니다."));
 
-        String holidayName = getHolidayName(holiday);
-        return situation.getDetailedSituations().stream()
-                .filter(detailedSituation -> detailedSituation.matches(holidayName))
-                .flatMap(detailedSituation -> detailedSituation.getSentences().stream())
+        return detailedSituation.getSentences().stream()
                 .filter(sentence -> sentence.getLanguage() == language)
                 .findFirst();
     }
