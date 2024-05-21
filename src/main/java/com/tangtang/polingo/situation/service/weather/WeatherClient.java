@@ -1,7 +1,7 @@
 package com.tangtang.polingo.situation.service.weather;
 
 import com.tangtang.polingo.situation.config.OpenWeatherMapConfig;
-import com.tangtang.polingo.situation.dto.OpenWeatherMapResponse;
+import com.tangtang.polingo.situation.dto.externel.OpenWeatherMapResponse;
 import com.tangtang.polingo.situation.vo.Weather;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.Cacheable;

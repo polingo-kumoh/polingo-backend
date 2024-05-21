@@ -25,6 +25,8 @@ public class Situation {
 
     private String name;
 
+    private String icon;
+
     @OneToMany(mappedBy = "situation")
     private List<DetailedSituation> detailedSituations = new ArrayList<>();
 }

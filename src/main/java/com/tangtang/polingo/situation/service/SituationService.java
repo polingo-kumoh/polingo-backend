@@ -2,6 +2,7 @@ package com.tangtang.polingo.situation.service;
 
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.situation.dto.DateResponse;
+import com.tangtang.polingo.situation.dto.PlaceSituationResponse;
 import com.tangtang.polingo.situation.dto.SituationDTO;
 import com.tangtang.polingo.situation.dto.SituationResponse;
 import com.tangtang.polingo.situation.dto.WeatherResponse;
@@ -23,6 +24,7 @@ public class SituationService {
     private final WeatherHandler weatherHandler;
     private final WeekHandler weekHandler;
     private final TimeHandler timeHandler;
+    private final PlaceHandler placeHandler;
 
     public DateResponse getDateSituation(Language language, LocalDate date) {
         return holidayHandler.getSituation(language, date);
@@ -37,9 +39,12 @@ public class SituationService {
         return new SituationResponse(situations);
     }
 
-    public SituationResponse getTimeSituation(Language lang) {
-        List<SituationDTO> situations = timeHandler.getSituation(lang);
-        log.info("situations = {}", situations);
+    public SituationResponse getTimeSituation(Language language) {
+        List<SituationDTO> situations = timeHandler.getSituation(language);
         return new SituationResponse(situations);
+    }
+
+    public List<PlaceSituationResponse> getPlaceSituations(Language language) {
+        return placeHandler.getSituation(language);
     }
 }

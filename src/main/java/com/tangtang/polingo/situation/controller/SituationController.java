@@ -2,12 +2,14 @@ package com.tangtang.polingo.situation.controller;
 
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.situation.dto.DateResponse;
+import com.tangtang.polingo.situation.dto.PlaceSituationResponse;
 import com.tangtang.polingo.situation.dto.SituationResponse;
 import com.tangtang.polingo.situation.dto.WeatherResponse;
 import com.tangtang.polingo.situation.service.SituationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.LocalDate;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -56,6 +58,14 @@ public class SituationController {
     public ResponseEntity<SituationResponse> getTimeSituation(
             @RequestParam Language lang) {
         SituationResponse response = situationService.getTimeSituation(lang);
+        return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "장소별 상황 예문 API")
+    @GetMapping("/places")
+    public ResponseEntity<List<PlaceSituationResponse>> getPlaceSituations(
+            @RequestParam Language language) {
+        List<PlaceSituationResponse> response = situationService.getPlaceSituations(language);
         return ResponseEntity.ok(response);
     }
 }

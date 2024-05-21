@@ -1,4 +1,4 @@
-package com.tangtang.polingo.situation.dto;
+package com.tangtang.polingo.situation.dto.externel;
 
 import java.util.List;
 import lombok.Data;
