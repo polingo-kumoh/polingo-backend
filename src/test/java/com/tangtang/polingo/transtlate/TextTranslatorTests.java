@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import com.deepl.api.Translator;
-import com.tangtang.polingo.translate.config.GoogleCloudConfig;
+import com.tangtang.polingo.translate.config.DeepLConfig;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,21 +13,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 
 @SpringBootTest
-@ContextConfiguration(classes = GoogleCloudConfig.class)
+@ContextConfiguration(classes = DeepLConfig.class)
 public class TextTranslatorTests {
     @Autowired
-    private GoogleCloudConfig googleCloudConfig;
+    private DeepLConfig deepLConfig;
     private Translator translator;
 
     @BeforeEach
     public void setUp() {
-        translator = googleCloudConfig.translator();
+        translator = deepLConfig.translator();
     }
 
     @Test
     @DisplayName("빈 정상 주입 확인")
     public void testTranslatorNotNull() {
-        assertNotNull(googleCloudConfig.translator(), "Translator 객체가 초기화되어야 합니다.");
+        assertNotNull(deepLConfig.translator(), "Translator 객체가 초기화되어야 합니다.");
     }
 
     @Test
