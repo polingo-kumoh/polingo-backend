@@ -7,7 +7,7 @@ source /home/ubuntu/polingo/scripts/config.sh
 mkdir -p $LOG_DIR
 
 # 스프링부트 애플리케이션 실행
-nohup java -jar $APP_NAME > $LOG_FILE 2>&1 &
+sudo nohup java -jar $APP_NAME > $LOG_FILE 2>&1 &
 
 # 애플리케이션이 시작될 때까지 기다리는 시간(초)
 WAIT_TIME=60
@@ -15,9 +15,9 @@ WAIT_TIME=60
 END_TIME=$((SECONDS+WAIT_TIME))
 
 # Health check
-echo "Checking application health on :8080/health-check"
+echo "Checking application health on :80/health-check"
 while [ $SECONDS -lt $END_TIME ]; do
-    HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:8080/api/health-check)
+    HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:80/api/health-check)
     if [ "$HTTP_STATUS" -eq 200 ]; then
         echo "Application started successfully."
         exit 0
