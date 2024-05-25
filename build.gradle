@@ -66,6 +66,8 @@ dependencies {
 
     // google speech 라이브러리
     implementation 'com.google.cloud:google-cloud-speech:4.36.0'
+    // google tts 라이브러리
+    implementation 'com.google.cloud:google-cloud-texttospeech:2.44.0'
 
     //Json 파싱 관련
     implementation group: 'org.json', name: 'json', version: '20240303'
