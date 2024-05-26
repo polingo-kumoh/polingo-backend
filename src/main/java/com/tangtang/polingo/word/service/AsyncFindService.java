@@ -21,7 +21,7 @@ public class AsyncFindService {
     }
 
     @Async
-    public CompletableFuture<String> translateWithDeepL(String word, Language language) {
-        return CompletableFuture.supplyAsync(() -> textTranslator.translate(word, language));
+    public CompletableFuture<Optional<String>> translateWithDeepL(String word, Language language) {
+        return CompletableFuture.supplyAsync(() -> Optional.ofNullable(textTranslator.translate(word, language)));
     }
 }
