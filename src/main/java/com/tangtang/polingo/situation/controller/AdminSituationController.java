@@ -3,6 +3,7 @@ package com.tangtang.polingo.situation.controller;
 import com.tangtang.polingo.situation.constants.SituationCategory;
 import com.tangtang.polingo.situation.dto.AdminSituationDetailResponse;
 import com.tangtang.polingo.situation.dto.AdminSituationListResponse;
+import com.tangtang.polingo.situation.dto.AdminStiuationPostRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,13 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/api/admin/situation")
 public class AdminSituationController {
+
+
+    @PostMapping("")
+    @Operation(summary = "상황별 예문 추가 API")
+    public void add(@RequestBody AdminStiuationPostRequest reqBody){
+
+    }
 
 
     @GetMapping("")
