@@ -45,7 +45,7 @@ public class AdminWordController {
     }
 
     @DeleteMapping("/{wordId}")
-    @Operation(summary = "단어 수정 API")
+    @Operation(summary = "단어 제거 API")
     public void delete(
             @PathVariable String wordId
     ){

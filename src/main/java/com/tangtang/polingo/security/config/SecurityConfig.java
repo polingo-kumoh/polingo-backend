@@ -25,10 +25,15 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
 
                 .authorizeHttpRequests((Requests) -> {
-                    Requests.requestMatchers(
-                            "/api/user/**",
-                            "api/wordset/**"
-                    ).authenticated();
+                    Requests
+                            .requestMatchers(
+                                    "/api/user/**",
+                                    "api/wordset/**"
+                            ).authenticated()
+                            .requestMatchers(
+                                    "/api/admin/**"
+                            )
+                            .hasRole("ADMIN");
                     Requests.anyRequest().permitAll();
                 })
 
