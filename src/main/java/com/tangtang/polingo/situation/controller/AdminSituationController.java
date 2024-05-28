@@ -47,9 +47,12 @@ public class AdminSituationController {
         return null;
     }
 
-    @PutMapping("")
+    @PutMapping("/{situationId}")
     @Operation(summary = "상황별 예문 수정 API")
-    public void update(@RequestBody AdminStiuationPostRequest reqBody){
+    public void update(
+            @PathVariable String situationId,
+            @RequestBody AdminStiuationPostRequest reqBody
+    ){
 
     }
 
