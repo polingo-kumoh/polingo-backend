@@ -47,6 +47,10 @@ public class AdminSituationController {
         return null;
     }
 
+    @PutMapping("")
+    @Operation(summary = "상황별 예문 수정 API")
+    public void update(@RequestBody AdminStiuationPostRequest reqBody){
 
+    }
 
 }
