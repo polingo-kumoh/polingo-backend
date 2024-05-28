@@ -35,7 +35,7 @@ public class AdminWordController {
 
     }
 
-    @PostMapping("/{wordId}")
+    @PutMapping("/{wordId}")
     @Operation(summary = "단어 수정 API")
     public void update(
             @PathVariable String wordId,
