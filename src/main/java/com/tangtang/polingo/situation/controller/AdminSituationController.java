@@ -27,7 +27,7 @@ public class AdminSituationController {
     public Page<SituationListResponse> getList(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "[]") List<SituationCategory> categories
+            @RequestParam List<SituationCategory> categories
     ){
         return null;
     }
