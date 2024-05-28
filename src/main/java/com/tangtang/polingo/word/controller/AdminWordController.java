@@ -34,4 +34,14 @@ public class AdminWordController {
     ){
 
     }
+
+    @PostMapping("/{wordId}")
+    @Operation(summary = "단어 수정 API")
+    public void update(
+            @PathVariable String wordId,
+            @RequestBody AdminWordPostRequest reqBody
+    ){
+
+    }
+
 }
