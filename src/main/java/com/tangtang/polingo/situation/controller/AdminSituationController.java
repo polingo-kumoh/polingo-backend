@@ -56,4 +56,12 @@ public class AdminSituationController {
 
     }
 
+    @DeleteMapping("/{situationId}")
+    @Operation(summary = "상황별 예문 삭제 API")
+    public void delete(
+            @PathVariable String situationId
+    ){
+
+    }
+
 }
