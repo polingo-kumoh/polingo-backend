@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface NewsRepository extends JpaRepository<News, Long> {
     @Query("SELECT new com.tangtang.polingo.news.dto.NewsSummaryResponse(" +
-            "n.id, n.imageUrl, n.title, n.publishDate, " +
+            "n.id, n.imageUrl, n.title, n.publishDate, n.language, " +
             "(SELECT COUNT(ns) > 0 FROM NewsScrap ns WHERE ns.news = n AND ns.user = :user), " +
             "(SELECT ns.originText FROM NewsSentence ns WHERE ns.news = n AND ns.id = (SELECT MIN(ns2.id) FROM NewsSentence ns2 WHERE ns2.news = n))"
             +
@@ -30,7 +30,7 @@ public interface NewsRepository extends JpaRepository<News, Long> {
 
 
     @Query("SELECT new com.tangtang.polingo.news.dto.NewsSummaryResponse(" +
-            "n.id, n.imageUrl, n.title, n.publishDate, " +
+            "n.id, n.imageUrl, n.title, n.publishDate, n.language, " +
             "(SELECT COUNT(ns) > 0 FROM NewsScrap ns WHERE ns.news = n AND ns.user = :user), " +
             "(SELECT ns.originText FROM NewsSentence ns WHERE ns.news = n AND ns.id = (SELECT MIN(ns2.id) FROM NewsSentence ns2 WHERE ns2.news = n))"
             +
