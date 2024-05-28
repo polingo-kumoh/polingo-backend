@@ -22,6 +22,17 @@ public class AdminNewsController {
 
     }
 
+
+
+    @PutMapping("/{newsId}")
+    @Operation(summary = "뉴스 수정 API", description = "뉴스 정보를 수정하는 API입니다.")
+    public void updateNews(@PathVariable String newsId, @RequestBody NewsPostRequest reqBody){
+
+    }
+
+
+
+
     @DeleteMapping("/{newsId}")
     @Operation(summary = "뉴스 제거 API", description = "뉴스 ID로 조회된 뉴스 정보를 제거합니다.")
     public void deleteNews(@PathVariable String newsId){
