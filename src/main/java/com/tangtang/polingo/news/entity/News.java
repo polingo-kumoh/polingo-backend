@@ -36,7 +36,8 @@ public class News extends BaseEntity {
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NewsScrap> newsScraps = new ArrayList<>();
 
-    public void updateNews(String title, String newsUrl, String imageUrl, LocalDateTime publishDate, Language language, List<NewsSentence> newSentences) {
+    public void updateNews(String title, String newsUrl, String imageUrl, LocalDateTime publishDate, Language language,
+                           List<NewsSentence> newSentences) {
         this.title = title;
         this.newsUrl = newsUrl;
         this.imageUrl = imageUrl;

@@ -23,6 +23,7 @@ public class AdminNewsService {
         News news = convertToEntity(reqBody);
         newsRepository.save(news);
     }
+
     public void updateNews(Long newsId, NewsPostRequest reqBody) {
         News updatedNews = convertToEntity(reqBody);
 

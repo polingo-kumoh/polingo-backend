@@ -1,5 +1,6 @@
 package com.tangtang.polingo.situation.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,10 +10,17 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class DetailedSituation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -24,13 +32,25 @@ public class DetailedSituation {
     @JoinColumn(name = "situation_id")
     private Situation situation; // 속한 상위 카테고리
 
-    @OneToMany(mappedBy = "detailedSituation")
+    @OneToMany(mappedBy = "detailedSituation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SituationSentence> sentences = new ArrayList<>();
 
-    @OneToMany(mappedBy = "detailedSituation")
+    @OneToMany(mappedBy = "detailedSituation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SituationImage> images = new ArrayList<>();
 
     public boolean matches(String holidayName) {
         return this.name.equals(holidayName);
+    }
+
+    public void addSituation(Situation situation) {
+        this.situation = situation;
+    }
+
+    public void addImages(List<SituationImage> images) {
+        this.images = images;
+    }
+
+    public void addSentences(List<SituationSentence> sentences) {
+        this.sentences = sentences;
     }
 }

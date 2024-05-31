@@ -8,7 +8,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "어드민용 단어 API")
 @Slf4j
@@ -23,7 +31,7 @@ public class AdminWordController {
             @RequestParam String searchQuery,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size
-    ){
+    ) {
         return null;
     }
 
@@ -31,7 +39,7 @@ public class AdminWordController {
     @Operation(summary = "단어 추가 API")
     public void add(
             @RequestBody AdminWordPostRequest reqBody
-    ){
+    ) {
 
     }
 
@@ -40,7 +48,7 @@ public class AdminWordController {
     public void update(
             @PathVariable String wordId,
             @RequestBody AdminWordPostRequest reqBody
-    ){
+    ) {
 
     }
 
@@ -48,7 +56,7 @@ public class AdminWordController {
     @Operation(summary = "단어 제거 API")
     public void delete(
             @PathVariable String wordId
-    ){
+    ) {
 
     }
 

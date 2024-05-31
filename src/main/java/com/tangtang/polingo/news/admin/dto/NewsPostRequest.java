@@ -2,9 +2,8 @@ package com.tangtang.polingo.news.admin.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class NewsPostRequest {

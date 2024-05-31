@@ -1,5 +1,6 @@
 package com.tangtang.polingo.situation.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -10,10 +11,17 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Situation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +35,6 @@ public class Situation {
 
     private String icon;
 
-    @OneToMany(mappedBy = "situation")
+    @OneToMany(mappedBy = "situation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetailedSituation> detailedSituations = new ArrayList<>();
 }

@@ -1,9 +1,8 @@
 package com.tangtang.polingo.news.dto;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import java.time.LocalDateTime;
-
 import com.tangtang.polingo.global.constant.Language;
+import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

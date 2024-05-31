@@ -1,37 +1,30 @@
-package com.tangtang.polingo.situation.dto;
+package com.tangtang.polingo.situation.admin.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class AdminStiuationPostRequest {
-
-
-    private Long id;
     private String name;
     private String category;
+    private String iconUrl;
 
     @JsonProperty("detailedSituations")
-    private List<AdminSituationDetailResponse.DetailedSituation> detailedSituations;
+    private List<DetailedSituation> detailedSituations;
 
     @Data
     public static class DetailedSituation {
-        private Long id;
-
         @JsonProperty("detailedName")
         private String detailedName;
 
         private List<String> images;
-        private List<AdminSituationDetailResponse.Sentence> sentences;
+        private List<Sentence> sentences;
     }
 
     @Data
     public static class Sentence {
-        private Long id;
-
         @JsonProperty("origin_text")
         private String originText;
 
@@ -40,5 +33,4 @@ public class AdminStiuationPostRequest {
 
         private String language;
     }
-
 }

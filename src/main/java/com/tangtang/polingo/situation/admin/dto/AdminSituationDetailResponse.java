@@ -1,10 +1,9 @@
-package com.tangtang.polingo.situation.dto;
+package com.tangtang.polingo.situation.admin.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class AdminSituationDetailResponse {
