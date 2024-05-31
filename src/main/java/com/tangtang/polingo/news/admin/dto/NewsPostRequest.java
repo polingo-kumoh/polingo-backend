@@ -1,4 +1,4 @@
-package com.tangtang.polingo.news.dto;
+package com.tangtang.polingo.news.admin.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonProperty;
