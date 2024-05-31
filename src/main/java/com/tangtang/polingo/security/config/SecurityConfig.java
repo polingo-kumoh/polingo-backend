@@ -29,11 +29,11 @@ public class SecurityConfig {
                             .requestMatchers(
                                     "/api/user/**",
                                     "api/wordset/**"
-                            ).authenticated()
-                            .requestMatchers(
-                                    "/api/admin/**"
-                            )
-                            .hasRole("ADMIN");
+                            ).authenticated();
+//                            .requestMatchers(
+//                                    "/api/admin/**"
+//                            )
+//                            .hasRole("ADMIN");
                     Requests.anyRequest().permitAll();
                 })
 

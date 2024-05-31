@@ -2,10 +2,12 @@ package com.tangtang.polingo.news.controller;
 
 
 import com.tangtang.polingo.news.dto.NewsPostRequest;
+import com.tangtang.polingo.news.service.NewsService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "어드민 뉴스 제어 API", description = "어드민용 뉴스 제어 API 입니다. languageCode는 [en/ja]  둘중 하나로 선택하시면 됩니다.")
@@ -14,12 +16,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/admin/news")
 @RequiredArgsConstructor
 public class AdminNewsController {
-
+    private final NewsService newsService;
 
     @PostMapping("")
     @Operation(summary = "뉴스 추가 API", description = "뉴스 정보를 추가하는 API입니다.")
-    public void saveNews(@RequestBody NewsPostRequest reqBody){
-
+    public ResponseEntity<Void> saveNews(@RequestBody NewsPostRequest reqBody){
+        newsService.saveNews(reqBody);
+        return ResponseEntity.ok().build();
     }
 
 

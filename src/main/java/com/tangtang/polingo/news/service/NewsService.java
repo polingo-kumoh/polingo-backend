@@ -2,14 +2,18 @@ package com.tangtang.polingo.news.service;
 
 import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.news.dto.NewsDetailResponse;
+import com.tangtang.polingo.news.dto.NewsPostRequest;
 import com.tangtang.polingo.news.dto.NewsSummaryResponse;
 import com.tangtang.polingo.news.dto.SentenceDetail;
 import com.tangtang.polingo.news.entity.News;
 import com.tangtang.polingo.news.entity.NewsScrap;
+import com.tangtang.polingo.news.entity.NewsSentence;
 import com.tangtang.polingo.news.repository.NewsRepository;
 import com.tangtang.polingo.news.repository.NewsScrapRepository;
 import com.tangtang.polingo.user.entity.User;
 import jakarta.persistence.EntityNotFoundException;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -94,4 +98,32 @@ public class NewsService {
         return news.getNewsScraps().stream()
                 .anyMatch(newsScrap -> newsScrap.getUser().equals(user));
     }
+
+    @Transactional
+    public void saveNews(NewsPostRequest reqBody) {
+        News news = convertToEntity(reqBody);
+        newsRepository.save(news);
+    }
+    private News convertToEntity(NewsPostRequest reqBody) {
+        List<NewsSentence> sentences = reqBody.getSentenceRequests().stream()
+                .map(s -> NewsSentence.builder()
+                        .originText(s.getOriginText())
+                        .translatedText(s.getTranslatedText())
+                        .grammars(s.getGrammers())
+                        .build())
+                .collect(Collectors.toList());
+
+        News news = News.builder()
+                .title(reqBody.getArticleTitle())
+                .newsUrl(reqBody.getArticleUrl())
+                .imageUrl(reqBody.getArticleImage())
+                .publishDate(LocalDateTime.now())
+                .language(Language.valueOf(reqBody.getLanguageCode().toUpperCase()))
+                .newsSentences(sentences)
+                .build();
+
+        sentences.forEach(s -> s.addNews(news)); // 연관 관계 설정
+        return news;
+    }
+
 }
