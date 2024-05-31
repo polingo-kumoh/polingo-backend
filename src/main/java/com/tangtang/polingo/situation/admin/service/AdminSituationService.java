@@ -4,13 +4,18 @@ import com.tangtang.polingo.global.constant.Language;
 import com.tangtang.polingo.situation.admin.dto.AdminSituationDetailResponse;
 import com.tangtang.polingo.situation.admin.dto.AdminSituationListResponse;
 import com.tangtang.polingo.situation.admin.dto.AdminStiuationPostRequest;
-import com.tangtang.polingo.situation.constants.SituationCategory;
+import com.tangtang.polingo.situation.admin.dto.DetailedSituationUpdateRequest;
+import com.tangtang.polingo.situation.admin.dto.ImageUpdateRequest;
+import com.tangtang.polingo.situation.admin.dto.SentenceUpdateRequest;
+import com.tangtang.polingo.situation.admin.dto.SituationUpdateRequest;
 import com.tangtang.polingo.situation.entity.Category;
 import com.tangtang.polingo.situation.entity.DetailedSituation;
 import com.tangtang.polingo.situation.entity.Situation;
 import com.tangtang.polingo.situation.entity.SituationImage;
 import com.tangtang.polingo.situation.entity.SituationSentence;
 import com.tangtang.polingo.situation.repository.DetailedSituationRepository;
+import com.tangtang.polingo.situation.repository.ImageRepository;
+import com.tangtang.polingo.situation.repository.SentenceRepository;
 import com.tangtang.polingo.situation.repository.SituationRepository;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
@@ -22,12 +27,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class AdminSituationService {
     private final SituationRepository situationRepository;
     private final DetailedSituationRepository detailedSituationRepository;
+    private final SentenceRepository sentenceRepository;
+    private final ImageRepository imageRepository;
 
-    @Transactional
     public void addSituation(AdminStiuationPostRequest reqBody) {
         Situation situation = situationRepository.findByName(reqBody.getName())
                 .orElseGet(() -> {
@@ -71,21 +78,31 @@ public class AdminSituationService {
         situationRepository.save(situation);
     }
 
+    @Transactional(readOnly = true)
     public Page<AdminSituationListResponse> getSituationsByCategories(List<Category> categories, Pageable pageable) {
         return situationRepository.findByCategoryIn(categories, pageable)
-                .map(situation -> new AdminSituationListResponse(situation.getId(), situation.getCategory().toString(), situation.getName()));
+                .map(situation -> new AdminSituationListResponse(situation.getId(), situation.getCategory().toString(),
+                        situation.getName()));
     }
 
+    @Transactional(readOnly = true)
     public AdminSituationDetailResponse getDetailedSituation(Long situationId) {
         Situation situation = situationRepository.findById(situationId)
                 .orElseThrow(() -> new EntityNotFoundException("Situation not found for id: " + situationId));
 
-        List<AdminSituationDetailResponse.DetailedSituation> detailedSituations = situation.getDetailedSituations().stream()
+        List<AdminSituationDetailResponse.DetailedSituation> detailedSituations = situation.getDetailedSituations()
+                .stream()
                 .map(ds -> AdminSituationDetailResponse.DetailedSituation.builder()
                         .id(ds.getId())
                         .detailedName(ds.getName())
-                        .images(ds.getImages().stream().map(SituationImage::getUrl).collect(Collectors.toList()))
-                        .sentences(ds.getSentences().stream().map(sentence -> AdminSituationDetailResponse.Sentence.builder()
+                        .images(ds.getImages().stream()
+                                .map(img -> AdminSituationDetailResponse.Image.builder()
+                                        .id(img.getId())
+                                        .url(img.getUrl())
+                                        .build())
+                                .collect(Collectors.toList()))
+                        .sentences(ds.getSentences().stream()
+                                .map(sentence -> AdminSituationDetailResponse.Sentence.builder()
                                         .id(sentence.getId())
                                         .originText(sentence.getSentence())
                                         .translatedText(sentence.getTranslation())
@@ -103,4 +120,51 @@ public class AdminSituationService {
                 .build();
     }
 
+    // 상세 상황 수정
+    public void updateDetailedSituation(Long detailSituationId, DetailedSituationUpdateRequest request) {
+        DetailedSituation detailedSituation = detailedSituationRepository.findById(detailSituationId)
+                .orElseThrow(() -> new EntityNotFoundException("DetailedSituation not found"));
+        detailedSituation.updateName(request.getDetailedName());
+        detailedSituationRepository.save(detailedSituation);
+    }
+
+    // 상세 상황 삭제
+    public void deleteDetailedSituation(Long detailSituationId) {
+        detailedSituationRepository.deleteById(detailSituationId);
+    }
+
+    // 문장 수정
+    public void updateSentence(Long sentenceId, SentenceUpdateRequest request) {
+        SituationSentence sentence = sentenceRepository.findById(sentenceId)
+                .orElseThrow(() -> new EntityNotFoundException("Sentence not found"));
+        sentence.update(request.getOriginText(), request.getTranslatedText(), Language.valueOf(request.getLanguage()));
+        sentenceRepository.save(sentence);
+    }
+
+    // 문장 삭제
+    public void deleteSentence(Long sentenceId) {
+        sentenceRepository.deleteById(sentenceId);
+    }
+
+    public void deleteSituation(Long situationId) {
+        situationRepository.deleteById(situationId);
+    }
+
+    public void updateImage(Long imageId, ImageUpdateRequest request) {
+        SituationImage image = imageRepository.findById(imageId)
+                .orElseThrow(() -> new EntityNotFoundException("Image not found"));
+        image.updateUrl(request.getUrl());
+        imageRepository.save(image);
+    }
+
+    public void deleteImage(Long imageId) {
+        imageRepository.deleteById(imageId);
+    }
+
+    public void updateSituation(Long situationId, SituationUpdateRequest request) {
+        Situation situation = situationRepository.findById(situationId)
+                .orElseThrow(() -> new EntityNotFoundException("Situation not found"));
+        situation.update(request.getName(), Category.valueOf(request.getCategory()), request.getIconUrl());
+        situationRepository.save(situation);
+    }
 }

@@ -25,7 +25,7 @@ public class AdminSituationDetailResponse {
         @JsonProperty("detailedName")
         private String detailedName;
 
-        private List<String> images;
+        private List<Image> images;
         private List<Sentence> sentences;
     }
 
@@ -43,4 +43,10 @@ public class AdminSituationDetailResponse {
         private String language;
     }
 
+    @Data
+    @Builder
+    public static class Image {
+        private Long id;
+        private String url;
+    }
 }

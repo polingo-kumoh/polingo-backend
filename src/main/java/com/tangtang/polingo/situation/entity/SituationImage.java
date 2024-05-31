@@ -28,7 +28,7 @@ public class SituationImage {
     @JoinColumn(name = "detailed_situation_id", nullable = false)
     private DetailedSituation detailedSituation;
 
-    public void addDetailedSituation(DetailedSituation detailedSituation) {
-        this.detailedSituation = detailedSituation;
+    public void updateUrl(String url) {
+        this.url = url;
     }
 }

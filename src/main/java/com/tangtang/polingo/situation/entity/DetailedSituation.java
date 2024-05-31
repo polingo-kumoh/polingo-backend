@@ -38,19 +38,15 @@ public class DetailedSituation {
     @OneToMany(mappedBy = "detailedSituation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SituationImage> images = new ArrayList<>();
 
-    public boolean matches(String holidayName) {
-        return this.name.equals(holidayName);
-    }
-
-    public void addSituation(Situation situation) {
-        this.situation = situation;
-    }
-
     public void addImages(List<SituationImage> images) {
         this.images = images;
     }
 
     public void addSentences(List<SituationSentence> sentences) {
         this.sentences = sentences;
+    }
+
+    public void updateName(String detailedName) {
+        this.name = detailedName;
     }
 }

@@ -18,6 +18,7 @@ public class AdminStiuationPostRequest {
     public static class DetailedSituation {
         @JsonProperty("detailedName")
         private String detailedName;
+        private Long detaildSituationId;
 
         private List<String> images;
         private List<Sentence> sentences;

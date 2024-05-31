@@ -37,4 +37,10 @@ public class Situation {
 
     @OneToMany(mappedBy = "situation", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<DetailedSituation> detailedSituations = new ArrayList<>();
+
+    public void update(String name, Category category, String icon) {
+        this.name = name;
+        this.category = category;
+        this.icon = icon;
+    }
 }

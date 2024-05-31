@@ -39,7 +39,9 @@ public class SituationSentence {
     @JoinColumn(name = "detailed_situation_id")
     private DetailedSituation detailedSituation; // 이 예문이 속한 세부 상황
 
-    public void addDetailedSituation(DetailedSituation detailedSituation) {
-        this.detailedSituation = detailedSituation;
+    public void update(String sentence, String translation, Language language) {
+        this.sentence = sentence;
+        this.translation = translation;
+        this.language = language;
     }
 }
