@@ -75,6 +75,9 @@ dependencies {
     //캐시
     implementation 'org.springframework.boot:spring-boot-starter-cache'
     implementation 'net.sf.ehcache:ehcache:2.10.3'
+
+    //es의존성
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 }
 
 tasks.named('test') {
