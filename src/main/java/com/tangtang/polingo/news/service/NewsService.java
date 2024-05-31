@@ -126,4 +126,24 @@ public class NewsService {
         return news;
     }
 
+    @Transactional
+    public void updateNews(Long newsId, NewsPostRequest reqBody) {
+        News updatedNews = convertToEntity(reqBody);
+
+        News news = newsRepository.findById(newsId)
+                .orElseThrow(() -> new EntityNotFoundException("News not found with id: " + newsId));
+
+        // 도메인 메소드를 통한 업데이트 수행
+        news.updateNews(
+                updatedNews.getTitle(),
+                updatedNews.getNewsUrl(),
+                updatedNews.getImageUrl(),
+                updatedNews.getPublishDate(),
+                updatedNews.getLanguage(),
+                updatedNews.getNewsSentences()
+        );
+
+        newsRepository.save(news); // JPA가 변경된 내용을 자동으로 감지하고 저장
+    }
+
 }

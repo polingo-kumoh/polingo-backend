@@ -29,8 +29,9 @@ public class AdminNewsController {
 
     @PutMapping("/{newsId}")
     @Operation(summary = "뉴스 수정 API", description = "뉴스 정보를 수정하는 API입니다.")
-    public void updateNews(@PathVariable String newsId, @RequestBody NewsPostRequest reqBody){
-
+    public ResponseEntity<Void> updateNews(@PathVariable Long newsId, @RequestBody NewsPostRequest reqBody){
+        newsService.updateNews(newsId, reqBody);
+        return ResponseEntity.ok().build();
     }
 
 

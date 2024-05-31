@@ -35,4 +35,17 @@ public class News extends BaseEntity {
 
     @OneToMany(mappedBy = "news", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NewsScrap> newsScraps = new ArrayList<>();
+
+    public void updateNews(String title, String newsUrl, String imageUrl, LocalDateTime publishDate, Language language, List<NewsSentence> newSentences) {
+        this.title = title;
+        this.newsUrl = newsUrl;
+        this.imageUrl = imageUrl;
+        this.publishDate = publishDate;
+        this.language = language;
+
+        // 기존 문장들을 제거하고 새로운 문장 목록으로 대체
+        this.newsSentences.clear();
+        this.newsSentences.addAll(newSentences);
+        newSentences.forEach(s -> s.addNews(this)); // 연관 관계 설정
+    }
 }
