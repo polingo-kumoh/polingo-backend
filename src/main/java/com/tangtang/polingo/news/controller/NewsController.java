@@ -43,10 +43,9 @@ public class NewsController {
             @CurrentUser User user
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<NewsSummaryResponse> newsPage = newsService.getNewsSummaries(Optional.of(languageCode), pageable, user);
+        Page<NewsSummaryResponse> newsPage = newsService.getNewsSummaries(Optional.ofNullable(languageCode), pageable, user);
         return ResponseEntity.ok(newsPage);
     }
-
 
     @GetMapping("/{newsId}")
     @Operation(summary = "뉴스 단건 조회 API", description = "뉴스 ID로 뉴스의 상세 정보와 관련 문장들을 조회합니다.")

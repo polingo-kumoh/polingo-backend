@@ -28,14 +28,13 @@ public class NewsService {
     private final NewsRepository newsRepository;
     private final NewsScrapRepository newsScrapRepository;
 
+
     public Page<NewsSummaryResponse> getNewsSummaries(Optional<String> languageCode, Pageable pageable, User user) {
-        if(languageCode.isPresent()){
+        if (languageCode.isPresent() && !languageCode.get().isEmpty()) {
             Language language = Language.fromCode(languageCode.get());
             return newsRepository.findNewsSummariesByLanguage(user, language, pageable);
         }
-
         return newsRepository.findNewsSummaries(user, pageable);
-
     }
 
     public NewsDetailResponse getNewsDetail(Long newsId, User user) {
