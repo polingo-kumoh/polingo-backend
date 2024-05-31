@@ -11,6 +11,7 @@ import com.tangtang.polingo.news.repository.NewsScrapRepository;
 import com.tangtang.polingo.user.entity.User;
 import jakarta.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,9 +28,14 @@ public class NewsService {
     private final NewsRepository newsRepository;
     private final NewsScrapRepository newsScrapRepository;
 
-    public Page<NewsSummaryResponse> getNewsSummaries(String languageCode, Pageable pageable, User user) {
-        Language language = Language.fromCode(languageCode);
-        return newsRepository.findNewsSummariesByLanguage(user, language, pageable);
+    public Page<NewsSummaryResponse> getNewsSummaries(Optional<String> languageCode, Pageable pageable, User user) {
+        if(languageCode.isPresent()){
+            Language language = Language.fromCode(languageCode.get());
+            return newsRepository.findNewsSummariesByLanguage(user, language, pageable);
+        }
+
+        return newsRepository.findNewsSummaries(user, pageable);
+
     }
 
     public NewsDetailResponse getNewsDetail(Long newsId, User user) {

@@ -24,6 +24,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Optional;
+
 @Tag(name = "뉴스 관련 API", description = "사용자와 뉴스의 상호작용에 대해서 다룹니다. languageCode는 [en/ja]  둘줄 하나로 선택하시면 됩니다.")
 @Slf4j
 @RestController
@@ -41,7 +43,7 @@ public class NewsController {
             @CurrentUser User user
     ) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<NewsSummaryResponse> newsPage = newsService.getNewsSummaries(languageCode, pageable, user);
+        Page<NewsSummaryResponse> newsPage = newsService.getNewsSummaries(Optional.of(languageCode), pageable, user);
         return ResponseEntity.ok(newsPage);
     }
 

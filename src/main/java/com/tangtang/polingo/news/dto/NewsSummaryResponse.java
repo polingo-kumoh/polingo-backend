@@ -2,6 +2,8 @@ package com.tangtang.polingo.news.dto;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import java.time.LocalDateTime;
+
+import com.tangtang.polingo.global.constant.Language;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,6 +16,7 @@ public class NewsSummaryResponse {
     private String imageUrl;
     private String title;
     private LocalDateTime publishDate;
+    private Language language;
     private boolean isScraped;
     private String firstSentence;
 
