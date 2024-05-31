@@ -5,12 +5,15 @@ import com.tangtang.polingo.situation.admin.dto.AdminSituationListResponse;
 import com.tangtang.polingo.situation.admin.dto.AdminStiuationPostRequest;
 import com.tangtang.polingo.situation.admin.service.AdminSituationService;
 import com.tangtang.polingo.situation.constants.SituationCategory;
+import com.tangtang.polingo.situation.entity.Category;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,16 +46,17 @@ public class AdminSituationController {
     public Page<AdminSituationListResponse> getList(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam List<SituationCategory> categories
+            @RequestParam List<Category> categories
     ) {
-        return null;
+        Pageable pageable = PageRequest.of(page, size);
+        return adminSituationService.getSituationsByCategories(categories, pageable);
     }
 
 
     @GetMapping("/{situationId}")
     @Operation(summary = "상황별 예문 상세 조회 API", description = "상황별 예문 상세 조회 API")
-    public AdminSituationDetailResponse getDetail(@PathVariable String situationId) {
-        return null;
+    public AdminSituationDetailResponse getDetail(@PathVariable Long situationId) {
+        return adminSituationService.getDetailedSituation(situationId);
     }
 
     @PutMapping("/{situationId}")

@@ -3,9 +3,11 @@ package com.tangtang.polingo.situation.admin.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
+import lombok.Builder;
 import lombok.Data;
 
 @Data
+@Builder
 public class AdminSituationDetailResponse {
 
     private Long id;
@@ -16,6 +18,7 @@ public class AdminSituationDetailResponse {
     private List<DetailedSituation> detailedSituations;
 
     @Data
+    @Builder
     public static class DetailedSituation {
         private Long id;
 
@@ -27,6 +30,7 @@ public class AdminSituationDetailResponse {
     }
 
     @Data
+    @Builder
     public static class Sentence {
         private Long id;
 
