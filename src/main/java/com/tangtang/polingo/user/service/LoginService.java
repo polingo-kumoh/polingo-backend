@@ -5,10 +5,13 @@ import com.tangtang.polingo.oauth2.service.OAuth2Service;
 import com.tangtang.polingo.oauth2.service.OAuth2Services;
 import com.tangtang.polingo.security.jwt.JwtProvider;
 import com.tangtang.polingo.user.constant.LoginType;
+import com.tangtang.polingo.user.entity.Admin;
 import com.tangtang.polingo.user.entity.User;
+import com.tangtang.polingo.user.repository.AdminUserRepository;
 import com.tangtang.polingo.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,6 +23,9 @@ public class LoginService {
     private final OAuth2Services oAuth2Services;
     private final UserService userService;
     private final UserRepository userRepository;
+    private final AdminUserRepository adminUserRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Transactional(readOnly = true)
     public ResponseEntity<Void> redirectLogin(String provider) {
@@ -40,5 +46,16 @@ public class LoginService {
                 .orElseGet(() -> userService.createUser(loginType, userInfo));
 
         return jwtProvider.createToken(user);
+    }
+
+    public String loginAdmin(String username, String password) {
+        Admin admin = adminUserRepository.findAdminByUsername(username)
+                .orElseThrow(IllegalArgumentException::new);
+
+        if(passwordEncoder.matches(password, admin.getPassword())){
+            throw new IllegalArgumentException();
+        }
+
+        return jwtProvider.createToken(admin.getId(), "ADMIN");
     }
 }

@@ -5,7 +5,9 @@ import com.tangtang.polingo.oauth2.dto.UserInfo;
 import com.tangtang.polingo.user.constant.LoginType;
 import com.tangtang.polingo.user.constant.UserRole;
 import com.tangtang.polingo.user.dto.UserResponse;
+import com.tangtang.polingo.user.entity.Admin;
 import com.tangtang.polingo.user.entity.User;
+import com.tangtang.polingo.user.repository.AdminUserRepository;
 import com.tangtang.polingo.user.repository.UserRepository;
 import com.tangtang.polingo.wordset.entity.WordSet;
 import com.tangtang.polingo.wordset.repository.WordSetRepository;
@@ -14,6 +16,7 @@ import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +27,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final WordSetRepository wordSetRepository;
     private final UserRepository userRepository;
+    private final AdminUserRepository adminUserRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -56,6 +61,16 @@ public class UserService {
         Language newLanguage = Language.fromCode(languageCode);
         user.updateLanguage(newLanguage);
         userRepository.save(user);
+    }
+
+    public void createAdmin(String username, String password, String nickname){
+        Admin admin = Admin.builder()
+                .username(username)
+                .password(passwordEncoder.encode(password))
+                .name(nickname)
+                .build();
+
+        adminUserRepository.save(admin);
     }
 
     @Transactional
