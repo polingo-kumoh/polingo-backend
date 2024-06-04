@@ -39,6 +39,7 @@ public class DetailedSituation {
     private List<SituationImage> images = new ArrayList<>();
 
     public void addImages(List<SituationImage> images) {
+        images.forEach(i -> i.assignImage(this));
         this.images = images;
     }
 

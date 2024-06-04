@@ -31,4 +31,8 @@ public class SituationImage {
     public void updateUrl(String url) {
         this.url = url;
     }
+
+    public void assignImage(DetailedSituation detailedSituation) {
+        this.detailedSituation = detailedSituation;
+    }
 }
