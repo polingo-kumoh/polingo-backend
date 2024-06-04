@@ -5,7 +5,9 @@ import com.tangtang.polingo.oauth2.dto.UserInfo;
 import com.tangtang.polingo.user.constant.LoginType;
 import com.tangtang.polingo.user.constant.UserRole;
 import com.tangtang.polingo.user.dto.UserResponse;
+import com.tangtang.polingo.user.entity.Admin;
 import com.tangtang.polingo.user.entity.User;
+import com.tangtang.polingo.user.repository.AdminUserRepository;
 import com.tangtang.polingo.user.repository.UserRepository;
 import com.tangtang.polingo.wordset.entity.WordSet;
 import com.tangtang.polingo.wordset.repository.WordSetRepository;
@@ -24,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
     private final WordSetRepository wordSetRepository;
     private final UserRepository userRepository;
-
+    private final AdminUserRepository adminUserRepository;
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -59,7 +61,13 @@ public class UserService {
     }
 
     public void createAdmin(String username, String password, String nickname){
+        Admin admin = Admin.builder()
+                .username(username)
+                .password(password)
+                .name(nickname)
+                .build();
 
+        adminUserRepository.save(admin);
     }
 
     @Transactional
