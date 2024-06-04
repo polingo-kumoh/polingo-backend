@@ -58,6 +58,10 @@ public class UserService {
         userRepository.save(user);
     }
 
+    public void createAdmin(String username, String password, String nickname){
+
+    }
+
     @Transactional
     public User createUser(LoginType loginType, UserInfo userInfo) {
         User newUser = User.builder()
