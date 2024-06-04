@@ -46,6 +46,7 @@ public class NewsService {
                 .map(ns -> SentenceDetail.builder()
                         .sentenceId(ns.getId())
                         .originalText(ns.getOriginText())
+                        .grammar(ns.getGrammars())
                         .translatedText(ns.getTranslatedText())
                         .build())
                 .collect(Collectors.toList());
