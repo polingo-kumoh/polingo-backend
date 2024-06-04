@@ -16,6 +16,7 @@ import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +28,8 @@ public class UserService {
     private final WordSetRepository wordSetRepository;
     private final UserRepository userRepository;
     private final AdminUserRepository adminUserRepository;
+    private final PasswordEncoder passwordEncoder;
+
     @PersistenceContext
     private EntityManager entityManager;
 
@@ -63,7 +66,7 @@ public class UserService {
     public void createAdmin(String username, String password, String nickname){
         Admin admin = Admin.builder()
                 .username(username)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .name(nickname)
                 .build();
 
