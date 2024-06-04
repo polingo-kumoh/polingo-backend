@@ -53,6 +53,7 @@ public class AdminWordService {
         } else {
             searchRequest = SearchRequest.of(sr -> sr
                     .index("polingo_words")
+                    .trackTotalHits(upTo -> upTo.count(100000))
                     .query(Query.of(q -> q.matchAll(ma -> ma)))
                     .source(sourceConfigBuilder -> sourceConfigBuilder.filter(filterBuilder -> filterBuilder.includes("english_word", "japanese_word", "description", "id")))
                     .from((int) pageable.getOffset())
@@ -64,7 +65,7 @@ public class AdminWordService {
         SearchResponse<WordDocument> searchResponse = elasticsearchClient.search(searchRequest, WordDocument.class);
 
         TotalHits total = searchResponse.hits().total();
-        boolean hasHits = total != null && total.value() > 0;
+        long totalHits = total != null ? total.value() : 0;
 
         List<AdminWordResponse> wordResponses = searchResponse.hits().hits().stream()
                 .map(hit -> {
@@ -78,7 +79,7 @@ public class AdminWordService {
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(wordResponses, pageable, hasHits ? total.value() : 0);
+        return new PageImpl<>(wordResponses, pageable, totalHits);
     }
 
     public void add(AdminWordPostRequest reqBody) throws IOException {
