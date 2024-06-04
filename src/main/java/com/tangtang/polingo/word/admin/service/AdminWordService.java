@@ -47,7 +47,9 @@ public class AdminWordService {
             searchRequest = SearchRequest.of(sr -> sr
                     .index("polingo_words")
                     .query(termQuery)
-                    .source(sourceConfigBuilder -> sourceConfigBuilder.filter(filterBuilder -> filterBuilder.includes("english_word", "japanese_word", "description", "id")))
+                    .source(sourceConfigBuilder -> sourceConfigBuilder.filter(
+                            filterBuilder -> filterBuilder.includes("english_word", "japanese_word", "description",
+                                    "id")))
                     .from((int) pageable.getOffset())
                     .size(pageable.getPageSize()));
         } else {
@@ -55,7 +57,9 @@ public class AdminWordService {
                     .index("polingo_words")
                     .trackTotalHits(upTo -> upTo.count(100000))
                     .query(Query.of(q -> q.matchAll(ma -> ma)))
-                    .source(sourceConfigBuilder -> sourceConfigBuilder.filter(filterBuilder -> filterBuilder.includes("english_word", "japanese_word", "description", "id")))
+                    .source(sourceConfigBuilder -> sourceConfigBuilder.filter(
+                            filterBuilder -> filterBuilder.includes("english_word", "japanese_word", "description",
+                                    "id")))
                     .from((int) pageable.getOffset())
                     .size(pageable.getPageSize()));
         }

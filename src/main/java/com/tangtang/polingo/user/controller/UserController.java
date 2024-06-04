@@ -9,10 +9,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "사용자 관련 API", description = "사용자 정보를 다루는 API를 제공합니다.")
 @Slf4j
@@ -21,10 +24,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    @Value("${system.password}")
-    private String systemPassword;
-
 
     @Operation(summary = "사용자 조회 API", description = "사용자 정보를 조회할 수 있습니다.")
     @GetMapping()
@@ -45,16 +44,4 @@ public class UserController {
         userService.updateNickname(user, name);
         return new CommonResponse(HttpStatus.OK.value(), "닉네임을 변경하였습니다.");
     }
-
-    @PostMapping("/add/admin")
-    public ResponseEntity addUser(@RequestBody String username, @RequestBody String password, @RequestBody String nickname, @RequestBody String systemPassword) {
-        if(systemPassword.equals(this.systemPassword)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        }
-
-        userService.createAdmin(username, password, nickname);
-
-        return ResponseEntity.ok().build();
-    }
-
 }

@@ -30,7 +30,7 @@ public class JwtProvider {
         return createToken(String.format("%s:%s", user.getId(), "MEMBER"));
     }
 
-    public String createToken(Long id, String role){
+    public String createToken(Long id, String role) {
         return createToken(String.format("%s:%s", id, role));
     }
 

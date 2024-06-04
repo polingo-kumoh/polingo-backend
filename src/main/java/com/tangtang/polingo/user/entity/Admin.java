@@ -12,6 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Admin {
 
+    @Id
+    @GeneratedValue
+    @Getter
+    private Long id;
+    private String username;
+    @Getter
+    private String password;
+    private String name;
 
     @Builder
     public Admin(String username, String password, String name) {
@@ -19,16 +27,5 @@ public class Admin {
         this.password = password;
         this.name = name;
     }
-
-    @Id @GeneratedValue
-    @Getter
-    private Long id;
-
-    private String username;
-
-    @Getter
-    private String password;
-
-    private String name;
 
 }
