@@ -30,6 +30,10 @@ public class JwtProvider {
         return createToken(String.format("%s:%s", user.getId(), "MEMBER"));
     }
 
+    public String createToken(Long id, String role){
+        return createToken(String.format("%s:%s", id, role));
+    }
+
     private String createToken(String userSpecification) {
         String secretKey = jwtProperties.getSecretKey();
         long expirationHours = jwtProperties.getExpirationHours();
