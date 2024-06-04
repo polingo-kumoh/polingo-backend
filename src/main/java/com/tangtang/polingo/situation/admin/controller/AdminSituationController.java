@@ -37,7 +37,7 @@ public class AdminSituationController {
 
     @PostMapping("")
     @Operation(summary = "상황별 예문 추가", description = "새로운 상황별 예문을 추가합니다.")
-    public ResponseEntity<Void> add(@RequestBody AdminStiuationPostRequest reqBody) {
+    public ResponseEntity<Void> addSituation(@RequestBody AdminStiuationPostRequest reqBody) {
         adminSituationService.addSituation(reqBody);
         return ResponseEntity.ok().build();
     }
