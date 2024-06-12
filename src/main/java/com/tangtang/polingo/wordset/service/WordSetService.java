@@ -53,6 +53,7 @@ public class WordSetService {
                         .id(wordSet.getId())
                         .name(wordSet.getName())
                         .isDefault(wordSet.getIsDefault())
+                        .language(wordSet.getLanguage())
                         .count(wordCounts.getOrDefault(wordSet.getId(), 0L)) // 단어 개수 추가
                         .build())
                 .collect(Collectors.toList());
